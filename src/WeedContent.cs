@@ -1,4 +1,4 @@
-ï»¿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -143,7 +143,7 @@ public sealed class Herbalist : PlaceholderCharacterModel
 
 	public override int StartingHp => 72;
 
-	public override CardPoolModel CardPool => ModelDb.CardPool<WeedCardPool>();
+	public override CardPoolModel CardPool => ModelDb.CardPool<ThornsCardPool>();
 
 	public override RelicPoolModel RelicPool => ModelDb.RelicPool<WeedRelicPool>();
 
@@ -951,8 +951,8 @@ public sealed class Scorch : CustomCardModel
 
 	public override List<(string, string)> Localization => new List<(string, string)>
 	{
-		("title", "ç¼ç—•"),
-		("description", "Gain [gold]ä¼ æ’­ç¼ç—•[/gold].")
+		("title", "×ÆºÛ"),
+		("description", "Gain [gold]´«²¥×ÆºÛ[/gold].")
 	};
 }
 
@@ -991,8 +991,8 @@ public sealed class SpreadingSporesPower : CustomPowerModel
 
 	public override List<(string, string)> Localization => new List<(string, string)>
 	{
-		("title", "ä¼ æ’­ç¼ç—•"),
-		("description", "Whenever you deal unblocked attack damage, there is a 30% chance to apply 1 [gold]ç¼ç—•[/gold]. While [gold]ç”Ÿå‘½ç«ç§[/gold] is active, this chance is 100% and can trigger from your unblocked damage.")
+		("title", "´«²¥×ÆºÛ"),
+		("description", "Whenever you deal unblocked attack damage, there is a 30% chance to apply 1 [gold]×ÆºÛ[/gold]. While [gold]ÉúÃü»ğÖÖ[/gold] is active, this chance is 100% and can trigger from your unblocked damage.")
 	};
 }
 
@@ -1042,7 +1042,7 @@ public sealed class ScorchPower : CustomPowerModel
 
 	public override List<(string, string)> Localization => new List<(string, string)>
 	{
-		("title", "ç¼ç—•"),
+		("title", "×ÆºÛ"),
 		("description", "Take 30% more attack damage and deal 20% less attack damage.")
 	};
 }
@@ -1096,8 +1096,8 @@ public sealed class LifeSpark : CustomCardModel
 
 	public override List<(string, string)> Localization => new List<(string, string)>
 	{
-		("title", "ç”Ÿå‘½ç«ç§"),
-		("description", "Requires [gold]ä¼ æ’­ç¼ç—•[/gold]. Gain {LifeSparkPower:diff()} [gold]ç”Ÿå‘½ç«ç§[/gold]. While active, gain {StrengthPower:diff()} [gold]Strength[/gold], copy your attack damage to another enemy, make [gold]ä¼ æ’­ç¼ç—•[/gold] always trigger, and make [gold]ç¼ç—•[/gold] burn enemies for {ScorchHpLoss:diff()} HP. Scorched enemies explode for {ExplosionPercent}% max HP on death. When this ends, remove all [gold]ç¼ç—•[/gold].")
+		("title", "ÉúÃü»ğÖÖ"),
+		("description", "Requires [gold]´«²¥×ÆºÛ[/gold]. Gain {LifeSparkPower:diff()} [gold]ÉúÃü»ğÖÖ[/gold]. While active, gain {StrengthPower:diff()} [gold]Strength[/gold], copy your attack damage to another enemy, make [gold]´«²¥×ÆºÛ[/gold] always trigger, and make [gold]×ÆºÛ[/gold] burn enemies for {ScorchHpLoss:diff()} HP. Scorched enemies explode for {ExplosionPercent}% max HP on death. When this ends, remove all [gold]×ÆºÛ[/gold].")
 	};
 }
 
@@ -1355,8 +1355,8 @@ public sealed class LifeSparkPower : CustomPowerModel
 
 	public override List<(string, string)> Localization => new List<(string, string)>
 	{
-		("title", "ç”Ÿå‘½ç«ç§"),
-		("description", "Gain 3 [gold]Strength[/gold] while active. Your attacks copy their damage to another enemy. Your [gold]ä¼ æ’­ç¼ç—•[/gold] always triggers. Enemy [gold]ç¼ç—•[/gold] burns for 2 HP after your cards and enemy turns. Scorched enemies explode for 20% max HP on death. When this ends, remove all [gold]ç¼ç—•[/gold].")
+		("title", "ÉúÃü»ğÖÖ"),
+		("description", "Gain 3 [gold]Strength[/gold] while active. Your attacks copy their damage to another enemy. Your [gold]´«²¥×ÆºÛ[/gold] always triggers. Enemy [gold]×ÆºÛ[/gold] burns for 2 HP after your cards and enemy turns. Scorched enemies explode for 20% max HP on death. When this ends, remove all [gold]×ÆºÛ[/gold].")
 	};
 }
 
@@ -1394,8 +1394,8 @@ public sealed class Gleam : CustomCardModel
 
 	public override List<(string, string)> Localization => new List<(string, string)>
 	{
-		("title", "æ˜ è€€"),
-		("description", "Gain [gold]æ˜ è€€[/gold].")
+		("title", "Ó³Ò«"),
+		("description", "Gain [gold]Ó³Ò«[/gold].")
 	};
 }
 
@@ -1458,7 +1458,7 @@ public sealed class GleamPower : CustomPowerModel
 
 	public override List<(string, string)> Localization => new List<(string, string)>
 	{
-		("title", "æ˜ è€€"),
+		("title", "Ó³Ò«"),
 		("description", "Whenever your HP increases, other players heal the same amount.")
 	};
 }
@@ -1528,7 +1528,7 @@ public sealed class SeedCache : CustomRelicModel
 
 	public override List<(string, string)> Localization => new List<(string, string)>
 	{
-		("title", "èµ äºˆçº¢é¾™çš„èŠ±å† "),
+		("title", "ÔùÓèºìÁúµÄ»¨¹Ú"),
 		("description", "Whenever damage you deal causes an enemy to lose HP, heal {Heal:diff()} HP."),
 		("flavor", "A small pouch of seeds saved for the next climb.")
 	};
