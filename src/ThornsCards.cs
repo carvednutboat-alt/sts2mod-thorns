@@ -60,7 +60,7 @@ public sealed class ThornsPower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "荆棘反刺"),
+        ("title", "Thorns"),
         ("description", "When attacked, deal 1 damage back.")
     };
 }
@@ -86,7 +86,7 @@ public sealed class RegenerationPower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "自我恢复"),
+        ("title", "Regeneration"),
         ("description", "At end of turn, heal HP.")
     };
 }
@@ -98,7 +98,7 @@ public sealed class PoisonMasteryPower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "毒物精通"),
+        ("title", "Poison Mastery"),
         ("description", "Attacks deal +1 damage to poisoned enemies.")
     };
 }
@@ -124,7 +124,7 @@ public sealed class ConstellationPower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "星辰之力"),
+        ("title", "Star Power"),
         ("description", "At end of turn, gain Strength.")
     };
 }
@@ -158,7 +158,7 @@ public sealed class LodestarRadiancePower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "引星辉光"),
+        ("title", "Lodestar Radiance"),
         ("description", "At end of turn, deal damage to ALL enemies and apply 1 Poison.")
     };
 }
@@ -184,7 +184,7 @@ public sealed class ConstellationInsightPower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "星图指引"),
+        ("title", "Star Chart"),
         ("description", "At end of turn, draw cards.")
     };
 }
@@ -213,7 +213,7 @@ public sealed class AbyssalPoisonPower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "深渊毒素"),
+        ("title", "Abyssal Toxin"),
         ("description", "At end of turn, apply Poison to ALL enemies.")
     };
 }
@@ -234,7 +234,7 @@ public sealed class AlchemicalBrewPower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "炼金术"),
+        ("title", "Alchemy"),
         ("description", "At end of turn, draw 1 additional card.")
     };
 }
@@ -260,7 +260,7 @@ public sealed class VesselOfPoisonPower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "毒物容器"),
+        ("title", "Vessel of Poison"),
         ("description", "Attacks apply Poison.")
     };
 }
@@ -293,8 +293,8 @@ public sealed class ThornsStrike : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "斩击"),
-        ("description", "造成 {Damage:diff()} 点伤害。")
+        ("title", "Strike"),
+        ("description", "Deal {Damage:diff()} damage.")
     };
 }
 
@@ -319,8 +319,8 @@ public sealed class ThornsDefend : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "防御"),
-        ("description", "获得 {Block:diff()} 点 [gold]格挡[/gold]。")
+        ("title", "Defend"),
+        ("description", "Gain {Block:diff()} [gold]Block[/gold].")
     };
 }
 
@@ -349,8 +349,8 @@ public sealed class PoisonStrike : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "淬毒斩"),
-        ("description", "造成 {Damage:diff()} 点伤害。\n施加 {Poison:diff()} 层 [gold]中毒[/gold]。")
+        ("title", "Poison Strike"),
+        ("description", "Deal {Damage:diff()} damage.\nApply {Poison:diff()} [gold]Poison[/gold].")
     };
 }
 
@@ -376,8 +376,8 @@ public sealed class QuickSlash : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "迅斩"),
-        ("description", "造成 {Damage:diff()} 点伤害。")
+        ("title", "Quick Slash"),
+        ("description", "Deal {Damage:diff()} damage.")
     };
 }
 
@@ -401,8 +401,8 @@ public sealed class IronGuard : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "铁壁"),
-        ("description", "获得 {Block:diff()} 点 [gold]格挡[/gold]。")
+        ("title", "Iron Guard"),
+        ("description", "Gain {Block:diff()} [gold]Block[/gold].")
     };
 }
 
@@ -427,8 +427,8 @@ public sealed class RegenerativeSalve : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "恢复药膏"),
-        ("description", "回复 {Heal:diff()} 点生命。")
+        ("title", "Regenerative Salve"),
+        ("description", "Heal {Heal:diff()} HP.")
     };
 }
 
@@ -453,8 +453,8 @@ public sealed class DarkStarGaze : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "暗星凝视"),
-        ("description", "抽 {Cards:diff()} 张牌。")
+        ("title", "Dark Star Gaze"),
+        ("description", "Draw {Cards:diff()} cards.")
     };
 }
 
@@ -482,8 +482,8 @@ public sealed class PreciseThrust : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "精准突刺"),
-        ("description", "造成 {Damage:diff()} 点伤害。\n抽 {Cards:diff()} 张牌。")
+        ("title", "Precise Thrust"),
+        ("description", "Deal {Damage:diff()} damage.\nDraw {Cards:diff()} card.")
     };
 }
 
@@ -507,8 +507,8 @@ public sealed class DefensiveStance : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "防御姿态"),
-        ("description", "获得 {Block:diff()} 点 [gold]格挡[/gold]。")
+        ("title", "Defensive Stance"),
+        ("description", "Gain {Block:diff()} [gold]Block[/gold].")
     };
 }
 
@@ -537,8 +537,8 @@ public sealed class NeurotoxinStrike : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "神经毒素打击"),
-        ("description", "造成 {Damage:diff()} 点伤害。\n施加 {Poison:diff()} 层 [gold]中毒[/gold]。")
+        ("title", "Neurotoxin Strike"),
+        ("description", "Deal {Damage:diff()} damage.\nApply {Poison:diff()} [gold]Poison[/gold].")
     };
 }
 
@@ -571,8 +571,8 @@ public sealed class DualStrike : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "双重打击"),
-        ("description", "造成 {Damage:diff()} 点伤害 {Repeat:diff()} 次。")
+        ("title", "Dual Strike"),
+        ("description", "Deal {Damage:diff()} damage {Repeat:diff()} times.")
     };
 }
 
@@ -600,8 +600,8 @@ public sealed class PoisonBlade : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "毒刃"),
-        ("description", "造成 {Damage:diff()} 点伤害。\n施加 {Poison:diff()} 层 [gold]中毒[/gold]。")
+        ("title", "Poison Blade"),
+        ("description", "Deal {Damage:diff()} damage.\nApply {Poison:diff()} [gold]Poison[/gold].")
     };
 }
 
@@ -625,8 +625,8 @@ public sealed class StarlightBarrier : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "星光屏障"),
-        ("description", "获得 {Block:diff()} 点 [gold]格挡[/gold]。")
+        ("title", "Starlight Barrier"),
+        ("description", "Gain {Block:diff()} [gold]Block[/gold].")
     };
 }
 
@@ -651,8 +651,8 @@ public sealed class QuickRecovery : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "快速恢复"),
-        ("description", "回复 {Heal:diff()} 点生命。")
+        ("title", "Quick Recovery"),
+        ("description", "Heal {Heal:diff()} HP.")
     };
 }
 
@@ -681,8 +681,8 @@ public sealed class ChemicalBurn : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "化学灼烧"),
-        ("description", "对所有敌人施加 {Poison:diff()} 层 [gold]中毒[/gold]。")
+        ("title", "Chemical Burn"),
+        ("description", "Apply {Poison:diff()} [gold]Poison[/gold] to ALL enemies.")
     };
 }
 
@@ -709,8 +709,8 @@ public sealed class DestrezaThrust : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "至高突刺"),
-        ("description", "造成 {Damage:diff()} 点伤害 {Repeat:diff()} 次。")
+        ("title", "Destreza Thrust"),
+        ("description", "Deal {Damage:diff()} damage {Repeat:diff()} times.")
     };
 }
 
@@ -738,8 +738,8 @@ public sealed class CrossSlash : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "交叉斩"),
-        ("description", "造成 {Damage:diff()} 点伤害。\n获得 {Block:diff()} 点 [gold]格挡[/gold]。")
+        ("title", "Cross Slash"),
+        ("description", "Deal {Damage:diff()} damage.\nGain {Block:diff()} [gold]Block[/gold].")
     };
 }
 
@@ -766,8 +766,8 @@ public sealed class SeaBreeze : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "海风"),
-        ("description", "回复 {Heal:diff()} 点生命。\n抽 {Cards:diff()} 张牌。")
+        ("title", "Sea Breeze"),
+        ("description", "Heal {Heal:diff()} HP.\nDraw {Cards:diff()} card.")
     };
 }
 
@@ -796,8 +796,8 @@ public sealed class InkSplash : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "墨溅"),
-        ("description", "对所有敌人造成 {Damage:diff()} 点伤害。")
+        ("title", "Ink Splash"),
+        ("description", "Deal {Damage:diff()} damage to ALL enemies.")
     };
 }
 
@@ -822,8 +822,8 @@ public sealed class CalmWaters : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "静水"),
-        ("description", "获得 {Block:diff()} 点 [gold]格挡[/gold]。")
+        ("title", "Calm Waters"),
+        ("description", "Gain {Block:diff()} [gold]Block[/gold].")
     };
 }
 
@@ -851,8 +851,8 @@ public sealed class ToxicEdge : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "毒锋"),
-        ("description", "造成 {Damage:diff()} 点伤害。\n施加 {Poison:diff()} 层 [gold]中毒[/gold]。")
+        ("title", "Toxic Edge"),
+        ("description", "Deal {Damage:diff()} damage.\nApply {Poison:diff()} [gold]Poison[/gold].")
     };
 }
 
@@ -876,8 +876,8 @@ public sealed class OceanShield : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "海洋之盾"),
-        ("description", "获得 {Block:diff()} 点 [gold]格挡[/gold]。")
+        ("title", "Ocean Shield"),
+        ("description", "Gain {Block:diff()} [gold]Block[/gold].")
     };
 }
 
@@ -906,8 +906,8 @@ public sealed class Starfall : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "星落"),
-        ("description", "对所有敌人造成 {Damage:diff()} 点伤害。")
+        ("title", "Starfall"),
+        ("description", "Deal {Damage:diff()} damage to ALL enemies.")
     };
 }
 
@@ -933,8 +933,8 @@ public sealed class DeepSeaVenom : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "深海毒液"),
-        ("description", "施加 {Poison:diff()} 层 [gold]中毒[/gold]。")
+        ("title", "Deep Sea Venom"),
+        ("description", "Apply {Poison:diff()} [gold]Poison[/gold].")
     };
 }
 
@@ -962,8 +962,8 @@ public sealed class SwiftRetort : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "迅捷反击"),
-        ("description", "造成 {Damage:diff()} 点伤害。\n获得 {Block:diff()} 点 [gold]格挡[/gold]。")
+        ("title", "Swift Retort"),
+        ("description", "Deal {Damage:diff()} damage.\nGain {Block:diff()} [gold]Block[/gold].")
     };
 }
 
@@ -991,8 +991,8 @@ public sealed class AlchemicalMixture : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "炼金混合"),
-        ("description", "施加 {Poison:diff()} 层 [gold]中毒[/gold]。\n抽 {Cards:diff()} 张牌。")
+        ("title", "Alchemical Mixture"),
+        ("description", "Apply {Poison:diff()} [gold]Poison[/gold].\nDraw {Cards:diff()} card.")
     };
 }
 
@@ -1017,8 +1017,8 @@ public sealed class ConstellationDraw : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "星象抽引"),
-        ("description", "抽 {Cards:diff()} 张牌。")
+        ("title", "Constellation Draw"),
+        ("description", "Draw {Cards:diff()} cards.")
     };
 }
 
@@ -1044,8 +1044,8 @@ public sealed class AegirResilience : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "阿戈尔韧性"),
-        ("description", "获得 {Block:diff()} 点 [gold]格挡[/gold]。\n回复 {Heal:diff()} 点生命。")
+        ("title", "Aegir Resilience"),
+        ("description", "Gain {Block:diff()} [gold]Block[/gold].\nHeal {Heal:diff()} HP.")
     };
 }
 
@@ -1071,8 +1071,8 @@ public sealed class AbyssalStrike : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "深渊打击"),
-        ("description", "造成 {Damage:diff()} 点伤害。")
+        ("title", "Abyssal Strike"),
+        ("description", "Deal {Damage:diff()} damage.")
     };
 }
 
@@ -1100,8 +1100,8 @@ public sealed class WaveSlash : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "波浪斩"),
-        ("description", "造成 {Damage:diff()} 点伤害。\n施加 {Poison:diff()} 层 [gold]中毒[/gold]。")
+        ("title", "Wave Slash"),
+        ("description", "Deal {Damage:diff()} damage.\nApply {Poison:diff()} [gold]Poison[/gold].")
     };
 }
 
@@ -1126,8 +1126,8 @@ public sealed class LodestarGuidance : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "引星指引"),
-        ("description", "抽 {Cards:diff()} 张牌。")
+        ("title", "Lodestar Guidance"),
+        ("description", "Draw {Cards:diff()} cards.")
     };
 }
 
@@ -1153,8 +1153,8 @@ public sealed class Riptide : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "激流"),
-        ("description", "造成 {Damage:diff()} 点伤害。")
+        ("title", "Riptide"),
+        ("description", "Deal {Damage:diff()} damage.")
     };
 }
 
@@ -1181,8 +1181,8 @@ public sealed class DestrezaMastery : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(1m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "至高精通"),
-        ("description", "造成 {Damage:diff()} 点伤害 {Repeat:diff()} 次。")
+        ("title", "Destreza Mastery"),
+        ("description", "Deal {Damage:diff()} damage {Repeat:diff()} times.")
     };
 }
 
@@ -1207,8 +1207,8 @@ public sealed class NeurotoxinCloud : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Poison.UpgradeValueBy(2m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "神经毒雾"),
-        ("description", "对所有敌人施加 {Poison:diff()} 层 [gold]中毒[/gold]。")
+        ("title", "Neurotoxin Cloud"),
+        ("description", "Apply {Poison:diff()} [gold]Poison[/gold] to ALL enemies.")
     };
 }
 
@@ -1229,8 +1229,8 @@ public sealed class SelfReconstitution : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Heal.UpgradeValueBy(4m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "自我重构"),
-        ("description", "回复 {Heal:diff()} 点生命。")
+        ("title", "Self-Reconstitution"),
+        ("description", "Heal {Heal:diff()} HP.")
     };
 }
 
@@ -1252,8 +1252,8 @@ public sealed class AncientRitual : CustomCardModel
     protected override void OnUpgrade() { DynamicVars.Strength.UpgradeValueBy(1m); DynamicVars.Dexterity.UpgradeValueBy(1m); }
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "远古仪式"),
-        ("description", "获得 {StrengthPower:diff()} 点 [gold]力量[/gold]。\n获得 {DexterityPower:diff()} 点 [gold]敏捷[/gold]。")
+        ("title", "Ancient Ritual"),
+        ("description", "Gain {StrengthPower:diff()} [gold]Strength[/gold].\nGain {DexterityPower:diff()} [gold]Dexterity[/gold].")
     };
 }
 
@@ -1273,8 +1273,8 @@ public sealed class ConstellationArmor : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(5m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "星甲"),
-        ("description", "获得 {Block:diff()} 点 [gold]格挡[/gold]。")
+        ("title", "Constellation Armor"),
+        ("description", "Gain {Block:diff()} [gold]Block[/gold].")
     };
 }
 
@@ -1295,8 +1295,8 @@ public sealed class HealingSprings : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Heal.UpgradeValueBy(5m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "治愈泉涌"),
-        ("description", "回复 {Heal:diff()} 点生命。")
+        ("title", "Healing Springs"),
+        ("description", "Heal {Heal:diff()} HP.")
     };
 }
 
@@ -1319,8 +1319,8 @@ public sealed class TripleStrike : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(2m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "三连击"),
-        ("description", "造成 {Damage:diff()} 点伤害 {Repeat:diff()} 次。")
+        ("title", "Triple Strike"),
+        ("description", "Deal {Damage:diff()} damage {Repeat:diff()} times.")
     };
 }
 
@@ -1342,8 +1342,8 @@ public sealed class DeadlyVenom : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Poison.UpgradeValueBy(3m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "致命毒液"),
-        ("description", "施加 {Poison:diff()} 层 [gold]中毒[/gold]。")
+        ("title", "Deadly Venom"),
+        ("description", "Apply {Poison:diff()} [gold]Poison[/gold].")
     };
 }
 
@@ -1366,8 +1366,8 @@ public sealed class OceanCurrent : CustomCardModel
     protected override void OnUpgrade() { DynamicVars.Damage.UpgradeValueBy(1m); DynamicVars.Cards.UpgradeValueBy(1m); }
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "洋流"),
-        ("description", "造成 {Damage:diff()} 点伤害。\n抽 {Cards:diff()} 张牌。")
+        ("title", "Ocean Current"),
+        ("description", "Deal {Damage:diff()} damage.\nDraw {Cards:diff()} card.")
     };
 }
 
@@ -1392,8 +1392,8 @@ public sealed class ChemicalExplosion : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "化学爆炸"),
-        ("description", "对所有敌人造成 {Damage:diff()} 点伤害。")
+        ("title", "Chemical Explosion"),
+        ("description", "Deal {Damage:diff()} damage to ALL enemies.")
     };
 }
 
@@ -1415,8 +1415,8 @@ public sealed class FocusedDestreza : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(2m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "专注至高"),
-        ("description", "造成 {Damage:diff()} 点伤害 {Repeat:diff()} 次。")
+        ("title", "Focused Destreza"),
+        ("description", "Deal {Damage:diff()} damage {Repeat:diff()} times.")
     };
 }
 
@@ -1434,8 +1434,8 @@ public sealed class RegenerationAura : CustomCardModel
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "恢复光环"),
-        ("description", "获得 [gold]自我恢复[/gold]。")
+        ("title", "Regeneration Aura"),
+        ("description", "Gain [gold]Regeneration[/gold].")
     };
 }
 
@@ -1455,8 +1455,8 @@ public sealed class SeaKingProtection : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(6m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "海王庇护"),
-        ("description", "获得 {Block:diff()} 点 [gold]格挡[/gold]。")
+        ("title", "Sea King's Protection"),
+        ("description", "Gain {Block:diff()} [gold]Block[/gold].")
     };
 }
 
@@ -1473,8 +1473,8 @@ public sealed class StarConstellation : CustomCardModel
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "星座"),
-        ("description", "获得 [gold]星辰之力[/gold]，每回合结束时获得 1 点力量。")
+        ("title", "Star Constellation"),
+        ("description", "Gain [gold]Star Power[/gold].\nAt end of turn, gain 1 Strength.")
     };
 }
 
@@ -1491,8 +1491,8 @@ public sealed class VesselOfPoison : CustomCardModel
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "毒物容器"),
-        ("description", "获得 [gold]毒物容器[/gold]，攻击施加 1 层中毒。")
+        ("title", "Vessel of Poison"),
+        ("description", "Gain [gold]Vessel of Poison[/gold].\nAttacks apply 1 Poison.")
     };
 }
 
@@ -1517,8 +1517,8 @@ public sealed class WaveCrash : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "巨浪破"),
-        ("description", "对所有敌人造成 {Damage:diff()} 点伤害。")
+        ("title", "Wave Crash"),
+        ("description", "Deal {Damage:diff()} damage to ALL enemies.")
     };
 }
 
@@ -1538,8 +1538,8 @@ public sealed class CoralShield : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(3m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "珊瑚盾"),
-        ("description", "获得 {Block:diff()} 点 [gold]格挡[/gold]。")
+        ("title", "Coral Shield"),
+        ("description", "Gain {Block:diff()} [gold]Block[/gold].")
     };
 }
 
@@ -1564,8 +1564,8 @@ public sealed class AbyssalWhisper : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Poison.UpgradeValueBy(2m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "深渊低语"),
-        ("description", "对所有敌人施加 {Poison:diff()} 层 [gold]中毒[/gold]。")
+        ("title", "Abyssal Whisper"),
+        ("description", "Apply {Poison:diff()} [gold]Poison[/gold] to ALL enemies.")
     };
 }
 
@@ -1587,8 +1587,8 @@ public sealed class PhantomSlash : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "幻影斩"),
-        ("description", "造成 {Damage:diff()} 点伤害。")
+        ("title", "Phantom Slash"),
+        ("description", "Deal {Damage:diff()} damage.")
     };
 }
 
@@ -1611,8 +1611,8 @@ public sealed class TidalSurge : CustomCardModel
     protected override void OnUpgrade() { DynamicVars.Damage.UpgradeValueBy(3m); DynamicVars.Block.UpgradeValueBy(3m); }
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "潮涌"),
-        ("description", "造成 {Damage:diff()} 点伤害。\n获得 {Block:diff()} 点 [gold]格挡[/gold]。")
+        ("title", "Tidal Surge"),
+        ("description", "Deal {Damage:diff()} damage.\nGain {Block:diff()} [gold]Block[/gold].")
     };
 }
 
@@ -1633,8 +1633,8 @@ public sealed class StarryNight : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Cards.UpgradeValueBy(1m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "星夜"),
-        ("description", "抽 {Cards:diff()} 张牌。")
+        ("title", "Starry Night"),
+        ("description", "Draw {Cards:diff()} cards.")
     };
 }
 
@@ -1651,8 +1651,8 @@ public sealed class PoisonMastery : CustomCardModel
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "毒物精通"),
-        ("description", "获得 [gold]毒物精通[/gold]，对中毒敌人伤害+1。")
+        ("title", "Poison Mastery"),
+        ("description", "Gain [gold]Poison Mastery[/gold].\nDeal +1 damage to Poisoned enemies.")
     };
 }
 
@@ -1669,8 +1669,8 @@ public sealed class ThornsBody : CustomCardModel
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "棘刺之躯"),
-        ("description", "获得 3 层 [gold]荆棘反刺[/gold]。")
+        ("title", "Thorns Body"),
+        ("description", "Gain 3 [gold]Thorns[/gold].")
     };
 }
 
@@ -1695,8 +1695,8 @@ public sealed class LodestarPower : CustomCardModel
     protected override void OnUpgrade() => DynamicVars["PoisonCount"].UpgradeValueBy(1m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "引星之力"),
-        ("description", "对所有敌人施加 2 层 [gold]中毒[/gold]。")
+        ("title", "Lodestar Power"),
+        ("description", "Apply 2 [gold]Poison[/gold] to ALL enemies.")
     };
 }
 
@@ -1717,8 +1717,8 @@ public sealed class SeaFoamBarrier : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(3m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "泡沫屏障"),
-        ("description", "获得 {Block:diff()} 点 [gold]格挡[/gold]。")
+        ("title", "Seafoam Barrier"),
+        ("description", "Gain {Block:diff()} [gold]Block[/gold].")
     };
 }
 
@@ -1741,8 +1741,8 @@ public sealed class ConstellationMark : CustomCardModel
     protected override void OnUpgrade() { DynamicVars.Poison.UpgradeValueBy(1m); DynamicVars.Cards.UpgradeValueBy(1m); }
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "星座标记"),
-        ("description", "施加 {Poison:diff()} 层 [gold]中毒[/gold]。\n抽 {Cards:diff()} 张牌。")
+        ("title", "Constellation Mark"),
+        ("description", "Apply {Poison:diff()} [gold]Poison[/gold].\nDraw {Cards:diff()} card.")
     };
 }
 
@@ -1765,8 +1765,8 @@ public sealed class ChemicalCatalyst : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Cards.UpgradeValueBy(1m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "化学催化剂"),
-        ("description", "施加 3 层 [gold]中毒[/gold]。\n抽 {Cards:diff()} 张牌。")
+        ("title", "Chemical Catalyst"),
+        ("description", "Apply 3 [gold]Poison[/gold].\nDraw {Cards:diff()} cards.")
     };
 }
 
@@ -1787,8 +1787,8 @@ public sealed class ThornsBarrier : CustomCardModel
     protected override void OnUpgrade() { DynamicVars.Block.UpgradeValueBy(4m); }
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "荆棘壁垒"),
-        ("description", "获得 {Block:diff()} 点 [gold]格挡[/gold]。\n获得 2 层 [gold]荆棘反刺[/gold]。")
+        ("title", "Thorns Barrier"),
+        ("description", "Gain {Block:diff()} [gold]Block[/gold].\nGain 2 [gold]Thorns[/gold].")
     };
 }
 
@@ -1809,8 +1809,8 @@ public sealed class DeepSeaRegeneration : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Heal.UpgradeValueBy(3m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "深海再生"),
-        ("description", "回复 {Heal:diff()} 点生命。")
+        ("title", "Deep Sea Regeneration"),
+        ("description", "Heal {Heal:diff()} HP.")
     };
 }
 
@@ -1831,8 +1831,8 @@ public sealed class StarBlessing : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Strength.UpgradeValueBy(1m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "星辉祝福"),
-        ("description", "获得 {StrengthPower:diff()} 点 [gold]力量[/gold]。")
+        ("title", "Star Blessing"),
+        ("description", "Gain {StrengthPower:diff()} [gold]Strength[/gold].")
     };
 }
 
@@ -1854,8 +1854,8 @@ public sealed class SeafoamHealing : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Heal.UpgradeValueBy(5m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "海沫治愈"),
-        ("description", "回复 {Heal:diff()} 点生命。")
+        ("title", "Seafoam Healing"),
+        ("description", "Heal {Heal:diff()} HP.")
     };
 }
 
@@ -1880,8 +1880,8 @@ public sealed class StarCataclysm : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(8m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "星陨天变"),
-        ("description", "对所有敌人造成 {Damage:diff()} 点伤害。")
+        ("title", "Star Cataclysm"),
+        ("description", "Deal {Damage:diff()} damage to ALL enemies.")
     };
 }
 
@@ -1898,8 +1898,8 @@ public sealed class AncientAlchemy : CustomCardModel
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "远古炼金"),
-        ("description", "获得 [gold]炼金术[/gold]。")
+        ("title", "Ancient Alchemy"),
+        ("description", "Gain [gold]Alchemy[/gold].")
     };
 }
 
@@ -1921,8 +1921,8 @@ public sealed class ConstellationLegacy : CustomCardModel
     protected override void OnUpgrade() { DynamicVars.Strength.UpgradeValueBy(2m); DynamicVars.Dexterity.UpgradeValueBy(2m); }
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "星宿传承"),
-        ("description", "获得 {StrengthPower:diff()} 点 [gold]力量[/gold]。\n获得 {DexterityPower:diff()} 点 [gold]敏捷[/gold]。")
+        ("title", "Constellation Legacy"),
+        ("description", "Gain {StrengthPower:diff()} [gold]Strength[/gold].\nGain {DexterityPower:diff()} [gold]Dexterity[/gold].")
     };
 }
 
@@ -1945,8 +1945,8 @@ public sealed class PoisonReaper : CustomCardModel
     protected override void OnUpgrade() { DynamicVars.Damage.UpgradeValueBy(5m); DynamicVars.Poison.UpgradeValueBy(3m); }
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "毒之收割"),
-        ("description", "造成 {Damage:diff()} 点伤害。\n施加 {Poison:diff()} 层 [gold]中毒[/gold]。")
+        ("title", "Poison Reaper"),
+        ("description", "Deal {Damage:diff()} damage.\nApply {Poison:diff()} [gold]Poison[/gold].")
     };
 }
 
@@ -1963,8 +1963,8 @@ public sealed class GuidingStar : CustomCardModel
     protected override void OnUpgrade() { }
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "启明星"),
-        ("description", "获得 [gold]星图指引[/gold]。")
+        ("title", "Guiding Star"),
+        ("description", "Gain [gold]Star Chart[/gold].")
     };
 }
 
@@ -1981,8 +1981,8 @@ public sealed class AbyssalForm : CustomCardModel
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "深渊形态"),
-        ("description", "获得 [gold]深渊毒素[/gold]。")
+        ("title", "Abyssal Form"),
+        ("description", "Gain [gold]Abyssal Toxin[/gold].")
     };
 }
 
@@ -1999,7 +1999,7 @@ public sealed class NavigatorForesight : CustomCardModel
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "领航预见"),
-        ("description", "获得双层 [gold]星图指引[/gold]。")
+        ("title", "Navigator's Foresight"),
+        ("description", "Gain [gold]Star Chart[/gold] twice.")
     };
 }
