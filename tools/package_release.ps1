@@ -1,26 +1,26 @@
 $ErrorActionPreference = "Stop"
 
-$ProjectRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
-$ManifestPath = Join-Path $ProjectRoot "reed.json"
-$ProjectFile = Join-Path $ProjectRoot "reed.csproj"
-$DllPath = Join-Path $ProjectRoot "reed.dll"
-$PckPath = Join-Path $ProjectRoot "reed.pck"
-$GodotExe = "E:\Godot\Godot_v4.5.1-stable_mono_win64\Godot_v4.5.1-stable_mono_win64\Godot_v4.5.1-stable_mono_win64_console.exe"
+$ProjectRoot = Split-Path -Parent $PSScriptRoot
+$ManifestPath = Join-Path $ProjectRoot "thorns.json"
+$Manifest = Get-Content $ManifestPath -Raw | ConvertFrom-Json
+$Version = $Manifest.version
+$DistDir = Join-Path $ProjectRoot "dist"
+$ZipPath = Join-Path $DistDir "thorns-v$Version.zip"
+$Godot = "E:\Godot\Godot_v4.5.1-stable_mono_win64\Godot_v4.5.1-stable_mono_win64\Godot_v4.5.1-stable_mono_win64_console.exe"
 
-$manifest = Get-Content -LiteralPath $ManifestPath -Raw | ConvertFrom-Json
-$version = $manifest.version
-$distDir = Join-Path $ProjectRoot "dist"
-$zipPath = Join-Path $distDir "reed-v$version.zip"
+New-Item -ItemType Directory -Force -Path $DistDir | Out-Null
 
-dotnet build $ProjectFile
-& $GodotExe --headless --path $ProjectRoot --script "res://tools/pack_reed_pck.gd"
+dotnet build (Join-Path $ProjectRoot "thorns.csproj")
+& $Godot --headless --path $ProjectRoot --script "res://tools/pack_thorns_pck.gd"
 
-New-Item -ItemType Directory -Force -Path $distDir | Out-Null
-
-if (Test-Path -LiteralPath $zipPath) {
-	Remove-Item -LiteralPath $zipPath -Force
+if (Test-Path $ZipPath) {
+	Remove-Item -LiteralPath $ZipPath -Force
 }
 
-Compress-Archive -LiteralPath @($ManifestPath, $DllPath, $PckPath) -DestinationPath $zipPath
+Compress-Archive -LiteralPath @(
+	(Join-Path $ProjectRoot "thorns.json"),
+	(Join-Path $ProjectRoot "thorns.dll"),
+	(Join-Path $ProjectRoot "thorns.pck")
+) -DestinationPath $ZipPath
 
-Write-Host "Release package created: $zipPath"
+Write-Host "Created $ZipPath"
