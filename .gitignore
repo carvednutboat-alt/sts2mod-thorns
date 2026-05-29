@@ -1,0 +1,32 @@
+# Godot 4+ generated files
+.godot/
+android/
+.mono/
+
+# .NET build output
+bin/
+obj/
+*.dll
+*.pdb
+*.deps.json
+*.runtimeconfig.json
+
+# Track the Godot Spine extension binaries, but keep generated mod DLLs ignored.
+!addons/spine/windows/
+!addons/spine/windows/*.dll
+
+# Exported/runtime mod packages
+*.pck
+*.zip
+dist/
+
+# Local/editor files
+*.user
+*.suo
+*.csproj.old
+*.old
+.vs/
+.idea/
+
+# Local scratch notes. The project skill under skills/ is intentionally tracked.
+CODEX_NOTES.md

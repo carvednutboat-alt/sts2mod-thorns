@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://src/Core/Nodes/Screens/Shops/NMerchantCharacter.cs" id="1_merchant"]
+[ext_resource type="Script" path="res://scenes/creature_visuals/spine_runtime_loader.gd" id="2_loader"]
+
+[node name="ReedMerchant" type="Node2D"]
+script = ExtResource("1_merchant")
+
+[node name="SpineSprite" type="SpineSprite" parent="."]
+preview_skin = "Default"
+preview_animation = "Idle"
+preview_frame = false
+preview_time = 0.0
+position = Vector2(10, -22)
+scale = Vector2(0.47, 0.47)
+
+[node name="SpineRuntimeLoader" type="Node" parent="."]
+script = ExtResource("2_loader")
+visuals_path = NodePath("../SpineSprite")

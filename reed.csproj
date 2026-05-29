@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>reed</AssemblyName>
+    <TargetFramework>net9.0</TargetFramework>
+    <LangVersion>13.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <DefaultItemExcludes>$(DefaultItemExcludes);.godot\**;obj\BaseLibDecompiled\**</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove=".godot\**;obj\BaseLibDecompiled\**;$(MSBuildProjectDirectory)\.godot\**\*.cs;$(MSBuildProjectDirectory)\obj\BaseLibDecompiled\**\*.cs" />
+    <Reference Include="sts2">
+      <HintPath>..\..\sts2\.godot\mono\temp\bin\Debug\sts2.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="BaseLib">
+      <HintPath>..\BaseLib\BaseLib.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>..\..\sts2\.godot\mono\temp\bin\Debug\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="GodotSharp">
+      <HintPath>..\..\Godot_v4.5.1-stable_mono_win64\Godot_v4.5.1-stable_mono_win64\GodotSharp\Api\Release\GodotSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="CopyModAssemblyToRoot" AfterTargets="Build">
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(MSBuildProjectDirectory)" />
+  </Target>
+</Project>
