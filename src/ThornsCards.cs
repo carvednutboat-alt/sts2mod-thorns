@@ -97,6 +97,22 @@ internal static class ThornsAlchemy
     public static async Task ApplyCatalyst(Creature target, decimal amount, Creature applier, CardModel? source)
     {
         await PowerCmd.Apply<AccelerantPower>(target, amount, applier, source);
+        await PowerCmd.Apply<CatalystAmplifierPower>(target, 1m, applier, source, silent: true);
+        if (amount > 0)
+        {
+            bool has = false;
+            PoisonPower? p = target.GetPower<PoisonPower>();
+            WeakPower? w = target.GetPower<WeakPower>();
+            VulnerablePower? v = target.GetPower<VulnerablePower>();
+            if (p != null && p.Amount > 0) { await PowerCmd.ModifyAmount(p, 1m, applier, source); has = true; }
+            if (w != null && w.Amount > 0) { await PowerCmd.ModifyAmount(w, 1m, applier, source); has = true; }
+            if (v != null && v.Amount > 0) { await PowerCmd.ModifyAmount(v, 1m, applier, source); has = true; }
+            if (has)
+            {
+                AccelerantPower? cat = target.GetPower<AccelerantPower>();
+                if (cat != null && cat.Amount > 0) { await PowerCmd.ModifyAmount(cat, -1m, applier, source); }
+            }
+        }
     }
 
     public static async Task ClearCatalyst(Creature target, decimal amount, Creature applier, CardModel? source)
@@ -215,6 +231,21 @@ internal static class ThornsAlchemy
     {
         return 1 + (owner.GetPower<ConstellationLegacyPower>()?.Amount ?? 0);
     }
+
+    public static async Task ApplyDebuffWithCatalystBoost<T>(Creature target, decimal amount, Creature applier, CardModel? source) where T : PowerModel
+    {
+        AccelerantPower? cat = target.GetPower<AccelerantPower>();
+        if (cat != null && cat.Amount > 0)
+        {
+            await PowerCmd.Apply<T>(target, amount + 1m, applier, source);
+            await PowerCmd.ModifyAmount(cat, -1m, applier, source);
+        }
+        else
+        {
+            await PowerCmd.Apply<T>(target, amount, applier, source);
+        }
+    }
+
 }
 
 
@@ -1007,6 +1038,51 @@ public sealed class NavigatorForesightPower : CustomPowerModel
 }
 
 
+
+
+public sealed class CatalystAmplifierPower : CustomPowerModel
+{
+    public override PowerType Type => PowerType.Buff;
+    public override PowerStackType StackType => PowerStackType.Counter;
+    protected override bool IsVisibleInternal => false;
+    public override bool ShouldPlayVfx => false;
+
+    public override async Task AfterTurnEnd(PlayerChoiceContext ctx, CombatSide side)
+    {
+        if (Owner.IsDead || !Owner.IsAlive) return;
+        if (side != Owner.Side) return;
+
+        AccelerantPower? cat = Owner.GetPower<AccelerantPower>();
+        if (cat == null || cat.Amount <= 0) return;
+
+        bool has = false;
+        PoisonPower? p = Owner.GetPower<PoisonPower>();
+        WeakPower? w = Owner.GetPower<WeakPower>();
+        VulnerablePower? v = Owner.GetPower<VulnerablePower>();
+
+        if (p != null && p.Amount > 0) has = true;
+        if (w != null && w.Amount > 0) has = true;
+        if (v != null && v.Amount > 0) has = true;
+
+        if (!has) return;
+
+        cat = Owner.GetPower<AccelerantPower>();
+        if (cat == null || cat.Amount <= 0) return;
+
+        Flash();
+        if (p != null && p.Amount > 0) await PowerCmd.ModifyAmount(p, 1m, Owner, null);
+        if (w != null && w.Amount > 0) await PowerCmd.ModifyAmount(w, 1m, Owner, null);
+        if (v != null && v.Amount > 0) await PowerCmd.ModifyAmount(v, 1m, Owner, null);
+        await PowerCmd.ModifyAmount(cat, -1m, Owner, null);
+    }
+
+    public override List<(string, string)> Localization => new List<(string, string)>
+    {
+        ("title", "催化增幅"),
+        ("description", "催化会放大敌人身上的减益效果。")
+    };
+}
+
 // ============================================================
 // BASIC CARDS
 // ============================================================
@@ -1173,7 +1249,7 @@ public sealed class RegenerativeSalve : CustomCardModel
 
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         if (!ThornsAlchemy.PlayedAttackThisTurn(Owner))
         {
             await CreatureCmd.Heal(Owner.Creature, DynamicVars.Heal.BaseValue);
@@ -1206,7 +1282,7 @@ public sealed class DarkStarGaze : CustomCardModel
 
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         await CardPileCmd.Draw(c, DynamicVars.Cards.BaseValue, Owner);
         if (ThornsAlchemy.HasUnit(Owner.Creature.CombatState))
         {
@@ -1422,7 +1498,7 @@ public sealed class QuickRecovery : CustomCardModel
 
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         if (ThornsAlchemy.HasUnit(Owner.Creature.CombatState))
         {
             await CreatureCmd.Heal(Owner.Creature, 2m);
@@ -1456,7 +1532,7 @@ public sealed class ChemicalBurn : CustomCardModel
 
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         foreach (Creature enemy in ThornsAlchemy.NormalEnemies(Owner.Creature.CombatState))
         {
             await PowerCmd.Apply<PoisonPower>(enemy, DynamicVars.Poison.BaseValue, Owner.Creature, this);
@@ -1730,7 +1806,7 @@ public sealed class DeepSeaVenom : CustomCardModel
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
         ArgumentNullException.ThrowIfNull(p.Target);
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         await PowerCmd.Apply<PoisonPower>(p.Target, DynamicVars.Poison.BaseValue + (ThornsAlchemy.HasCatalyst(p.Target) ? 2m : 0m), Owner.Creature, this);
     }
 
@@ -1788,7 +1864,7 @@ public sealed class AlchemicalMixture : CustomCardModel
 
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         if (ThornsAlchemy.HasUnit(Owner.Creature.CombatState))
         {
             await ThornsAlchemy.Pulse(c, Owner.Creature.CombatState, Owner.Creature, this);
@@ -1820,7 +1896,7 @@ public sealed class ConstellationDraw : CustomCardModel
 
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         await CardPileCmd.Draw(c, DynamicVars.Cards.BaseValue, Owner);
         if (!ThornsAlchemy.HasUnit(Owner.Creature.CombatState))
         {
@@ -1954,7 +2030,7 @@ public sealed class LodestarGuidance : CustomCardModel
 
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         if (ThornsAlchemy.HasUnit(Owner.Creature.CombatState))
         {
             await ThornsAlchemy.Pulse(c, Owner.Creature.CombatState, Owner.Creature, this);
@@ -2050,7 +2126,7 @@ public sealed class NeurotoxinCloud : CustomCardModel
     public NeurotoxinCloud() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.AllEnemies) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         foreach (Creature enemy in ThornsAlchemy.NormalEnemies(Owner.Creature.CombatState))
         {
             await PowerCmd.Apply<PoisonPower>(enemy, DynamicVars.Poison.BaseValue, Owner.Creature, this);
@@ -2077,7 +2153,7 @@ public sealed class SelfReconstitution : CustomCardModel
     public SelfReconstitution() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         int catalyst = Owner.Creature.GetPower<AccelerantPower>()?.Amount ?? 0;
         if (catalyst <= 0)
         {
@@ -2107,7 +2183,7 @@ public sealed class AncientRitual : CustomCardModel
     public AncientRitual() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         await PowerCmd.Apply<FirstUnitBreakRewardPower>(Owner.Creature, DynamicVars.Strength.BaseValue, Owner.Creature, this);
     }
     protected override void OnUpgrade() { DynamicVars.Strength.UpgradeValueBy(1m); DynamicVars.Dexterity.UpgradeValueBy(1m); }
@@ -2157,7 +2233,7 @@ public sealed class HealingSprings : CustomCardModel
     public HealingSprings() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         await CreatureCmd.Heal(Owner.Creature, DynamicVars.Heal.BaseValue);
         foreach (Creature creature in Owner.Creature.CombatState?.Creatures.Where(creature => creature.IsAlive).ToList() ?? new List<Creature>())
         {
@@ -2212,7 +2288,7 @@ public sealed class DeadlyVenom : CustomCardModel
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
         ArgumentNullException.ThrowIfNull(p.Target);
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         await PowerCmd.Apply<PoisonPower>(p.Target, DynamicVars.Poison.BaseValue, Owner.Creature, this);
         if (ThornsAlchemy.HasCatalyst(p.Target))
         {
@@ -2323,7 +2399,7 @@ public sealed class RegenerationAura : CustomCardModel
     public RegenerationAura() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         await PowerCmd.Apply<AlchemyPulseHealPower>(Owner.Creature, 1m, Owner.Creature, this);
     }
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
@@ -2369,7 +2445,7 @@ public sealed class StarConstellation : CustomCardModel
     public StarConstellation() : base(2, CardType.Power, CardRarity.Uncommon, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         await PowerCmd.Apply<StarConstellationPower>(Owner.Creature, 1m, Owner.Creature, this);
     }
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
@@ -2387,7 +2463,7 @@ public sealed class VesselOfPoison : CustomCardModel
     public VesselOfPoison() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         await PowerCmd.Apply<VesselOfPoisonPower>(Owner.Creature, 1m, Owner.Creature, this);
     }
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
@@ -2461,7 +2537,7 @@ public sealed class AbyssalWhisper : CustomCardModel
     public AbyssalWhisper() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AllEnemies) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         bool shouldDraw = ThornsAlchemy.NormalEnemies(Owner.Creature.CombatState)
             .Any(enemy => (enemy.GetPower<PoisonPower>()?.Amount ?? 0) >= 6);
         foreach (Creature enemy in ThornsAlchemy.NormalEnemies(Owner.Creature.CombatState))
@@ -2545,7 +2621,7 @@ public sealed class StarryNight : CustomCardModel
     public StarryNight() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         await CardPileCmd.Draw(c, DynamicVars.Cards.BaseValue, Owner);
     }
     protected override void OnUpgrade() => DynamicVars.Cards.UpgradeValueBy(1m);
@@ -2563,7 +2639,7 @@ public sealed class PoisonMastery : CustomCardModel
     public PoisonMastery() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         await PowerCmd.Apply<PoisonMasteryPower>(Owner.Creature, 1m, Owner.Creature, this);
     }
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
@@ -2581,7 +2657,7 @@ public sealed class ThornsBody : CustomCardModel
     public ThornsBody() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         await PowerCmd.Apply<ThornsBodyPower>(Owner.Creature, 1m, Owner.Creature, this);
     }
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
@@ -2603,7 +2679,7 @@ public sealed class LodestarPower : CustomCardModel
     public LodestarPower() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AllEnemies) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         Creature? unit = ThornsAlchemy.Units(Owner.Creature.CombatState).FirstOrDefault();
         if (unit != null)
         {
@@ -2665,7 +2741,7 @@ public sealed class ConstellationMark : CustomCardModel
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
         ArgumentNullException.ThrowIfNull(p.Target);
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         await PowerCmd.Apply<PoisonPower>(p.Target, DynamicVars.Poison.BaseValue, Owner.Creature, this);
         await ThornsAlchemy.ApplyCatalyst(p.Target, 1m, Owner.Creature, this);
     }
@@ -2689,7 +2765,7 @@ public sealed class ChemicalCatalyst : CustomCardModel
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
         ArgumentNullException.ThrowIfNull(p.Target);
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         bool hadPoison = p.Target.HasPower<PoisonPower>();
         await ThornsAlchemy.ApplyCatalyst(p.Target, 3m, Owner.Creature, this);
         if (hadPoison)
@@ -2738,7 +2814,7 @@ public sealed class DeepSeaRegeneration : CustomCardModel
     public DeepSeaRegeneration() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         await CreatureCmd.Heal(Owner.Creature, DynamicVars.Heal.BaseValue);
         if (!ThornsAlchemy.HasUnit(Owner.Creature.CombatState))
         {
@@ -2764,7 +2840,7 @@ public sealed class StarBlessing : CustomCardModel
     public StarBlessing() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         await PowerCmd.Apply<StarBlessingPower>(Owner.Creature, 1m, Owner.Creature, this);
     }
     protected override void OnUpgrade() => DynamicVars.Strength.UpgradeValueBy(1m);
@@ -2788,7 +2864,7 @@ public sealed class SeafoamHealing : CustomCardModel
     public SeafoamHealing() : base(2, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         await CreatureCmd.Heal(Owner.Creature, DynamicVars.Heal.BaseValue);
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, p);
         await ThornsAlchemy.Pulse(c, Owner.Creature.CombatState, Owner.Creature, this);
@@ -2810,50 +2886,15 @@ public sealed class StarCataclysm : CustomCardModel
         new DamageVar(18m, ValueProp.Move)
     };
     public StarCataclysm() : base(3, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies) { }
-    protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
+                                protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        CombatState? combatState = Owner.Creature.CombatState;
-        if (combatState == null)
+        // Exact same pattern as InkSplash
+        foreach (Creature enemy in ThornsAlchemy.NormalEnemies(Owner.Creature.CombatState))
         {
-            return;
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(enemy)
+                .WithHitFx("vfx/vfx_spell_cast").Execute(c);
         }
-
-        List<Creature> targets = combatState.HittableEnemies
-            .Where(enemy => enemy.IsAlive && !enemy.IsPlayer)
-            .ToList();
-        foreach (Creature enemy in targets)
-        {
-            if (enemy.IsAlive)
-            {
-                await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(enemy)
-                    .WithHitFx("vfx/vfx_spell_cast").Execute(c);
-            }
-        }
-
-        List<Creature> remainingEnemies = combatState.HittableEnemies
-            .Where(enemy => enemy.IsAlive && !enemy.IsPlayer && !enemy.HasPower<AlchemyUnitPower>())
-            .ToList();
-        if (remainingEnemies.Count == 0)
-        {
-            return;
-        }
-
-        if (!ThornsAlchemy.HasUnit(combatState))
-        {
-            await ThornsAlchemy.SummonUnit(c, Owner, this);
-        }
-        await ThornsAlchemy.Pulse(c, combatState, Owner.Creature, this);
-
-        foreach (Creature enemy in remainingEnemies)
-        {
-            if (enemy.IsAlive)
-            {
-                await PowerCmd.Apply<WeakPower>(enemy, 2m, Owner.Creature, this);
-                await PowerCmd.Apply<AccelerantPower>(enemy, 2m, Owner.Creature, this);
-            }
-        }
-    }
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(8m);
+    }protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(8m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "我的海疆"),
@@ -2868,7 +2909,7 @@ public sealed class AncientAlchemy : CustomCardModel
     public AncientAlchemy() : base(1, CardType.Power, CardRarity.Rare, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         await PowerCmd.Apply<AncientAlchemyPower>(Owner.Creature, 1m, Owner.Creature, this);
     }
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
@@ -2890,7 +2931,7 @@ public sealed class ConstellationLegacy : CustomCardModel
     public ConstellationLegacy() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         await PowerCmd.Apply<ConstellationLegacyPower>(Owner.Creature, DynamicVars["UnitLimit"].BaseValue, Owner.Creature, this);
     }
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
@@ -2908,7 +2949,7 @@ public sealed class PoisonReaper : CustomCardModel
     public PoisonReaper() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         await PowerCmd.Apply<PoisonReaperPower>(Owner.Creature, 1m, Owner.Creature, this);
     }
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
@@ -2926,7 +2967,7 @@ public sealed class GuidingStar : CustomCardModel
     public GuidingStar() : base(0, CardType.Power, CardRarity.Rare, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         await PowerCmd.Apply<GuidingStarPower>(Owner.Creature, 1m, Owner.Creature, this);
     }
     protected override void OnUpgrade() { }
@@ -2944,7 +2985,7 @@ public sealed class AbyssalForm : CustomCardModel
     public AbyssalForm() : base(3, CardType.Power, CardRarity.Rare, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         await PowerCmd.Apply<AbyssalFormPower>(Owner.Creature, 1m, Owner.Creature, this);
     }
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
@@ -2962,7 +3003,7 @@ public sealed class NavigatorForesight : CustomCardModel
     public NavigatorForesight() : base(1, CardType.Power, CardRarity.Rare, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+
         await PowerCmd.Apply<NavigatorForesightPower>(Owner.Creature, 1m, Owner.Creature, this);
     }
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
