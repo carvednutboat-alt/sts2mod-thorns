@@ -63,6 +63,8 @@ public sealed class Herbalist : PlaceholderCharacterModel
 	private const string HerbalistMerchantVisualPath = "res://scenes/merchant/characters/herbalist_merchant.tscn";
 	private const string HerbalistRestSiteVisualPath = "res://scenes/rest_site/characters/herbalist_rest_site.tscn";
 	private const string HerbalistCharacterSelectBgPath = "res://scenes/screens/char_select/char_select_bg_herbalist.tscn";
+	private const string HerbalistCharacterSelectIconPath = "packed/character_select/char_select_reed.png";
+	private const string HerbalistCharacterSelectLockedIconPath = "packed/character_select/char_select_reed_locked.png";
 	private const string HerbalistAtlasPath = "res://animations/characters/herbalist/char_1020_reed2.atlas";
 	private const string HerbalistAtlasTexturePath = "res://animations/characters/herbalist/char_1020_reed2.png";
 	private const string HerbalistSkeletonPath = "res://animations/characters/herbalist/spine_converted_b76f642b77aa4e448ee7a97a54031e3c/char_1020_reed2.skel";
@@ -76,6 +78,10 @@ public sealed class Herbalist : PlaceholderCharacterModel
 	public override string CustomRestSiteAnimPath => CanLoadHerbalistVisual() && ResourceLoader.Exists(HerbalistRestSiteVisualPath) ? HerbalistRestSiteVisualPath : base.CustomRestSiteAnimPath;
 
 	public override string CustomCharacterSelectBg => CanLoadHerbalistVisual() && ResourceLoader.Exists(HerbalistCharacterSelectBgPath) ? HerbalistCharacterSelectBgPath : base.CustomCharacterSelectBg;
+
+	protected override string CharacterSelectIconPath => ImageHelper.GetImagePath(HerbalistCharacterSelectIconPath);
+
+	protected override string CharacterSelectLockedIconPath => ImageHelper.GetImagePath(HerbalistCharacterSelectLockedIconPath);
 
 	private static bool CanLoadHerbalistVisual()
 	{
@@ -164,6 +170,46 @@ public sealed class Herbalist : PlaceholderCharacterModel
 		("pronounSubject", "they"),
 		("unlockText", "Available from the Reed mod.")
 	};
+}
+
+[HarmonyPatch(typeof(CharacterModel), "get_IconTexture")]
+internal static class ReedCharacterIconTexturePatch
+{
+	private const string IconPath = "res://images/packed/ui/top_panel/character_icon_reed.png";
+
+	private static void Postfix(CharacterModel __instance, ref Texture2D __result)
+	{
+		if (__instance is not Herbalist)
+		{
+			return;
+		}
+
+		Texture2D? texture = ResourceLoader.Load<Texture2D>(IconPath, null, ResourceLoader.CacheMode.Reuse);
+		if (texture != null)
+		{
+			__result = texture;
+		}
+	}
+}
+
+[HarmonyPatch(typeof(CharacterModel), "get_IconOutlineTexture")]
+internal static class ReedCharacterIconOutlineTexturePatch
+{
+	private const string IconOutlinePath = "res://images/packed/ui/top_panel/character_icon_reed_outline.png";
+
+	private static void Postfix(CharacterModel __instance, ref Texture2D __result)
+	{
+		if (__instance is not Herbalist)
+		{
+			return;
+		}
+
+		Texture2D? texture = ResourceLoader.Load<Texture2D>(IconOutlinePath, null, ResourceLoader.CacheMode.Reuse);
+		if (texture != null)
+		{
+			__result = texture;
+		}
+	}
 }
 
 [HarmonyPatch(typeof(NMerchantCharacter), "_Ready")]

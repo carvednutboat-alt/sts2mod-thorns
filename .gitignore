@@ -24,7 +24,9 @@ dist/
 *.user
 *.suo
 *.csproj.old
+*.csproj.old.*
 *.old
+*.old.*
 .vs/
 .idea/
 

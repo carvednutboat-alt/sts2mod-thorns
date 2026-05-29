@@ -27,19 +27,25 @@ Do not edit `E:/Godot/sts2` for mod content. Do not edit external Codex skill di
 
 - Character: `Herbalist`, displayed as `Reed`.
 - Base class: `BaseLib.Abstracts.PlaceholderCharacterModel`.
-- Custom visual hooks: `Herbalist.CustomVisualPath`, `CustomMerchantAnimPath`, `CustomRestSiteAnimPath`, and `CustomCharacterSelectBg` check custom scenes/resources before returning Reed scenes; otherwise they fall back to Ironclad. With `reed.pck`, `scenes/creature_visuals/herbalist.tscn`, `scenes/merchant/characters/herbalist_merchant.tscn`, and `scenes/rest_site/characters/herbalist_rest_site.tscn` use `spine_runtime_loader.gd` to manually load the Spine 4.2 assets. `scenes/screens/char_select/char_select_bg_herbalist.tscn` uses `images/packed/character_select/reed_character_select_bg.png`, a 2560x1200 crop derived from the original Reed JPG.
+- Custom visual hooks: `Herbalist.CustomVisualPath`, `CustomMerchantAnimPath`, `CustomRestSiteAnimPath`, and `CustomCharacterSelectBg` check custom scenes/resources before returning Reed scenes; otherwise they fall back to Ironclad. With `reed.pck`, `scenes/creature_visuals/herbalist.tscn`, `scenes/merchant/characters/herbalist_merchant.tscn`, and `scenes/rest_site/characters/herbalist_rest_site.tscn` use `spine_runtime_loader.gd` to manually load the Spine 4.2 assets. `scenes/screens/char_select/char_select_bg_herbalist.tscn` uses `images/packed/character_select/reed_character_select_bg.png`, a 2560x1200 transparent canvas with the original 1920x1139 Reed JPG pasted unscaled at `(120, 30)`.
 - Starter deck: 4x `Weed.Strike`, 4x `Weed.Defend`, 1x `Weed.HerbalGuard`, 1x `Weed.Scorch`. The `Weed.*` content IDs are retained intentionally even though the runtime mod ID is now `reed`.
 - Starter card portraits:
   - `Strike`: `images/packed/card_portraits/weed/strike.png`
   - `Defend`: `images/packed/card_portraits/weed/defend.png`
   - `HerbalGuard`: `images/packed/card_portraits/weed/herbal_guard.png`
   - `Scorch`: `images/packed/card_portraits/weed/scorch.png`
-- Character-select background: `scenes/screens/char_select/char_select_bg_herbalist.tscn`, using `images/packed/character_select/reed_character_select_bg.png`.
+- Character-select background: `scenes/screens/char_select/char_select_bg_herbalist.tscn`, using `images/packed/character_select/reed_character_select_bg.png` with transparent outer padding and no source-image upscaling.
+- Character/avatar images derived from `original_resources/9903D60B5F1A8BFC64CDDF8FBF5015EB.jpg`:
+  - Character-select button: `images/packed/character_select/char_select_reed.png`
+  - Locked character-select button: `images/packed/character_select/char_select_reed_locked.png`
+  - Top-panel/continue-run icon: `images/packed/ui/top_panel/character_icon_reed.png`
+  - Icon outline/mask: `images/packed/ui/top_panel/character_icon_reed_outline.png`
 - Starter relic: `Weed.SeedCache`.
 - `LeafCut`, `Gleam`, and `LifeSpark` remain in the reward pool.
 - Harmony patches:
   - `TheArchitectDefineDialoguesPatch`: adds default repeating Architect ending dialogue for `Herbalist`.
   - `HerbalistTreasureSkipPatch`: prevents Herbalist treasure rooms from using the skip/proceed action while a chest relic is still available.
+  - `ReedCharacterIconTexturePatch` / `ReedCharacterIconOutlineTexturePatch`: use Reed's custom 88x88 character icon in UI locations that call `CharacterModel.IconTexture` / `IconOutlineTexture`.
   - `ReedMerchantCharacterReadyPatch` / `ReedRestSiteCharacterReadyPatch`: use Reed's `Idle` Spine animation in merchant/rest-site scenes instead of vanilla `relaxed_loop` / act rest animations.
 
 ## Asset Notes
