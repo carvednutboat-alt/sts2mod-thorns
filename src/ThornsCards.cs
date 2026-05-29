@@ -2886,34 +2886,52 @@ public sealed class StarCataclysm : CustomCardModel
         new DamageVar(18m, ValueProp.Move)
     };
     public StarCataclysm() : base(3, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies) { }
-                                        protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
+    protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        // Step 1: Deal 18 AOE damage to all normal enemies
-        foreach (Creature enemy in ThornsAlchemy.NormalEnemies(Owner.Creature.CombatState))
+        CombatState? combatState = Owner.Creature.CombatState;
+        if (combatState == null) { return; }
+
+        List<Creature> targets = combatState.HittableEnemies
+            .Where(enemy => enemy.IsAlive && !enemy.IsPlayer)
+            .ToList();
+        foreach (Creature enemy in targets)
         {
-            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(enemy)
-                .WithHitFx("vfx/vfx_spell_cast").Execute(c);
+            if (enemy.IsAlive)
+            {
+                await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(enemy)
+                    .WithHitFx("vfx/vfx_spell_cast").Execute(c);
+            }
         }
 
-        // Step 2: Summon an Alchemy Unit (if at limit, pulses existing instead)
-        await ThornsAlchemy.SummonUnit(c, Owner, this);
+        List<Creature> remainingEnemies = combatState.HittableEnemies
+            .Where(enemy => enemy.IsAlive && !enemy.IsPlayer && !enemy.HasPower<AlchemyUnitPower>())
+            .ToList();
+        if (remainingEnemies.Count == 0) { return; }
 
-        // Step 3: Trigger Pulse (applies 1 poison to all enemies)
-        await ThornsAlchemy.Pulse(c, Owner.Creature.CombatState, Owner.Creature, this);
-
-        // Step 4: Apply Weak x2 and Catalyst x2 to all enemies
-        foreach (Creature enemy in ThornsAlchemy.NormalEnemies(Owner.Creature.CombatState))
+        if (!ThornsAlchemy.HasUnit(combatState))
         {
-            await PowerCmd.Apply<WeakPower>(enemy, 2m, Owner.Creature, this);
-            await ThornsAlchemy.ApplyCatalyst(enemy, 2m, Owner.Creature, this);
+            await ThornsAlchemy.SummonUnit(c, Owner, this);
         }
-    }protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(8m);
+        await ThornsAlchemy.Pulse(c, combatState, Owner.Creature, this);
+
+        foreach (Creature enemy in remainingEnemies)
+        {
+            if (enemy.IsAlive)
+            {
+                await PowerCmd.Apply<WeakPower>(enemy, 2m, Owner.Creature, this);
+                await PowerCmd.Apply<AccelerantPower>(enemy, 2m, Owner.Creature, this);
+            }
+        }
+    }
+    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(8m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "我的海疆"),
         ("description", "对所有敌人造成18点伤害。召唤1个炼金单元并立即触发其脉冲。所有敌人获得2层虚弱和2层催化。")
     };
 }
+
+
 
 [Pool(typeof(ThornsCardPool))]
 public sealed class AncientAlchemy : CustomCardModel
