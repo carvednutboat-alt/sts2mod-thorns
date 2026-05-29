@@ -37,6 +37,7 @@ const PACK_FILES := {
 	"res://.godot/imported/character_icon_reed_outline.png-c0885ebfd8327ddd9b673cc4515f0d72.ctex": "E:/Godot/sts2mod/weed/.godot/imported/character_icon_reed_outline.png-c0885ebfd8327ddd9b673cc4515f0d72.ctex",
 	"res://scenes/creature_visuals/herbalist.tscn": "E:/Godot/sts2mod/weed/scenes/creature_visuals/herbalist.tscn",
 	"res://scenes/creature_visuals/spine_runtime_loader.gd": "E:/Godot/sts2mod/weed/scenes/creature_visuals/spine_runtime_loader.gd",
+	"res://scenes/ui/character_icons/reed_icon.tscn": "E:/Godot/sts2mod/weed/scenes/ui/character_icons/reed_icon.tscn",
 	"res://scenes/screens/char_select/char_select_bg_herbalist.tscn": "E:/Godot/sts2mod/weed/scenes/screens/char_select/char_select_bg_herbalist.tscn",
 	"res://scenes/merchant/characters/herbalist_merchant.tscn": "E:/Godot/sts2mod/weed/scenes/merchant/characters/herbalist_merchant.tscn",
 	"res://scenes/rest_site/characters/herbalist_rest_site.tscn": "E:/Godot/sts2mod/weed/scenes/rest_site/characters/herbalist_rest_site.tscn",

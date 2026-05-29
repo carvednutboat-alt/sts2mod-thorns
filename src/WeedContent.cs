@@ -63,6 +63,7 @@ public sealed class Herbalist : PlaceholderCharacterModel
 	private const string HerbalistMerchantVisualPath = "res://scenes/merchant/characters/herbalist_merchant.tscn";
 	private const string HerbalistRestSiteVisualPath = "res://scenes/rest_site/characters/herbalist_rest_site.tscn";
 	private const string HerbalistCharacterSelectBgPath = "res://scenes/screens/char_select/char_select_bg_herbalist.tscn";
+	private const string HerbalistIconPath = "res://scenes/ui/character_icons/reed_icon.tscn";
 	private const string HerbalistCharacterSelectIconPath = "packed/character_select/char_select_reed.png";
 	private const string HerbalistCharacterSelectLockedIconPath = "packed/character_select/char_select_reed_locked.png";
 	private const string HerbalistAtlasPath = "res://animations/characters/herbalist/char_1020_reed2.atlas";
@@ -78,6 +79,8 @@ public sealed class Herbalist : PlaceholderCharacterModel
 	public override string CustomRestSiteAnimPath => CanLoadHerbalistVisual() && ResourceLoader.Exists(HerbalistRestSiteVisualPath) ? HerbalistRestSiteVisualPath : base.CustomRestSiteAnimPath;
 
 	public override string CustomCharacterSelectBg => CanLoadHerbalistVisual() && ResourceLoader.Exists(HerbalistCharacterSelectBgPath) ? HerbalistCharacterSelectBgPath : base.CustomCharacterSelectBg;
+
+	protected override string IconPath => ResourceLoader.Exists(HerbalistIconPath) ? HerbalistIconPath : base.IconPath;
 
 	protected override string CharacterSelectIconPath => ImageHelper.GetImagePath(HerbalistCharacterSelectIconPath);
 

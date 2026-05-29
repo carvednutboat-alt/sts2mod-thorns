@@ -40,6 +40,7 @@ Do not edit `E:/Godot/sts2` for mod content. Do not edit external Codex skill di
   - Locked character-select button: `images/packed/character_select/char_select_reed_locked.png`
   - Top-panel/continue-run icon: `images/packed/ui/top_panel/character_icon_reed.png`
   - Icon outline/mask: `images/packed/ui/top_panel/character_icon_reed_outline.png`
+  - Icon scene used by `CharacterModel.Icon`: `scenes/ui/character_icons/reed_icon.tscn`
 - Starter relic: `Weed.SeedCache`.
 - `LeafCut`, `Gleam`, and `LifeSpark` remain in the reward pool.
 - Harmony patches:
