@@ -1,9 +1,9 @@
-{
+﻿{
   "id": "reed",
   "name": "Reed",
   "author": "local",
   "description": "Adds the Reed prototype character, Reed Spine visual, starter relic, starter Scorch card, stacking Scorch support, Gleam multiplayer healing support, Life Spark cleanup support, and power hover text fixes.",
-  "version": "0.1.22",
+  "version": "0.1.23",
   "has_pck": true,
   "has_dll": true,
   "dependencies": [

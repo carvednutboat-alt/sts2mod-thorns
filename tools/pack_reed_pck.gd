@@ -1,6 +1,6 @@
 extends SceneTree
 
-const OUTPUT_PATH := "E:/Godot/sts2mod/weed/reed.pck"
+const OUTPUT_PATH := "res://reed.pck"
 
 const PACK_FILES := {
 	"res://animations/characters/herbalist/char_1020_reed2.atlas": "E:/Godot/sts2mod/weed/animations/characters/herbalist/char_1020_reed2.atlas",
@@ -8,6 +8,11 @@ const PACK_FILES := {
 	"res://animations/characters/herbalist/char_1020_reed2.png.import": "E:/Godot/sts2mod/weed/animations/characters/herbalist/char_1020_reed2.png.import",
 	"res://.godot/imported/char_1020_reed2.png-78bd075b54d42cac2899ecce08d59e0b.ctex": "E:/Godot/sts2mod/weed/.godot/imported/char_1020_reed2.png-78bd075b54d42cac2899ecce08d59e0b.ctex",
 	"res://animations/characters/herbalist/spine_converted_b76f642b77aa4e448ee7a97a54031e3c/char_1020_reed2.skel": "E:/Godot/sts2mod/weed/animations/characters/herbalist/spine_converted_b76f642b77aa4e448ee7a97a54031e3c/char_1020_reed2.skel",
+	"res://animations/characters/thorns/char_293_thorns.atlas": "E:/Godot/sts2mod/weed/animations/characters/thorns/char_293_thorns.atlas",
+	"res://animations/characters/thorns/char_293_thorns.png": "E:/Godot/sts2mod/weed/animations/characters/thorns/char_293_thorns.png",
+	"res://animations/characters/thorns/char_293_thorns.png.import": "E:/Godot/sts2mod/weed/animations/characters/thorns/char_293_thorns.png.import",
+	"res://.godot/imported/char_293_thorns.png-3dad6d10d0505a034114c7cf5d1eb5c5.ctex": "E:/Godot/sts2mod/weed/.godot/imported/char_293_thorns.png-3dad6d10d0505a034114c7cf5d1eb5c5.ctex",
+	"res://animations/characters/thorns/spine_converted_front_default/char_293_thorns.skel": "E:/Godot/sts2mod/weed/animations/characters/thorns/spine_converted_front_default/char_293_thorns.skel",
 	"res://images/packed/card_portraits/weed/strike.png": "E:/Godot/sts2mod/weed/images/packed/card_portraits/weed/strike.png",
 	"res://images/packed/card_portraits/weed/strike.png.import": "E:/Godot/sts2mod/weed/images/packed/card_portraits/weed/strike.png.import",
 	"res://.godot/imported/strike.png-fc1a12c392462ca1be3c0d01d44a625f.ctex": "E:/Godot/sts2mod/weed/.godot/imported/strike.png-fc1a12c392462ca1be3c0d01d44a625f.ctex",
@@ -29,6 +34,12 @@ const PACK_FILES := {
 	"res://images/packed/character_select/char_select_reed_locked.png": "E:/Godot/sts2mod/weed/images/packed/character_select/char_select_reed_locked.png",
 	"res://images/packed/character_select/char_select_reed_locked.png.import": "E:/Godot/sts2mod/weed/images/packed/character_select/char_select_reed_locked.png.import",
 	"res://.godot/imported/char_select_reed_locked.png-d5486c1410e00679659aacdfd01be927.ctex": "E:/Godot/sts2mod/weed/.godot/imported/char_select_reed_locked.png-d5486c1410e00679659aacdfd01be927.ctex",
+	"res://images/packed/character_select/char_select_thorns.png": "E:/Godot/sts2mod/weed/images/packed/character_select/char_select_thorns.png",
+	"res://images/packed/character_select/char_select_thorns.png.import": "E:/Godot/sts2mod/weed/images/packed/character_select/char_select_thorns.png.import",
+	"res://.godot/imported/char_select_thorns.png-7c11b3e3fa13478a5f9bd26feeb432ef.ctex": "E:/Godot/sts2mod/weed/.godot/imported/char_select_thorns.png-7c11b3e3fa13478a5f9bd26feeb432ef.ctex",
+	"res://images/packed/character_select/thorns_character_select_bg.png": "E:/Godot/sts2mod/weed/images/packed/character_select/thorns_character_select_bg.png",
+	"res://images/packed/character_select/thorns_character_select_bg.png.import": "E:/Godot/sts2mod/weed/images/packed/character_select/thorns_character_select_bg.png.import",
+	"res://.godot/imported/thorns_character_select_bg.png-51aa353f59230d7f98e0b9bd7ab88e3e.ctex": "E:/Godot/sts2mod/weed/.godot/imported/thorns_character_select_bg.png-51aa353f59230d7f98e0b9bd7ab88e3e.ctex",
 	"res://images/packed/ui/top_panel/character_icon_reed.png": "E:/Godot/sts2mod/weed/images/packed/ui/top_panel/character_icon_reed.png",
 	"res://images/packed/ui/top_panel/character_icon_reed.png.import": "E:/Godot/sts2mod/weed/images/packed/ui/top_panel/character_icon_reed.png.import",
 	"res://.godot/imported/character_icon_reed.png-a0de1a8e9ee32baa283a2aee88eb85d5.ctex": "E:/Godot/sts2mod/weed/.godot/imported/character_icon_reed.png-a0de1a8e9ee32baa283a2aee88eb85d5.ctex",
@@ -36,23 +47,26 @@ const PACK_FILES := {
 	"res://images/packed/ui/top_panel/character_icon_reed_outline.png.import": "E:/Godot/sts2mod/weed/images/packed/ui/top_panel/character_icon_reed_outline.png.import",
 	"res://.godot/imported/character_icon_reed_outline.png-c0885ebfd8327ddd9b673cc4515f0d72.ctex": "E:/Godot/sts2mod/weed/.godot/imported/character_icon_reed_outline.png-c0885ebfd8327ddd9b673cc4515f0d72.ctex",
 	"res://scenes/creature_visuals/herbalist.tscn": "E:/Godot/sts2mod/weed/scenes/creature_visuals/herbalist.tscn",
+	"res://scenes/creature_visuals/thorns.tscn": "E:/Godot/sts2mod/weed/scenes/creature_visuals/thorns.tscn",
 	"res://scenes/creature_visuals/spine_runtime_loader.gd": "E:/Godot/sts2mod/weed/scenes/creature_visuals/spine_runtime_loader.gd",
 	"res://scenes/ui/character_icons/reed_icon.tscn": "E:/Godot/sts2mod/weed/scenes/ui/character_icons/reed_icon.tscn",
+	"res://scenes/ui/character_icons/thorns_icon.tscn": "E:/Godot/sts2mod/weed/scenes/ui/character_icons/thorns_icon.tscn",
 	"res://scenes/screens/char_select/char_select_bg_herbalist.tscn": "E:/Godot/sts2mod/weed/scenes/screens/char_select/char_select_bg_herbalist.tscn",
+	"res://scenes/screens/char_select/char_select_bg_thorns.tscn": "E:/Godot/sts2mod/weed/scenes/screens/char_select/char_select_bg_thorns.tscn",
 	"res://scenes/merchant/characters/herbalist_merchant.tscn": "E:/Godot/sts2mod/weed/scenes/merchant/characters/herbalist_merchant.tscn",
 	"res://scenes/rest_site/characters/herbalist_rest_site.tscn": "E:/Godot/sts2mod/weed/scenes/rest_site/characters/herbalist_rest_site.tscn",
 }
 
 func _init() -> void:
 	var packer := PCKPacker.new()
-	var start_err := packer.pck_start(OUTPUT_PATH)
+	var start_err := packer.pck_start(ProjectSettings.globalize_path(OUTPUT_PATH))
 	print("PCK_START ", start_err)
 	if start_err != OK:
 		quit(start_err)
 		return
 
 	for target_path in PACK_FILES.keys():
-		var source_path: String = PACK_FILES[target_path]
+		var source_path := ProjectSettings.globalize_path(target_path)
 		var add_err := packer.add_file(target_path, source_path)
 		print("ADD ", target_path, " <- ", source_path, " err=", add_err)
 		if add_err != OK:

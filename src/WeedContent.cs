@@ -32,6 +32,7 @@ using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Nodes.RestSite;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Nodes.Screens.Shops;
+using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
 
@@ -175,19 +176,140 @@ public sealed class Herbalist : PlaceholderCharacterModel
 	};
 }
 
+public sealed class Thorns : PlaceholderCharacterModel
+{
+	private const string ThornsVisualPath = "res://scenes/creature_visuals/thorns.tscn";
+	private const string ThornsCharacterSelectBgPath = "res://scenes/screens/char_select/char_select_bg_thorns.tscn";
+	private const string ThornsIconPath = "res://scenes/ui/character_icons/thorns_icon.tscn";
+	private const string ThornsCharacterSelectIconPath = "packed/character_select/char_select_thorns.png";
+	private const string ThornsCharacterSelectLockedIconPath = "packed/character_select/char_select_thorns.png";
+	private const string ThornsAtlasPath = "res://animations/characters/thorns/char_293_thorns.atlas";
+	private const string ThornsAtlasTexturePath = "res://animations/characters/thorns/char_293_thorns.png";
+	private const string ThornsSkeletonPath = "res://animations/characters/thorns/spine_converted_front_default/char_293_thorns.skel";
+
+	public override string PlaceholderID => "silent";
+
+	public override string CustomVisualPath => CanLoadThornsVisual() ? ThornsVisualPath : base.CustomVisualPath;
+
+	public override string CustomCharacterSelectBg => ResourceLoader.Exists(ThornsCharacterSelectBgPath) ? ThornsCharacterSelectBgPath : base.CustomCharacterSelectBg;
+
+	protected override string IconPath => ResourceLoader.Exists(ThornsIconPath) ? ThornsIconPath : base.IconPath;
+
+	protected override string CharacterSelectIconPath => ImageHelper.GetImagePath(ThornsCharacterSelectIconPath);
+
+	protected override string CharacterSelectLockedIconPath => ImageHelper.GetImagePath(ThornsCharacterSelectLockedIconPath);
+
+	private static bool CanLoadThornsVisual()
+	{
+		if (!ResourceLoader.Exists(ThornsVisualPath) ||
+		    !FileAccess.FileExists(ThornsAtlasPath) ||
+		    !FileAccess.FileExists(ThornsSkeletonPath))
+		{
+			return false;
+		}
+
+		try
+		{
+			return ResourceLoader.Load<Texture2D>(ThornsAtlasTexturePath) != null;
+		}
+		catch (Exception)
+		{
+			return false;
+		}
+	}
+
+	public override CreatureAnimator? SetupCustomAnimationStates(MegaSprite controller)
+	{
+		if (!controller.HasAnimation("Idle"))
+		{
+			return null;
+		}
+
+		return SetupAnimationState(controller, idleName: "Idle", deadName: "Die", hitName: "Start", attackName: "Attack_1", castName: "Skill1_1");
+	}
+
+	public override CharacterGender Gender => CharacterGender.Masculine;
+
+	public override Color NameColor => new Color("B7D179");
+
+	public override int StartingHp => 70;
+
+	public override CardPoolModel CardPool => ModelDb.CardPool<WeedCardPool>();
+
+	public override RelicPoolModel RelicPool => ModelDb.RelicPool<WeedRelicPool>();
+
+	public override PotionPoolModel PotionPool => ModelDb.PotionPool<SharedPotionPool>();
+
+	public override IEnumerable<CardModel> StartingDeck => new CardModel[]
+	{
+		ModelDb.Card<MegaCrit.Sts2.Core.Models.Cards.StrikeSilent>(),
+		ModelDb.Card<MegaCrit.Sts2.Core.Models.Cards.StrikeSilent>(),
+		ModelDb.Card<MegaCrit.Sts2.Core.Models.Cards.StrikeSilent>(),
+		ModelDb.Card<MegaCrit.Sts2.Core.Models.Cards.StrikeSilent>(),
+		ModelDb.Card<MegaCrit.Sts2.Core.Models.Cards.StrikeSilent>(),
+		ModelDb.Card<MegaCrit.Sts2.Core.Models.Cards.DefendSilent>(),
+		ModelDb.Card<MegaCrit.Sts2.Core.Models.Cards.DefendSilent>(),
+		ModelDb.Card<MegaCrit.Sts2.Core.Models.Cards.DefendSilent>(),
+		ModelDb.Card<MegaCrit.Sts2.Core.Models.Cards.DefendSilent>(),
+		ModelDb.Card<MegaCrit.Sts2.Core.Models.Cards.DefendSilent>(),
+		ModelDb.Card<MegaCrit.Sts2.Core.Models.Cards.Neutralize>(),
+		ModelDb.Card<MegaCrit.Sts2.Core.Models.Cards.Survivor>()
+	};
+
+	public override IReadOnlyList<RelicModel> StartingRelics => new RelicModel[]
+	{
+		ModelDb.Relic<NeurotoxinCoating>()
+	};
+
+	public override Color DialogueColor => new Color("506828");
+
+	public override Color MapDrawingColor => new Color("8AA84F");
+
+	public override Color RemoteTargetingLineColor => new Color("B7D179");
+
+	public override Color RemoteTargetingLineOutline => new Color("35451A");
+
+	public override List<string> GetArchitectAttackVfx()
+	{
+		return ModelDb.Character<Silent>().GetArchitectAttackVfx();
+	}
+
+	public override List<(string, string)> Localization => new List<(string, string)>
+	{
+		("title", "Thorns"),
+		("titleObject", "Thorns"),
+		("description", "A prototype Arknights character.\nStarts with the Silent deck and a poison-focused relic."),
+		("cardsModifierTitle", "Thorns Cards"),
+		("cardsModifierDescription", "Thorns cards will now appear in rewards and shops."),
+		("eventDeathPrevention", "The black tide still recedes."),
+		("possessiveAdjective", "his"),
+		("pronounObject", "him"),
+		("pronounPossessive", "his"),
+		("pronounSubject", "he"),
+		("unlockText", "Available from the Reed mod.")
+	};
+}
+
 [HarmonyPatch(typeof(CharacterModel), "get_IconTexture")]
 internal static class ReedCharacterIconTexturePatch
 {
 	private const string IconPath = "res://images/packed/ui/top_panel/character_icon_reed.png";
+	private const string ThornsIconPath = "res://images/packed/character_select/char_select_thorns.png";
 
 	private static void Postfix(CharacterModel __instance, ref Texture2D __result)
 	{
-		if (__instance is not Herbalist)
+		string? iconPath = __instance switch
+		{
+			Herbalist => IconPath,
+			Thorns => ThornsIconPath,
+			_ => null
+		};
+		if (iconPath == null)
 		{
 			return;
 		}
 
-		Texture2D? texture = ResourceLoader.Load<Texture2D>(IconPath, null, ResourceLoader.CacheMode.Reuse);
+		Texture2D? texture = ResourceLoader.Load<Texture2D>(iconPath, null, ResourceLoader.CacheMode.Reuse);
 		if (texture != null)
 		{
 			__result = texture;
@@ -199,15 +321,22 @@ internal static class ReedCharacterIconTexturePatch
 internal static class ReedCharacterIconOutlineTexturePatch
 {
 	private const string IconOutlinePath = "res://images/packed/ui/top_panel/character_icon_reed_outline.png";
+	private const string ThornsIconOutlinePath = "res://images/packed/character_select/char_select_thorns.png";
 
 	private static void Postfix(CharacterModel __instance, ref Texture2D __result)
 	{
-		if (__instance is not Herbalist)
+		string? iconPath = __instance switch
+		{
+			Herbalist => IconOutlinePath,
+			Thorns => ThornsIconOutlinePath,
+			_ => null
+		};
+		if (iconPath == null)
 		{
 			return;
 		}
 
-		Texture2D? texture = ResourceLoader.Load<Texture2D>(IconOutlinePath, null, ResourceLoader.CacheMode.Reuse);
+		Texture2D? texture = ResourceLoader.Load<Texture2D>(iconPath, null, ResourceLoader.CacheMode.Reuse);
 		if (texture != null)
 		{
 			__result = texture;
@@ -1381,5 +1510,76 @@ public sealed class SeedCache : CustomRelicModel
 		("title", "赠予红龙的花冠"),
 		("description", "Whenever damage you deal causes an enemy to lose HP, heal {Heal:diff()} HP."),
 		("flavor", "A small pouch of seeds saved for the next climb.")
+	};
+}
+
+[Pool(typeof(WeedRelicPool))]
+public sealed class NeurotoxinCoating : CustomRelicModel
+{
+	private readonly HashSet<Creature> _poisonedThisTurn = new HashSet<Creature>();
+
+	public override string PackedIconPath => ImageHelper.GetImagePath("atlases/relic_atlas.sprites/snecko_skull.tres");
+
+	protected override string PackedIconOutlinePath => ImageHelper.GetImagePath("atlases/relic_outline_atlas.sprites/snecko_skull.tres");
+
+	protected override string BigIconPath => ImageHelper.GetImagePath("relics/snecko_skull.png");
+
+	public override RelicRarity Rarity => RelicRarity.Starter;
+
+	protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
+	{
+		new PowerVar<PoisonPower>(3m)
+	};
+
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
+	{
+		HoverTipFactory.FromPower<PoisonPower>()
+	};
+
+	public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
+	{
+		if (cardPlay.Card.Owner != Owner || !CombatManager.Instance.IsInProgress || cardPlay.Card.Type != CardType.Attack)
+		{
+			return;
+		}
+
+		IEnumerable<Creature> targets = cardPlay.Target != null
+			? new Creature[] { cardPlay.Target }
+			: Owner.Creature.CombatState?.HittableEnemies ?? Enumerable.Empty<Creature>();
+		List<Creature> validTargets = targets.Where(target => !target.IsPlayer && target.IsAlive && !_poisonedThisTurn.Contains(target)).ToList();
+		if (validTargets.Count == 0)
+		{
+			return;
+		}
+
+		Flash();
+		foreach (Creature target in validTargets)
+		{
+			_poisonedThisTurn.Add(target);
+			await PowerCmd.Apply<PoisonPower>(target, DynamicVars.Poison.BaseValue, Owner.Creature, null);
+		}
+	}
+
+	public override Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+	{
+		if (side == Owner.Creature.Side)
+		{
+			_poisonedThisTurn.Clear();
+		}
+
+		return Task.CompletedTask;
+	}
+
+	public override Task AfterCombatEnd(CombatRoom _)
+	{
+		_poisonedThisTurn.Clear();
+		return Task.CompletedTask;
+	}
+
+	public override List<(string, string)> Localization => new List<(string, string)>
+	{
+		("title", "Neurotoxin Coating"),
+		("description", "The first time each turn you play an Attack against an enemy, apply {Poison:diff()} Poison to that enemy. Each enemy can only be affected once per turn."),
+		("flavor", "A measured dose on the blade's edge.")
 	};
 }

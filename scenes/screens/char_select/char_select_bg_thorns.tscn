@@ -1,8 +1,8 @@
 ﻿[gd_scene load_steps=2 format=3]
 
-[ext_resource type="Texture2D" path="res://images/packed/character_select/reed_character_select_bg.png" id="1_bg"]
+[ext_resource type="Texture2D" path="res://images/packed/character_select/thorns_character_select_bg.png" id="1_bg"]
 
-[node name="ReedBg" type="Control"]
+[node name="ThornsBg" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_left = 0.0
