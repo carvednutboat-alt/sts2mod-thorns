@@ -241,7 +241,7 @@ public sealed class ThornsPower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Thorns"),
+        ("title", "????"),
         ("description", "When attacked, deal 1 damage back.")
     };
 }
@@ -266,7 +266,7 @@ public sealed class RegenerationPower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Regeneration"),
+        ("title", "????"),
         ("description", "At end of turn, heal HP.")
     };
 }
@@ -474,7 +474,7 @@ public sealed class ConstellationPower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Star Power"),
+        ("title", "????"),
         ("description", "At end of turn, gain Strength.")
     };
 }
@@ -508,7 +508,7 @@ public sealed class LodestarRadiancePower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Lodestar Radiance"),
+        ("title", "????"),
         ("description", "At end of turn, deal damage to ALL enemies and apply 1 Poison.")
     };
 }
@@ -563,7 +563,7 @@ public sealed class AbyssalPoisonPower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Abyssal Toxin"),
+        ("title", "????"),
         ("description", "At end of turn, apply Poison to ALL enemies.")
     };
 }
@@ -610,7 +610,7 @@ public sealed class VesselOfPoisonPower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Vessel of Poison"),
+        ("title", "????"),
         ("description", "Attacks apply Poison.")
     };
 }
@@ -824,7 +824,7 @@ public sealed class AncientAlchemyPower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Ancient Alchemy"),
+        ("title", "????"),
         ("description", "Whenever you summon an Alchemical Unit, draw cards, up to twice each turn.")
     };
 }
@@ -870,7 +870,7 @@ public sealed class ConstellationLegacyPower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Constellation Legacy"),
+        ("title", "????"),
         ("description", "Alchemical Unit limit is increased. Your first Alchemy card each combat summons an extra unit. Unit releases grant Block.")
     };
 }

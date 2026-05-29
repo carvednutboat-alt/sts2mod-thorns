@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://ct5mluojk1hbf"
+
+[deps]
+
+files=["res://ThornsCards.ClassName.translation", "res://ThornsCards.Name.translation", "res://ThornsCards.Cost.translation", "res://ThornsCards.Type.translation", "res://ThornsCards.Rarity.translation", "res://ThornsCards.Target.translation", "res://ThornsCards.Description.translation"]
+
+source_file="res://ThornsCards.csv"
+dest_files=["res://ThornsCards.ClassName.translation", "res://ThornsCards.Name.translation", "res://ThornsCards.Cost.translation", "res://ThornsCards.Type.translation", "res://ThornsCards.Rarity.translation", "res://ThornsCards.Target.translation", "res://ThornsCards.Description.translation"]
+
+[params]
+
+compress=true
+delimiter=0

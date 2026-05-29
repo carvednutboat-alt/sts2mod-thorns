@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://sb7vboeprglx"
+
+[deps]
+
+files=["res://棘刺卡片表_新版设计.ClassName.translation", "res://棘刺卡片表_新版设计.Name.translation", "res://棘刺卡片表_新版设计.Cost.translation", "res://棘刺卡片表_新版设计.Type.translation", "res://棘刺卡片表_新版设计.Rarity.translation", "res://棘刺卡片表_新版设计.Target.translation", "res://棘刺卡片表_新版设计.Description.translation", "res://棘刺卡片表_新版设计.Damage.translation", "res://棘刺卡片表_新版设计.Block.translation", "res://棘刺卡片表_新版设计.Poison.translation", "res://棘刺卡片表_新版设计.Catalyst.translation", "res://棘刺卡片表_新版设计.AlchemyUnit.translation", "res://棘刺卡片表_新版设计.Release.translation", "res://棘刺卡片表_新版设计.Upgrade.translation", "res://棘刺卡片表_新版设计.DesignNote.translation"]
+
+source_file="res://棘刺卡片表_新版设计.csv"
+dest_files=["res://棘刺卡片表_新版设计.ClassName.translation", "res://棘刺卡片表_新版设计.Name.translation", "res://棘刺卡片表_新版设计.Cost.translation", "res://棘刺卡片表_新版设计.Type.translation", "res://棘刺卡片表_新版设计.Rarity.translation", "res://棘刺卡片表_新版设计.Target.translation", "res://棘刺卡片表_新版设计.Description.translation", "res://棘刺卡片表_新版设计.Damage.translation", "res://棘刺卡片表_新版设计.Block.translation", "res://棘刺卡片表_新版设计.Poison.translation", "res://棘刺卡片表_新版设计.Catalyst.translation", "res://棘刺卡片表_新版设计.AlchemyUnit.translation", "res://棘刺卡片表_新版设计.Release.translation", "res://棘刺卡片表_新版设计.Upgrade.translation", "res://棘刺卡片表_新版设计.DesignNote.translation"]
+
+[params]
+
+compress=true
+delimiter=0

@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://54eaijvnmwgs"
+
+[deps]
+
+files=["res://棘刺卡片表_新版设计_v3_路线分化.ClassName.translation", "res://棘刺卡片表_新版设计_v3_路线分化.Name.translation", "res://棘刺卡片表_新版设计_v3_路线分化.Cost.translation", "res://棘刺卡片表_新版设计_v3_路线分化.Type.translation", "res://棘刺卡片表_新版设计_v3_路线分化.Rarity.translation", "res://棘刺卡片表_新版设计_v3_路线分化.Target.translation", "res://棘刺卡片表_新版设计_v3_路线分化.Description.translation", "res://棘刺卡片表_新版设计_v3_路线分化.Damage.translation", "res://棘刺卡片表_新版设计_v3_路线分化.Block.translation", "res://棘刺卡片表_新版设计_v3_路线分化.Poison.translation", "res://棘刺卡片表_新版设计_v3_路线分化.Catalyst.translation", "res://棘刺卡片表_新版设计_v3_路线分化.AlchemyUnit.translation", "res://棘刺卡片表_新版设计_v3_路线分化.Release.translation", "res://棘刺卡片表_新版设计_v3_路线分化.Upgrade.translation", "res://棘刺卡片表_新版设计_v3_路线分化.DesignNote.translation", "res://棘刺卡片表_新版设计_v3_路线分化.NeuralThreshold.translation", "res://棘刺卡片表_新版设计_v3_路线分化.Mechanic.translation"]
+
+source_file="res://棘刺卡片表_新版设计_v3_路线分化.csv"
+dest_files=["res://棘刺卡片表_新版设计_v3_路线分化.ClassName.translation", "res://棘刺卡片表_新版设计_v3_路线分化.Name.translation", "res://棘刺卡片表_新版设计_v3_路线分化.Cost.translation", "res://棘刺卡片表_新版设计_v3_路线分化.Type.translation", "res://棘刺卡片表_新版设计_v3_路线分化.Rarity.translation", "res://棘刺卡片表_新版设计_v3_路线分化.Target.translation", "res://棘刺卡片表_新版设计_v3_路线分化.Description.translation", "res://棘刺卡片表_新版设计_v3_路线分化.Damage.translation", "res://棘刺卡片表_新版设计_v3_路线分化.Block.translation", "res://棘刺卡片表_新版设计_v3_路线分化.Poison.translation", "res://棘刺卡片表_新版设计_v3_路线分化.Catalyst.translation", "res://棘刺卡片表_新版设计_v3_路线分化.AlchemyUnit.translation", "res://棘刺卡片表_新版设计_v3_路线分化.Release.translation", "res://棘刺卡片表_新版设计_v3_路线分化.Upgrade.translation", "res://棘刺卡片表_新版设计_v3_路线分化.DesignNote.translation", "res://棘刺卡片表_新版设计_v3_路线分化.NeuralThreshold.translation", "res://棘刺卡片表_新版设计_v3_路线分化.Mechanic.translation"]
+
+[params]
+
+compress=true
+delimiter=0

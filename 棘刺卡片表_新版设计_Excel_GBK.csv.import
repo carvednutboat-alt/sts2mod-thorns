@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://ggnjyqgostpw"
+
+[deps]
+
+files=["res://棘刺卡片表_新版设计_Excel_GBK.ClassName.translation", "res://棘刺卡片表_新版设计_Excel_GBK.Name.translation", "res://棘刺卡片表_新版设计_Excel_GBK.Cost.translation", "res://棘刺卡片表_新版设计_Excel_GBK.Type.translation", "res://棘刺卡片表_新版设计_Excel_GBK.Rarity.translation", "res://棘刺卡片表_新版设计_Excel_GBK.Target.translation", "res://棘刺卡片表_新版设计_Excel_GBK.Description.translation", "res://棘刺卡片表_新版设计_Excel_GBK.Damage.translation", "res://棘刺卡片表_新版设计_Excel_GBK.Block.translation", "res://棘刺卡片表_新版设计_Excel_GBK.Poison.translation", "res://棘刺卡片表_新版设计_Excel_GBK.Catalyst.translation", "res://棘刺卡片表_新版设计_Excel_GBK.AlchemyUnit.translation", "res://棘刺卡片表_新版设计_Excel_GBK.Release.translation", "res://棘刺卡片表_新版设计_Excel_GBK.Upgrade.translation", "res://棘刺卡片表_新版设计_Excel_GBK.DesignNote.translation"]
+
+source_file="res://棘刺卡片表_新版设计_Excel_GBK.csv"
+dest_files=["res://棘刺卡片表_新版设计_Excel_GBK.ClassName.translation", "res://棘刺卡片表_新版设计_Excel_GBK.Name.translation", "res://棘刺卡片表_新版设计_Excel_GBK.Cost.translation", "res://棘刺卡片表_新版设计_Excel_GBK.Type.translation", "res://棘刺卡片表_新版设计_Excel_GBK.Rarity.translation", "res://棘刺卡片表_新版设计_Excel_GBK.Target.translation", "res://棘刺卡片表_新版设计_Excel_GBK.Description.translation", "res://棘刺卡片表_新版设计_Excel_GBK.Damage.translation", "res://棘刺卡片表_新版设计_Excel_GBK.Block.translation", "res://棘刺卡片表_新版设计_Excel_GBK.Poison.translation", "res://棘刺卡片表_新版设计_Excel_GBK.Catalyst.translation", "res://棘刺卡片表_新版设计_Excel_GBK.AlchemyUnit.translation", "res://棘刺卡片表_新版设计_Excel_GBK.Release.translation", "res://棘刺卡片表_新版设计_Excel_GBK.Upgrade.translation", "res://棘刺卡片表_新版设计_Excel_GBK.DesignNote.translation"]
+
+[params]
+
+compress=true
+delimiter=0
