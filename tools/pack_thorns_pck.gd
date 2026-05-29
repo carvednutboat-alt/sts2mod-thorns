@@ -15,6 +15,10 @@ const TEXTURE_FILES := [
 	"res://animations/characters/thorns/char_293_thorns.png",
 	"res://images/packed/character_select/char_select_thorns.png",
 	"res://images/packed/character_select/thorns_character_select_bg.png",
+	"res://images/packed/thorns_icons/alchemy_release_icon.png",
+	"res://images/packed/thorns_icons/alchemy_unit_icon.png",
+	"res://images/packed/thorns_icons/my_sea_icon.png",
+	"res://images/packed/thorns_icons/neural_damage_icon.png",
 ]
 
 func _init() -> void:
