@@ -1,0 +1,13 @@
+{
+  "id": "thorns",
+  "name": "Thorns",
+  "author": "local",
+  "description": "Adds the Thorns prototype character with a Silent-style card pool, custom Spine visual, character select visuals, and a poison-focused starter relic.",
+  "version": "0.1.0",
+  "has_pck": true,
+  "has_dll": true,
+  "dependencies": [
+    "BaseLib"
+  ],
+  "affects_gameplay": true
+}
