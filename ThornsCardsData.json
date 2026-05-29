@@ -1,0 +1,632 @@
+[
+  {
+    "className": "ThornsStrike",
+    "title": "斩击",
+    "desc": "造成 {Damage:diff()} 点伤害。",
+    "cost": "1",
+    "type": "Attack",
+    "rarity": "Basic",
+    "target": "AnyEnemy"
+  },
+  {
+    "className": "ThornsDefend",
+    "title": "防御",
+    "desc": "获得 {Block:diff()} 点 [gold]格挡[/gold]。",
+    "cost": "1",
+    "type": "Skill",
+    "rarity": "Basic",
+    "target": "Self"
+  },
+  {
+    "className": "PoisonStrike",
+    "title": "淬毒斩",
+    "desc": "造成 {Damage:diff()} 点伤害。 施加 {Poison:diff()} 层 [gold]中毒[/gold]。",
+    "cost": "1",
+    "type": "Attack",
+    "rarity": "Basic",
+    "target": "AnyEnemy"
+  },
+  {
+    "className": "QuickSlash",
+    "title": "迅斩",
+    "desc": "造成 {Damage:diff()} 点伤害。",
+    "cost": "0",
+    "type": "Attack",
+    "rarity": "Basic",
+    "target": "AnyEnemy"
+  },
+  {
+    "className": "IronGuard",
+    "title": "铁壁",
+    "desc": "获得 {Block:diff()} 点 [gold]格挡[/gold]。",
+    "cost": "0",
+    "type": "Skill",
+    "rarity": "Basic",
+    "target": "Self"
+  },
+  {
+    "className": "RegenerativeSalve",
+    "title": "恢复药膏",
+    "desc": "回复 {Heal:diff()} 点生命。",
+    "cost": "1",
+    "type": "Skill",
+    "rarity": "Basic",
+    "target": "Self"
+  },
+  {
+    "className": "DarkStarGaze",
+    "title": "暗星凝视",
+    "desc": "抽 {Cards:diff()} 张牌。",
+    "cost": "1",
+    "type": "Skill",
+    "rarity": "Basic",
+    "target": "Self"
+  },
+  {
+    "className": "PreciseThrust",
+    "title": "精准突刺",
+    "desc": "造成 {Damage:diff()} 点伤害。 抽 {Cards:diff()} 张牌。",
+    "cost": "1",
+    "type": "Attack",
+    "rarity": "Basic",
+    "target": "AnyEnemy"
+  },
+  {
+    "className": "DefensiveStance",
+    "title": "防御姿态",
+    "desc": "获得 {Block:diff()} 点 [gold]格挡[/gold]。",
+    "cost": "1",
+    "type": "Skill",
+    "rarity": "Basic",
+    "target": "Self"
+  },
+  {
+    "className": "NeurotoxinStrike",
+    "title": "神经毒素打击",
+    "desc": "造成 {Damage:diff()} 点伤害。 施加 {Poison:diff()} 层 [gold]中毒[/gold]。",
+    "cost": "1",
+    "type": "Attack",
+    "rarity": "Basic",
+    "target": "AnyEnemy"
+  },
+  {
+    "className": "DualStrike",
+    "title": "双重打击",
+    "desc": "造成 {Damage:diff()} 点伤害 {Repeat:diff()} 次。",
+    "cost": "1",
+    "type": "Attack",
+    "rarity": "Common",
+    "target": "AnyEnemy"
+  },
+  {
+    "className": "PoisonBlade",
+    "title": "毒刃",
+    "desc": "造成 {Damage:diff()} 点伤害。 施加 {Poison:diff()} 层 [gold]中毒[/gold]。",
+    "cost": "1",
+    "type": "Attack",
+    "rarity": "Common",
+    "target": "AnyEnemy"
+  },
+  {
+    "className": "StarlightBarrier",
+    "title": "星光屏障",
+    "desc": "获得 {Block:diff()} 点 [gold]格挡[/gold]。",
+    "cost": "1",
+    "type": "Skill",
+    "rarity": "Common",
+    "target": "Self"
+  },
+  {
+    "className": "QuickRecovery",
+    "title": "快速恢复",
+    "desc": "回复 {Heal:diff()} 点生命。",
+    "cost": "1",
+    "type": "Skill",
+    "rarity": "Common",
+    "target": "Self"
+  },
+  {
+    "className": "ChemicalBurn",
+    "title": "化学灼烧",
+    "desc": "对所有敌人施加 {Poison:diff()} 层 [gold]中毒[/gold]。",
+    "cost": "1",
+    "type": "Skill",
+    "rarity": "Common",
+    "target": "AllEnemies"
+  },
+  {
+    "className": "DestrezaThrust",
+    "title": "至高突刺",
+    "desc": "造成 {Damage:diff()} 点伤害 {Repeat:diff()} 次。",
+    "cost": "1",
+    "type": "Attack",
+    "rarity": "Common",
+    "target": "AnyEnemy"
+  },
+  {
+    "className": "CrossSlash",
+    "title": "交叉斩",
+    "desc": "造成 {Damage:diff()} 点伤害。 获得 {Block:diff()} 点 [gold]格挡[/gold]。",
+    "cost": "1",
+    "type": "Attack",
+    "rarity": "Common",
+    "target": "AnyEnemy"
+  },
+  {
+    "className": "SeaBreeze",
+    "title": "海风",
+    "desc": "回复 {Heal:diff()} 点生命。 抽 {Cards:diff()} 张牌。",
+    "cost": "1",
+    "type": "Skill",
+    "rarity": "Common",
+    "target": "Self"
+  },
+  {
+    "className": "InkSplash",
+    "title": "墨溅",
+    "desc": "对所有敌人造成 {Damage:diff()} 点伤害。",
+    "cost": "1",
+    "type": "Attack",
+    "rarity": "Common",
+    "target": "AllEnemies"
+  },
+  {
+    "className": "CalmWaters",
+    "title": "静水",
+    "desc": "获得 {Block:diff()} 点 [gold]格挡[/gold]。",
+    "cost": "1",
+    "type": "Skill",
+    "rarity": "Common",
+    "target": "Self"
+  },
+  {
+    "className": "ToxicEdge",
+    "title": "毒锋",
+    "desc": "造成 {Damage:diff()} 点伤害。 施加 {Poison:diff()} 层 [gold]中毒[/gold]。",
+    "cost": "1",
+    "type": "Attack",
+    "rarity": "Common",
+    "target": "AnyEnemy"
+  },
+  {
+    "className": "OceanShield",
+    "title": "海洋之盾",
+    "desc": "获得 {Block:diff()} 点 [gold]格挡[/gold]。",
+    "cost": "2",
+    "type": "Skill",
+    "rarity": "Common",
+    "target": "Self"
+  },
+  {
+    "className": "Starfall",
+    "title": "星落",
+    "desc": "对所有敌人造成 {Damage:diff()} 点伤害。",
+    "cost": "1",
+    "type": "Attack",
+    "rarity": "Common",
+    "target": "AllEnemies"
+  },
+  {
+    "className": "DeepSeaVenom",
+    "title": "深海毒液",
+    "desc": "施加 {Poison:diff()} 层 [gold]中毒[/gold]。",
+    "cost": "1",
+    "type": "Skill",
+    "rarity": "Common",
+    "target": "AnyEnemy"
+  },
+  {
+    "className": "SwiftRetort",
+    "title": "迅捷反击",
+    "desc": "造成 {Damage:diff()} 点伤害。 获得 {Block:diff()} 点 [gold]格挡[/gold]。",
+    "cost": "0",
+    "type": "Attack",
+    "rarity": "Common",
+    "target": "AnyEnemy"
+  },
+  {
+    "className": "AlchemicalMixture",
+    "title": "炼金混合",
+    "desc": "施加 {Poison:diff()} 层 [gold]中毒[/gold]。 抽 {Cards:diff()} 张牌。",
+    "cost": "1",
+    "type": "Skill",
+    "rarity": "Common",
+    "target": "AnyEnemy"
+  },
+  {
+    "className": "ConstellationDraw",
+    "title": "星象抽引",
+    "desc": "抽 {Cards:diff()} 张牌。",
+    "cost": "1",
+    "type": "Skill",
+    "rarity": "Common",
+    "target": "Self"
+  },
+  {
+    "className": "AegirResilience",
+    "title": "阿戈尔韧性",
+    "desc": "获得 {Block:diff()} 点 [gold]格挡[/gold]。 回复 {Heal:diff()} 点生命。",
+    "cost": "1",
+    "type": "Skill",
+    "rarity": "Common",
+    "target": "Self"
+  },
+  {
+    "className": "AbyssalStrike",
+    "title": "深渊打击",
+    "desc": "造成 {Damage:diff()} 点伤害。",
+    "cost": "1",
+    "type": "Attack",
+    "rarity": "Common",
+    "target": "AnyEnemy"
+  },
+  {
+    "className": "WaveSlash",
+    "title": "波浪斩",
+    "desc": "造成 {Damage:diff()} 点伤害。 施加 {Poison:diff()} 层 [gold]中毒[/gold]。",
+    "cost": "1",
+    "type": "Attack",
+    "rarity": "Common",
+    "target": "AnyEnemy"
+  },
+  {
+    "className": "LodestarGuidance",
+    "title": "引星指引",
+    "desc": "抽 {Cards:diff()} 张牌。",
+    "cost": "1",
+    "type": "Skill",
+    "rarity": "Common",
+    "target": "Self"
+  },
+  {
+    "className": "Riptide",
+    "title": "激流",
+    "desc": "造成 {Damage:diff()} 点伤害。",
+    "cost": "1",
+    "type": "Attack",
+    "rarity": "Common",
+    "target": "AnyEnemy"
+  },
+  {
+    "className": "DestrezaMastery",
+    "title": "至高精通",
+    "desc": "造成 {Damage:diff()} 点伤害 {Repeat:diff()} 次。",
+    "cost": "1",
+    "type": "Attack",
+    "rarity": "Uncommon",
+    "target": "AnyEnemy"
+  },
+  {
+    "className": "NeurotoxinCloud",
+    "title": "神经毒雾",
+    "desc": "对所有敌人施加 {Poison:diff()} 层 [gold]中毒[/gold]。",
+    "cost": "2",
+    "type": "Skill",
+    "rarity": "Uncommon",
+    "target": "AllEnemies"
+  },
+  {
+    "className": "SelfReconstitution",
+    "title": "自我重构",
+    "desc": "回复 {Heal:diff()} 点生命。",
+    "cost": "1",
+    "type": "Skill",
+    "rarity": "Uncommon",
+    "target": "Self"
+  },
+  {
+    "className": "AncientRitual",
+    "title": "远古仪式",
+    "desc": "获得 {StrengthPower:diff()} 点 [gold]力量[/gold]。 获得 {DexterityPower:diff()} 点 [gold]敏捷[/gold]。",
+    "cost": "1",
+    "type": "Power",
+    "rarity": "Uncommon",
+    "target": "Self"
+  },
+  {
+    "className": "ConstellationArmor",
+    "title": "星甲",
+    "desc": "获得 {Block:diff()} 点 [gold]格挡[/gold]。",
+    "cost": "2",
+    "type": "Skill",
+    "rarity": "Uncommon",
+    "target": "Self"
+  },
+  {
+    "className": "HealingSprings",
+    "title": "治愈泉涌",
+    "desc": "回复 {Heal:diff()} 点生命。",
+    "cost": "2",
+    "type": "Skill",
+    "rarity": "Uncommon",
+    "target": "Self"
+  },
+  {
+    "className": "TripleStrike",
+    "title": "三连击",
+    "desc": "造成 {Damage:diff()} 点伤害 {Repeat:diff()} 次。",
+    "cost": "1",
+    "type": "Attack",
+    "rarity": "Uncommon",
+    "target": "AnyEnemy"
+  },
+  {
+    "className": "DeadlyVenom",
+    "title": "致命毒液",
+    "desc": "施加 {Poison:diff()} 层 [gold]中毒[/gold]。",
+    "cost": "1",
+    "type": "Skill",
+    "rarity": "Uncommon",
+    "target": "AnyEnemy"
+  },
+  {
+    "className": "OceanCurrent",
+    "title": "洋流",
+    "desc": "造成 {Damage:diff()} 点伤害。 抽 {Cards:diff()} 张牌。",
+    "cost": "1",
+    "type": "Attack",
+    "rarity": "Uncommon",
+    "target": "AnyEnemy"
+  },
+  {
+    "className": "ChemicalExplosion",
+    "title": "化学爆炸",
+    "desc": "对所有敌人造成 {Damage:diff()} 点伤害。",
+    "cost": "2",
+    "type": "Attack",
+    "rarity": "Uncommon",
+    "target": "AllEnemies"
+  },
+  {
+    "className": "FocusedDestreza",
+    "title": "专注至高",
+    "desc": "造成 {Damage:diff()} 点伤害 {Repeat:diff()} 次。",
+    "cost": "2",
+    "type": "Attack",
+    "rarity": "Uncommon",
+    "target": "AnyEnemy"
+  },
+  {
+    "className": "RegenerationAura",
+    "title": "恢复光环",
+    "desc": "获得 [gold]自我恢复[/gold]。",
+    "cost": "1",
+    "type": "Power",
+    "rarity": "Uncommon",
+    "target": "Self"
+  },
+  {
+    "className": "SeaKingProtection",
+    "title": "海王庇护",
+    "desc": "获得 {Block:diff()} 点 [gold]格挡[/gold]。",
+    "cost": "3",
+    "type": "Skill",
+    "rarity": "Uncommon",
+    "target": "Self"
+  },
+  {
+    "className": "StarConstellation",
+    "title": "星座",
+    "desc": "获得 [gold]星辰之力[/gold]，每回合结束时获得 1 点力量。",
+    "cost": "2",
+    "type": "Power",
+    "rarity": "Uncommon",
+    "target": "Self"
+  },
+  {
+    "className": "VesselOfPoison",
+    "title": "毒物容器",
+    "desc": "获得 [gold]毒物容器[/gold]，攻击施加 1 层中毒。",
+    "cost": "1",
+    "type": "Power",
+    "rarity": "Uncommon",
+    "target": "Self"
+  },
+  {
+    "className": "WaveCrash",
+    "title": "巨浪破",
+    "desc": "对所有敌人造成 {Damage:diff()} 点伤害。",
+    "cost": "2",
+    "type": "Attack",
+    "rarity": "Uncommon",
+    "target": "AllEnemies"
+  },
+  {
+    "className": "CoralShield",
+    "title": "珊瑚盾",
+    "desc": "获得 {Block:diff()} 点 [gold]格挡[/gold]。",
+    "cost": "1",
+    "type": "Skill",
+    "rarity": "Uncommon",
+    "target": "Self"
+  },
+  {
+    "className": "AbyssalWhisper",
+    "title": "深渊低语",
+    "desc": "对所有敌人施加 {Poison:diff()} 层 [gold]中毒[/gold]。",
+    "cost": "1",
+    "type": "Skill",
+    "rarity": "Uncommon",
+    "target": "AllEnemies"
+  },
+  {
+    "className": "PhantomSlash",
+    "title": "幻影斩",
+    "desc": "造成 {Damage:diff()} 点伤害。",
+    "cost": "1",
+    "type": "Attack",
+    "rarity": "Uncommon",
+    "target": "AnyEnemy"
+  },
+  {
+    "className": "TidalSurge",
+    "title": "潮涌",
+    "desc": "造成 {Damage:diff()} 点伤害。 获得 {Block:diff()} 点 [gold]格挡[/gold]。",
+    "cost": "2",
+    "type": "Attack",
+    "rarity": "Uncommon",
+    "target": "AnyEnemy"
+  },
+  {
+    "className": "StarryNight",
+    "title": "星夜",
+    "desc": "抽 {Cards:diff()} 张牌。",
+    "cost": "2",
+    "type": "Skill",
+    "rarity": "Uncommon",
+    "target": "Self"
+  },
+  {
+    "className": "PoisonMastery",
+    "title": "毒物精通",
+    "desc": "获得 [gold]毒物精通[/gold]，对中毒敌人伤害+1。",
+    "cost": "1",
+    "type": "Power",
+    "rarity": "Uncommon",
+    "target": "Self"
+  },
+  {
+    "className": "ThornsBody",
+    "title": "棘刺之躯",
+    "desc": "获得 3 层 [gold]荆棘反刺[/gold]。",
+    "cost": "1",
+    "type": "Power",
+    "rarity": "Uncommon",
+    "target": "Self"
+  },
+  {
+    "className": "LodestarPower",
+    "title": "引星之力",
+    "desc": "对所有敌人施加 2 层 [gold]中毒[/gold]。",
+    "cost": "1",
+    "type": "Skill",
+    "rarity": "Uncommon",
+    "target": "AllEnemies"
+  },
+  {
+    "className": "SeaFoamBarrier",
+    "title": "泡沫屏障",
+    "desc": "获得 {Block:diff()} 点 [gold]格挡[/gold]。",
+    "cost": "1",
+    "type": "Skill",
+    "rarity": "Common",
+    "target": "Self"
+  },
+  {
+    "className": "ConstellationMark",
+    "title": "星座标记",
+    "desc": "施加 {Poison:diff()} 层 [gold]中毒[/gold]。 抽 {Cards:diff()} 张牌。",
+    "cost": "1",
+    "type": "Skill",
+    "rarity": "Common",
+    "target": "AnyEnemy"
+  },
+  {
+    "className": "ChemicalCatalyst",
+    "title": "化学催化剂",
+    "desc": "施加 3 层 [gold]中毒[/gold]。 抽 {Cards:diff()} 张牌。",
+    "cost": "1",
+    "type": "Skill",
+    "rarity": "Common",
+    "target": "AnyEnemy"
+  },
+  {
+    "className": "ThornsBarrier",
+    "title": "荆棘壁垒",
+    "desc": "获得 {Block:diff()} 点 [gold]格挡[/gold]。 获得 2 层 [gold]荆棘反刺[/gold]。",
+    "cost": "2",
+    "type": "Skill",
+    "rarity": "Uncommon",
+    "target": "Self"
+  },
+  {
+    "className": "DeepSeaRegeneration",
+    "title": "深海再生",
+    "desc": "回复 {Heal:diff()} 点生命。",
+    "cost": "1",
+    "type": "Skill",
+    "rarity": "Uncommon",
+    "target": "Self"
+  },
+  {
+    "className": "StarBlessing",
+    "title": "星辉祝福",
+    "desc": "获得 {StrengthPower:diff()} 点 [gold]力量[/gold]。",
+    "cost": "1",
+    "type": "Power",
+    "rarity": "Uncommon",
+    "target": "Self"
+  },
+  {
+    "className": "SeafoamHealing",
+    "title": "海沫治愈",
+    "desc": "回复 {Heal:diff()} 点生命。",
+    "cost": "2",
+    "type": "Skill",
+    "rarity": "Rare",
+    "target": "Self"
+  },
+  {
+    "className": "StarCataclysm",
+    "title": "星陨天变",
+    "desc": "对所有敌人造成 {Damage:diff()} 点伤害。",
+    "cost": "3",
+    "type": "Attack",
+    "rarity": "Rare",
+    "target": "AllEnemies"
+  },
+  {
+    "className": "AncientAlchemy",
+    "title": "远古炼金",
+    "desc": "获得 [gold]炼金术[/gold]。",
+    "cost": "1",
+    "type": "Power",
+    "rarity": "Rare",
+    "target": "Self"
+  },
+  {
+    "className": "ConstellationLegacy",
+    "title": "星宿传承",
+    "desc": "获得 {StrengthPower:diff()} 点 [gold]力量[/gold]。 获得 {DexterityPower:diff()} 点 [gold]敏捷[/gold]。",
+    "cost": "3",
+    "type": "Power",
+    "rarity": "Rare",
+    "target": "Self"
+  },
+  {
+    "className": "PoisonReaper",
+    "title": "毒之收割",
+    "desc": "造成 {Damage:diff()} 点伤害。 施加 {Poison:diff()} 层 [gold]中毒[/gold]。",
+    "cost": "2",
+    "type": "Attack",
+    "rarity": "Rare",
+    "target": "AnyEnemy"
+  },
+  {
+    "className": "GuidingStar",
+    "title": "启明星",
+    "desc": "获得 [gold]星图指引[/gold]。",
+    "cost": "0",
+    "type": "Power",
+    "rarity": "Rare",
+    "target": "Self"
+  },
+  {
+    "className": "AbyssalForm",
+    "title": "深渊形态",
+    "desc": "获得 [gold]深渊毒素[/gold]。",
+    "cost": "3",
+    "type": "Power",
+    "rarity": "Rare",
+    "target": "Self"
+  },
+  {
+    "className": "NavigatorForesight",
+    "title": "领航预见",
+    "desc": "获得双层 [gold]星图指引[/gold]。",
+    "cost": "1",
+    "type": "Power",
+    "rarity": "Rare",
+    "target": "Self"
+  }
+]
