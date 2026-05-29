@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -541,7 +541,7 @@ public sealed class ThornsStrike : CustomCardModel
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "罗德岛剑击"),
-        ("description", "Deal {Damage:diff()} damage.")
+        ("description", "造成6点伤害。")
     };
 }
 
@@ -567,7 +567,7 @@ public sealed class ThornsDefend : CustomCardModel
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "实验防护"),
-        ("description", "Gain {Block:diff()} [gold]Block[/gold].")
+        ("description", "获得5点格挡。")
     };
 }
 
@@ -597,7 +597,7 @@ public sealed class PoisonStrike : CustomCardModel
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "神经腐蚀"),
-        ("description", "Deal {Damage:diff()} damage.\nApply {Poison:diff()} [gold]Poison[/gold].")
+        ("description", "造成4点伤害。施加2层中毒。")
     };
 }
 
@@ -629,7 +629,7 @@ public sealed class QuickSlash : CustomCardModel
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "迅捷斩击"),
-        ("description", "Deal {Damage:diff()} damage.\nIf the target has Poison, draw {Cards:diff()} card.")
+        ("description", "造成4点伤害。若目标有中毒，抽1张牌。")
     };
 }
 
@@ -656,7 +656,7 @@ public sealed class IronGuard : CustomCardModel
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "护身架势"),
-        ("description", "Gain {Block:diff()} [gold]Block[/gold].\nAt end of turn, if you played no Attacks this turn, heal {Heal:diff()} HP.")
+        ("description", "获得7点格挡。下回合开始时，若本回合没有打出攻击牌，回复2点生命。")
     };
 }
 
@@ -669,7 +669,7 @@ public sealed class RegenerativeSalve : CustomCardModel
         new HealVar(4m)
     };
 
-    public RegenerativeSalve() : base(1, CardType.Skill, CardRarity.Basic, TargetType.Self) { }
+    public RegenerativeSalve() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
@@ -681,8 +681,8 @@ public sealed class RegenerativeSalve : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Regenerative Salve"),
-        ("description", "Heal {Heal:diff()} HP.")
+        ("title", "故土潮声"),
+        ("description", "若本回合没有打出攻击牌，回复5点生命；否则获得6点格挡。")
     };
 }
 
@@ -695,7 +695,7 @@ public sealed class DarkStarGaze : CustomCardModel
         new CardsVar(2)
     };
 
-    public DarkStarGaze() : base(1, CardType.Skill, CardRarity.Basic, TargetType.Self) { }
+    public DarkStarGaze() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
@@ -707,8 +707,8 @@ public sealed class DarkStarGaze : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Dark Star Gaze"),
-        ("description", "Draw {Cards:diff()} cards.")
+        ("title", "心相"),
+        ("description", "抽1张牌。若场上有炼金单元，获得1层催化。")
     };
 }
 
@@ -718,11 +718,11 @@ public sealed class PreciseThrust : CustomCardModel
     public override string? CustomPortraitPath => MissingPortraitPath;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(5m, ValueProp.Move),
+        new DamageVar(7m, ValueProp.Move),
         new CardsVar(1)
     };
 
-    public PreciseThrust() : base(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy) { }
+    public PreciseThrust() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
 
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
@@ -736,8 +736,8 @@ public sealed class PreciseThrust : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Precise Thrust"),
-        ("description", "Deal {Damage:diff()} damage.\nDraw {Cards:diff()} card.")
+        ("title", "精准刺击"),
+        ("description", "造成7点伤害。若目标有催化，抽1张牌。")
     };
 }
 
@@ -750,7 +750,7 @@ public sealed class DefensiveStance : CustomCardModel
         new BlockVar(8m, ValueProp.Move)
     };
 
-    public DefensiveStance() : base(1, CardType.Skill, CardRarity.Basic, TargetType.Self) { }
+    public DefensiveStance() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
@@ -761,8 +761,8 @@ public sealed class DefensiveStance : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Defensive Stance"),
-        ("description", "Gain {Block:diff()} [gold]Block[/gold].")
+        ("title", "护身架势"),
+        ("description", "获得8点格挡。下次受到未格挡攻击时，对随机敌人造成4点伤害。")
     };
 }
 
@@ -773,11 +773,11 @@ public sealed class NeurotoxinStrike : CustomCardModel
     protected override HashSet<CardTag> CanonicalTags => new HashSet<CardTag> { CardTag.Strike };
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(5m, ValueProp.Move),
-        new PowerVar<PoisonPower>(3m)
+        new DamageVar(6m, ValueProp.Move),
+        new PowerVar<PoisonPower>(2m)
     };
 
-    public NeurotoxinStrike() : base(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy) { }
+    public NeurotoxinStrike() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
 
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
@@ -791,8 +791,8 @@ public sealed class NeurotoxinStrike : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Neurotoxin Strike"),
-        ("description", "Deal {Damage:diff()} damage.\nApply {Poison:diff()} [gold]Poison[/gold].")
+        ("title", "神经毒刃"),
+        ("description", "造成6点伤害。施加2层中毒。若目标没有中毒，改为施加4层中毒。")
     };
 }
 
@@ -825,8 +825,8 @@ public sealed class DualStrike : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Dual Strike"),
-        ("description", "Deal {Damage:diff()} damage {Repeat:diff()} times.")
+        ("title", "二连刺"),
+        ("description", "造成4点伤害2次。每次命中均触发神经腐蚀。")
     };
 }
 
@@ -836,8 +836,8 @@ public sealed class PoisonBlade : CustomCardModel
     public override string? CustomPortraitPath => MissingPortraitPath;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(4m, ValueProp.Move),
-        new PowerVar<PoisonPower>(3m)
+        new DamageVar(5m, ValueProp.Move),
+        new PowerVar<PoisonPower>(4m)
     };
 
     public PoisonBlade() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
@@ -854,8 +854,8 @@ public sealed class PoisonBlade : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Poison Blade"),
-        ("description", "Deal {Damage:diff()} damage.\nApply {Poison:diff()} [gold]Poison[/gold].")
+        ("title", "淬毒剑刃"),
+        ("description", "造成5点伤害。施加4层中毒。")
     };
 }
 
@@ -865,7 +865,7 @@ public sealed class StarlightBarrier : CustomCardModel
     public override string? CustomPortraitPath => MissingPortraitPath;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new BlockVar(7m, ValueProp.Move)
+        new BlockVar(6m, ValueProp.Move)
     };
 
     public StarlightBarrier() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) { }
@@ -879,8 +879,8 @@ public sealed class StarlightBarrier : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Starlight Barrier"),
-        ("description", "Gain {Block:diff()} [gold]Block[/gold].")
+        ("title", "炼金屏障"),
+        ("description", "获得6点格挡。使炼金单元获得1层护甲，下一次受到伤害改为失去护甲。")
     };
 }
 
@@ -905,8 +905,8 @@ public sealed class QuickRecovery : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Quick Recovery"),
-        ("description", "Heal {Heal:diff()} HP.")
+        ("title", "应急试剂"),
+        ("description", "回复4点生命。若场上有炼金单元，改为回复2点生命并抽1张牌。")
     };
 }
 
@@ -935,8 +935,8 @@ public sealed class ChemicalBurn : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Chemical Burn"),
-        ("description", "Apply {Poison:diff()} [gold]Poison[/gold] to ALL enemies.")
+        ("title", "腐蚀雾区"),
+        ("description", "对所有敌人施加2层中毒。若场上有炼金单元，额外施加1层催化。")
     };
 }
 
@@ -963,8 +963,8 @@ public sealed class DestrezaThrust : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Destreza Thrust"),
-        ("description", "Deal {Damage:diff()} damage {Repeat:diff()} times.")
+        ("title", "剑术连携"),
+        ("description", "造成3点伤害3次。若击破炼金单元，抽1张牌。")
     };
 }
 
@@ -974,8 +974,8 @@ public sealed class CrossSlash : CustomCardModel
     public override string? CustomPortraitPath => MissingPortraitPath;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(5m, ValueProp.Move),
-        new BlockVar(3m, ValueProp.Move)
+        new DamageVar(6m, ValueProp.Move),
+        new BlockVar(4m, ValueProp.Move)
     };
 
     public CrossSlash() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
@@ -992,8 +992,8 @@ public sealed class CrossSlash : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Cross Slash"),
-        ("description", "Deal {Damage:diff()} damage.\nGain {Block:diff()} [gold]Block[/gold].")
+        ("title", "交叉斩"),
+        ("description", "造成6点伤害。获得4点格挡。")
     };
 }
 
@@ -1020,8 +1020,8 @@ public sealed class SeaBreeze : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Sea Breeze"),
-        ("description", "Heal {Heal:diff()} HP.\nDraw {Cards:diff()} card.")
+        ("title", "潮声回稳"),
+        ("description", "获得5点格挡。若本回合没有击破炼金单元，抽1张牌。")
     };
 }
 
@@ -1031,7 +1031,7 @@ public sealed class InkSplash : CustomCardModel
     public override string? CustomPortraitPath => MissingPortraitPath;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(7m, ValueProp.Move)
+        new DamageVar(5m, ValueProp.Move)
     };
 
     public InkSplash() : base(1, CardType.Attack, CardRarity.Common, TargetType.AllEnemies) { }
@@ -1050,8 +1050,8 @@ public sealed class InkSplash : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Ink Splash"),
-        ("description", "Deal {Damage:diff()} damage to ALL enemies.")
+        ("title", "远距挥洒"),
+        ("description", "对所有敌人造成5点伤害。炼金单元不会受到此牌伤害。")
     };
 }
 
@@ -1076,8 +1076,8 @@ public sealed class CalmWaters : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Calm Waters"),
-        ("description", "Gain {Block:diff()} [gold]Block[/gold].")
+        ("title", "冷静调配"),
+        ("description", "获得9点格挡。若手牌中有攻击牌，弃1张牌。")
     };
 }
 
@@ -1087,8 +1087,8 @@ public sealed class ToxicEdge : CustomCardModel
     public override string? CustomPortraitPath => MissingPortraitPath;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(6m, ValueProp.Move),
-        new PowerVar<PoisonPower>(2m)
+        new DamageVar(7m, ValueProp.Move),
+        new PowerVar<PoisonPower>(3m)
     };
 
     public ToxicEdge() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
@@ -1105,8 +1105,8 @@ public sealed class ToxicEdge : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Toxic Edge"),
-        ("description", "Deal {Damage:diff()} damage.\nApply {Poison:diff()} [gold]Poison[/gold].")
+        ("title", "毒锋"),
+        ("description", "造成7点伤害。若目标有催化，施加3层中毒。")
     };
 }
 
@@ -1116,7 +1116,7 @@ public sealed class OceanShield : CustomCardModel
     public override string? CustomPortraitPath => MissingPortraitPath;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new BlockVar(12m, ValueProp.Move)
+        new BlockVar(14m, ValueProp.Move)
     };
 
     public OceanShield() : base(2, CardType.Skill, CardRarity.Common, TargetType.Self) { }
@@ -1130,8 +1130,8 @@ public sealed class OceanShield : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Ocean Shield"),
-        ("description", "Gain {Block:diff()} [gold]Block[/gold].")
+        ("title", "防蚀护具"),
+        ("description", "获得14点格挡。清除自身1层催化，然后回复2点生命。")
     };
 }
 
@@ -1141,7 +1141,7 @@ public sealed class Starfall : CustomCardModel
     public override string? CustomPortraitPath => MissingPortraitPath;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(4m, ValueProp.Move)
+        new DamageVar(8m, ValueProp.Move)
     };
 
     public Starfall() : base(1, CardType.Attack, CardRarity.Common, TargetType.AllEnemies) { }
@@ -1160,8 +1160,8 @@ public sealed class Starfall : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Starfall"),
-        ("description", "Deal {Damage:diff()} damage to ALL enemies.")
+        ("title", "抛掷试剂"),
+        ("description", "造成8点伤害，随机目标。可以命中炼金单元。")
     };
 }
 
@@ -1171,7 +1171,7 @@ public sealed class DeepSeaVenom : CustomCardModel
     public override string? CustomPortraitPath => MissingPortraitPath;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new PowerVar<PoisonPower>(4m)
+        new PowerVar<PoisonPower>(5m)
     };
 
     public DeepSeaVenom() : base(1, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy) { }
@@ -1187,8 +1187,8 @@ public sealed class DeepSeaVenom : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Deep Sea Venom"),
-        ("description", "Apply {Poison:diff()} [gold]Poison[/gold].")
+        ("title", "深海毒剂"),
+        ("description", "施加5层中毒。若目标有催化，额外施加2层中毒。")
     };
 }
 
@@ -1216,8 +1216,8 @@ public sealed class SwiftRetort : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Swift Retort"),
-        ("description", "Deal {Damage:diff()} damage.\nGain {Block:diff()} [gold]Block[/gold].")
+        ("title", "迅捷反刺"),
+        ("description", "造成3点伤害。若上回合失去过生命，获得3点格挡。")
     };
 }
 
@@ -1230,7 +1230,7 @@ public sealed class AlchemicalMixture : CustomCardModel
         new DynamicVar("UnitCount", 1m)
     };
 
-    public AlchemicalMixture() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+    public AlchemicalMixture() : base(1, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy) { }
 
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
@@ -1249,7 +1249,7 @@ public sealed class AlchemicalMixture : CustomCardModel
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "投放炼金单元"),
-        ("description", "Summon an [gold]Alchemical Unit[/gold]. If one already exists, trigger its pulse.")
+        ("description", "召唤1个炼金单元。若场上已有炼金单元，改为触发其脉冲。")
     };
 }
 
@@ -1274,8 +1274,8 @@ public sealed class ConstellationDraw : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Constellation Draw"),
-        ("description", "Draw {Cards:diff()} cards.")
+        ("title", "航路测算"),
+        ("description", "抽2张牌。若场上没有炼金单元，弃1张牌。")
     };
 }
 
@@ -1285,7 +1285,7 @@ public sealed class AegirResilience : CustomCardModel
     public override string? CustomPortraitPath => MissingPortraitPath;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new BlockVar(4m, ValueProp.Move),
+        new BlockVar(6m, ValueProp.Move),
         new HealVar(2m)
     };
 
@@ -1301,8 +1301,8 @@ public sealed class AegirResilience : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Aegir Resilience"),
-        ("description", "Gain {Block:diff()} [gold]Block[/gold].\nHeal {Heal:diff()} HP.")
+        ("title", "阿戈尔韧性"),
+        ("description", "获得6点格挡。若你有中毒或催化，回复3点生命。")
     };
 }
 
@@ -1312,7 +1312,7 @@ public sealed class AbyssalStrike : CustomCardModel
     public override string? CustomPortraitPath => MissingPortraitPath;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(7m, ValueProp.Move)
+        new DamageVar(8m, ValueProp.Move)
     };
 
     public AbyssalStrike() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
@@ -1328,8 +1328,8 @@ public sealed class AbyssalStrike : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Abyssal Strike"),
-        ("description", "Deal {Damage:diff()} damage.")
+        ("title", "海嗣斩击"),
+        ("description", "造成8点伤害。若目标是炼金单元，改为触发释放且不消耗本牌。")
     };
 }
 
@@ -1340,7 +1340,7 @@ public sealed class WaveSlash : CustomCardModel
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
         new DamageVar(6m, ValueProp.Move),
-        new PowerVar<PoisonPower>(1m)
+        new PowerVar<PoisonPower>(2m)
     };
 
     public WaveSlash() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
@@ -1357,8 +1357,8 @@ public sealed class WaveSlash : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Wave Slash"),
-        ("description", "Deal {Damage:diff()} damage.\nApply {Poison:diff()} [gold]Poison[/gold].")
+        ("title", "浪波斩"),
+        ("description", "造成6点伤害。对另一个随机敌人施加2层中毒。")
     };
 }
 
@@ -1392,7 +1392,7 @@ public sealed class LodestarGuidance : CustomCardModel
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "灯塔指引"),
-        ("description", "Summon an [gold]Alchemical Unit[/gold], or trigger its pulse if one exists.\nDraw {Cards:diff()} card.")
+        ("description", "选择：召唤1个炼金单元；或触发场上炼金单元的脉冲。抽1张牌。")
     };
 }
 
@@ -1402,10 +1402,10 @@ public sealed class Riptide : CustomCardModel
     public override string? CustomPortraitPath => MissingPortraitPath;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(8m, ValueProp.Move)
+        new DamageVar(9m, ValueProp.Move)
     };
 
-    public Riptide() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
+    public Riptide() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
 
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
@@ -1418,8 +1418,8 @@ public sealed class Riptide : CustomCardModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Riptide"),
-        ("description", "Deal {Damage:diff()} damage.")
+        ("title", "潮涌刺击"),
+        ("description", "造成9点伤害。若本回合触发过炼金单元脉冲，返还1点能量。")
     };
 }
 
@@ -1446,8 +1446,8 @@ public sealed class DestrezaMastery : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(1m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Destreza Mastery"),
-        ("description", "Deal {Damage:diff()} damage {Repeat:diff()} times.")
+        ("title", "剑术专精"),
+        ("description", "造成4点伤害4次。每次命中中毒敌人时获得1层临时力量。")
     };
 }
 
@@ -1472,8 +1472,8 @@ public sealed class NeurotoxinCloud : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Poison.UpgradeValueBy(2m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Neurotoxin Cloud"),
-        ("description", "Apply {Poison:diff()} [gold]Poison[/gold] to ALL enemies.")
+        ("title", "神经腐蚀云"),
+        ("description", "对所有敌人施加5层中毒和1层催化。")
     };
 }
 
@@ -1494,8 +1494,8 @@ public sealed class SelfReconstitution : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Heal.UpgradeValueBy(4m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Self-Reconstitution"),
-        ("description", "Heal {Heal:diff()} HP.")
+        ("title", "自我重构"),
+        ("description", "消耗自身所有催化。每消耗1层，获得4点格挡并回复1点生命。")
     };
 }
 
@@ -1517,8 +1517,8 @@ public sealed class AncientRitual : CustomCardModel
     protected override void OnUpgrade() { DynamicVars.Strength.UpgradeValueBy(1m); DynamicVars.Dexterity.UpgradeValueBy(1m); }
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Ancient Ritual"),
-        ("description", "Gain {StrengthPower:diff()} [gold]Strength[/gold].\nGain {DexterityPower:diff()} [gold]Dexterity[/gold].")
+        ("title", "第三面的选择"),
+        ("description", "每场战斗第一次击破炼金单元时，获得1点力量和1点敏捷。")
     };
 }
 
@@ -1528,7 +1528,7 @@ public sealed class ConstellationArmor : CustomCardModel
     public override string? CustomPortraitPath => MissingPortraitPath;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new BlockVar(15m, ValueProp.Move)
+        new BlockVar(14m, ValueProp.Move)
     };
     public ConstellationArmor() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
@@ -1538,8 +1538,8 @@ public sealed class ConstellationArmor : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(5m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Constellation Armor"),
-        ("description", "Gain {Block:diff()} [gold]Block[/gold].")
+        ("title", "视界护甲"),
+        ("description", "获得14点格挡。若场上有炼金单元，所有敌人获得1层虚弱。")
     };
 }
 
@@ -1560,8 +1560,8 @@ public sealed class HealingSprings : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Heal.UpgradeValueBy(5m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Healing Springs"),
-        ("description", "Heal {Heal:diff()} HP.")
+        ("title", "再生雾"),
+        ("description", "回复8点生命。对所有单位施加1层催化。")
     };
 }
 
@@ -1584,8 +1584,8 @@ public sealed class TripleStrike : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(2m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Triple Strike"),
-        ("description", "Deal {Damage:diff()} damage {Repeat:diff()} times.")
+        ("title", "三段剑术"),
+        ("description", "造成5点伤害3次。若三次都命中同一敌人，施加3层中毒。")
     };
 }
 
@@ -1595,7 +1595,7 @@ public sealed class DeadlyVenom : CustomCardModel
     public override string? CustomPortraitPath => MissingPortraitPath;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new PowerVar<PoisonPower>(6m)
+        new PowerVar<PoisonPower>(7m)
     };
     public DeadlyVenom() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
@@ -1607,8 +1607,8 @@ public sealed class DeadlyVenom : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Poison.UpgradeValueBy(3m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Deadly Venom"),
-        ("description", "Apply {Poison:diff()} [gold]Poison[/gold].")
+        ("title", "致命毒剂"),
+        ("description", "施加7层中毒。若目标有催化，获得1点能量。")
     };
 }
 
@@ -1640,7 +1640,7 @@ public sealed class OceanCurrent : CustomCardModel
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "移动单元"),
-        ("description", "Deal {Damage:diff()} damage.\nSummon an [gold]Alchemical Unit[/gold], or trigger its pulse if one exists.\nDraw {Cards:diff()} card.")
+        ("description", "造成4点伤害。若场上有炼金单元，触发其脉冲；否则召唤1个炼金单元。抽1张牌。")
     };
 }
 
@@ -1665,8 +1665,8 @@ public sealed class ChemicalExplosion : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Chemical Explosion"),
-        ("description", "Deal {Damage:diff()} damage to ALL enemies.")
+        ("title", "爆炸艺术"),
+        ("description", "对所有敌人造成10点伤害。击破炼金单元时，本牌费用本回合变为0。")
     };
 }
 
@@ -1676,7 +1676,7 @@ public sealed class FocusedDestreza : CustomCardModel
     public override string? CustomPortraitPath => MissingPortraitPath;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(6m, ValueProp.Move), new RepeatVar(3)
+        new DamageVar(7m, ValueProp.Move), new RepeatVar(3)
     };
     public FocusedDestreza() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
@@ -1688,8 +1688,8 @@ public sealed class FocusedDestreza : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(2m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Focused Destreza"),
-        ("description", "Deal {Damage:diff()} damage {Repeat:diff()} times.")
+        ("title", "专注剑势"),
+        ("description", "造成7点伤害3次。若你本回合没有打出技能牌，额外造成1次。")
     };
 }
 
@@ -1707,8 +1707,8 @@ public sealed class RegenerationAura : CustomCardModel
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Regeneration Aura"),
-        ("description", "Gain [gold]Regeneration[/gold].")
+        ("title", "再生气雾"),
+        ("description", "炼金单元脉冲时，你回复1点生命。")
     };
 }
 
@@ -1718,7 +1718,7 @@ public sealed class SeaKingProtection : CustomCardModel
     public override string? CustomPortraitPath => MissingPortraitPath;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new BlockVar(18m, ValueProp.Move)
+        new BlockVar(20m, ValueProp.Move)
     };
     public SeaKingProtection() : base(3, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
@@ -1728,8 +1728,8 @@ public sealed class SeaKingProtection : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(6m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Sea King's Protection"),
-        ("description", "Gain {Block:diff()} [gold]Block[/gold].")
+        ("title", "海疆屏障"),
+        ("description", "获得20点格挡。若场上有炼金单元，对所有敌人施加2层虚弱。")
     };
 }
 
@@ -1746,8 +1746,8 @@ public sealed class StarConstellation : CustomCardModel
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Star Constellation"),
-        ("description", "Gain [gold]Star Power[/gold].\nAt end of turn, gain 1 Strength.")
+        ("title", "连续航线"),
+        ("description", "炼金单元脉冲效果额外触发1次，但每次也使所有敌人获得1层催化。")
     };
 }
 
@@ -1764,8 +1764,8 @@ public sealed class VesselOfPoison : CustomCardModel
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Vessel of Poison"),
-        ("description", "Gain [gold]Vessel of Poison[/gold].\nAttacks apply 1 Poison.")
+        ("title", "毒剂容器"),
+        ("description", "你的攻击对中毒敌人额外施加1层中毒。")
     };
 }
 
@@ -1790,8 +1790,8 @@ public sealed class WaveCrash : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Wave Crash"),
-        ("description", "Deal {Damage:diff()} damage to ALL enemies.")
+        ("title", "涌潮冲击"),
+        ("description", "对所有敌人造成12点伤害。若场上有炼金单元，施加1层催化。")
     };
 }
 
@@ -1811,8 +1811,8 @@ public sealed class CoralShield : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(3m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Coral Shield"),
-        ("description", "Gain {Block:diff()} [gold]Block[/gold].")
+        ("title", "珊瑚护层"),
+        ("description", "获得8点格挡。每有1个中毒敌人，额外获得2点格挡。")
     };
 }
 
@@ -1837,8 +1837,8 @@ public sealed class AbyssalWhisper : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Poison.UpgradeValueBy(2m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Abyssal Whisper"),
-        ("description", "Apply {Poison:diff()} [gold]Poison[/gold] to ALL enemies.")
+        ("title", "深海低语"),
+        ("description", "对所有敌人施加3层中毒。若任意敌人有6层以上中毒，抽1张牌。")
     };
 }
 
@@ -1860,8 +1860,8 @@ public sealed class PhantomSlash : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Phantom Slash"),
-        ("description", "Deal {Damage:diff()} damage.")
+        ("title", "远程剑影"),
+        ("description", "造成10点伤害。若目标不是前排敌人，施加3层中毒。")
     };
 }
 
@@ -1871,7 +1871,7 @@ public sealed class TidalSurge : CustomCardModel
     public override string? CustomPortraitPath => MissingPortraitPath;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(6m, ValueProp.Move), new BlockVar(6m, ValueProp.Move)
+        new DamageVar(8m, ValueProp.Move), new BlockVar(8m, ValueProp.Move)
     };
     public TidalSurge() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
@@ -1884,8 +1884,8 @@ public sealed class TidalSurge : CustomCardModel
     protected override void OnUpgrade() { DynamicVars.Damage.UpgradeValueBy(3m); DynamicVars.Block.UpgradeValueBy(3m); }
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Tidal Surge"),
-        ("description", "Deal {Damage:diff()} damage.\nGain {Block:diff()} [gold]Block[/gold].")
+        ("title", "潮涌连斩"),
+        ("description", "造成8点伤害。获得8点格挡。触发炼金单元脉冲。")
     };
 }
 
@@ -1906,8 +1906,8 @@ public sealed class StarryNight : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Cards.UpgradeValueBy(1m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Starry Night"),
-        ("description", "Draw {Cards:diff()} cards.")
+        ("title", "星夜测绘"),
+        ("description", "抽4张牌。若场上有炼金单元，保留其中1张直到下回合。")
     };
 }
 
@@ -1925,7 +1925,7 @@ public sealed class PoisonMastery : CustomCardModel
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "神经损伤"),
-        ("description", "Gain [gold]Neural Damage[/gold].\nPoison damage builds a 12-point gauge on enemies. At full, their next attack deals 0 damage.")
+        ("description", "能力。敌人每次因中毒失去生命时，等量累积神经损伤。累积达到12时清空，给予其1层神经震慑：下一次攻击伤害变为0。")
     };
 }
 
@@ -1942,8 +1942,8 @@ public sealed class ThornsBody : CustomCardModel
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Thorns Body"),
-        ("description", "Gain 3 [gold]Thorns[/gold].")
+        ("title", "护身尖刺"),
+        ("description", "每回合第一次受到攻击时，对攻击者造成5点伤害并施加2层中毒。")
     };
 }
 
@@ -1980,7 +1980,7 @@ public sealed class LodestarPower : CustomCardModel
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "引星实验"),
-        ("description", "Summon an [gold]Alchemical Unit[/gold] and apply 1 Catalyst to ALL enemies.\nIf one already exists, release it.")
+        ("description", "召唤1个炼金单元。所有敌人获得1层催化。若场上已有炼金单元，改为使其释放。")
     };
 }
 
@@ -2001,8 +2001,8 @@ public sealed class SeaFoamBarrier : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(3m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Seafoam Barrier"),
-        ("description", "Gain {Block:diff()} [gold]Block[/gold].")
+        ("title", "浪沫防线"),
+        ("description", "获得5点格挡。若手牌中有炼金单元牌，额外获得5点格挡。")
     };
 }
 
@@ -2012,7 +2012,7 @@ public sealed class ConstellationMark : CustomCardModel
     public override string? CustomPortraitPath => MissingPortraitPath;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new PowerVar<PoisonPower>(3m), new CardsVar(1)
+        new PowerVar<PoisonPower>(2m), new CardsVar(1)
     };
     public ConstellationMark() : base(1, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
@@ -2025,8 +2025,8 @@ public sealed class ConstellationMark : CustomCardModel
     protected override void OnUpgrade() { DynamicVars.Poison.UpgradeValueBy(1m); DynamicVars.Cards.UpgradeValueBy(1m); }
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Constellation Mark"),
-        ("description", "Apply {Poison:diff()} [gold]Poison[/gold].\nDraw {Cards:diff()} card.")
+        ("title", "测绘标记"),
+        ("description", "施加2层中毒和1层催化。")
     };
 }
 
@@ -2049,8 +2049,8 @@ public sealed class ChemicalCatalyst : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Cards.UpgradeValueBy(1m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Chemical Catalyst"),
-        ("description", "Apply 3 [gold]Poison[/gold].\nDraw {Cards:diff()} cards.")
+        ("title", "化学催化"),
+        ("description", "施加3层催化。若目标已有中毒，抽1张牌。")
     };
 }
 
@@ -2071,8 +2071,8 @@ public sealed class ThornsBarrier : CustomCardModel
     protected override void OnUpgrade() { DynamicVars.Block.UpgradeValueBy(4m); }
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Thorns Barrier"),
-        ("description", "Gain {Block:diff()} [gold]Block[/gold].\nGain 2 [gold]Thorns[/gold].")
+        ("title", "尖刺壁垒"),
+        ("description", "获得12点格挡。获得3层反刺。")
     };
 }
 
@@ -2093,8 +2093,8 @@ public sealed class DeepSeaRegeneration : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Heal.UpgradeValueBy(3m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Deep Sea Regeneration"),
-        ("description", "Heal {Heal:diff()} HP.")
+        ("title", "深海再生"),
+        ("description", "回复6点生命。若场上没有炼金单元，召唤1个炼金单元。")
     };
 }
 
@@ -2115,8 +2115,8 @@ public sealed class StarBlessing : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Strength.UpgradeValueBy(1m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Star Blessing"),
-        ("description", "Gain {StrengthPower:diff()} [gold]Strength[/gold].")
+        ("title", "引星祝福"),
+        ("description", "场上有炼金单元时，你的攻击造成额外1点伤害。")
     };
 }
 
@@ -2138,8 +2138,8 @@ public sealed class SeafoamHealing : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Heal.UpgradeValueBy(5m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Seafoam Healing"),
-        ("description", "Heal {Heal:diff()} HP.")
+        ("title", "度算浪波·专精"),
+        ("description", "回复10点生命，获得10点格挡，并触发炼金单元脉冲。")
     };
 }
 
@@ -2149,7 +2149,7 @@ public sealed class StarCataclysm : CustomCardModel
     public override string? CustomPortraitPath => ThornsPortraits.MySea;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(20m, ValueProp.Move)
+        new DamageVar(18m, ValueProp.Move)
     };
     public StarCataclysm() : base(3, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
@@ -2164,8 +2164,8 @@ public sealed class StarCataclysm : CustomCardModel
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(8m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Star Cataclysm"),
-        ("description", "Deal {Damage:diff()} damage to ALL enemies.")
+        ("title", "我的海疆"),
+        ("description", "对所有敌人造成18点伤害。召唤1个炼金单元并立即触发其脉冲。所有敌人获得2层虚弱和2层催化。")
     };
 }
 
@@ -2182,8 +2182,8 @@ public sealed class AncientAlchemy : CustomCardModel
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Ancient Alchemy"),
-        ("description", "Gain [gold]Alchemy[/gold].")
+        ("title", "炼金术"),
+        ("description", "每当你召唤炼金单元，抽1张牌。每回合限2次。")
     };
 }
 
@@ -2195,7 +2195,7 @@ public sealed class ConstellationLegacy : CustomCardModel
     {
         new PowerVar<StrengthPower>(5m), new PowerVar<DexterityPower>(5m)
     };
-    public ConstellationLegacy() : base(3, CardType.Power, CardRarity.Rare, TargetType.Self) { }
+    public ConstellationLegacy() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
@@ -2205,8 +2205,8 @@ public sealed class ConstellationLegacy : CustomCardModel
     protected override void OnUpgrade() { DynamicVars.Strength.UpgradeValueBy(2m); DynamicVars.Dexterity.UpgradeValueBy(2m); }
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Constellation Legacy"),
-        ("description", "Gain {StrengthPower:diff()} [gold]Strength[/gold].\nGain {DexterityPower:diff()} [gold]Dexterity[/gold].")
+        ("title", "宝宝摇篮号"),
+        ("description", "炼金单元上限+1。每场战斗第一次打出炼金单元牌时，额外召唤1个炼金单元。炼金单元释放后，获得4点格挡。")
     };
 }
 
@@ -2224,7 +2224,7 @@ public sealed class PoisonReaper : CustomCardModel
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "神经损伤爆发"),
-        ("description", "Whenever [gold]Neural Damage[/gold] applies Neural Shock, apply 6 Poison and trigger an Alchemical Unit pulse.")
+        ("description", "能力。神经损伤触发神经震慑时，额外对该敌人施加6层中毒并触发一次炼金单元脉冲。")
     };
 }
 
@@ -2241,8 +2241,8 @@ public sealed class GuidingStar : CustomCardModel
     protected override void OnUpgrade() { }
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Guiding Star"),
-        ("description", "Gain [gold]Star Chart[/gold].")
+        ("title", "至高之术"),
+        ("description", "本场战斗第二次打出攻击牌后，获得1点力量。之后每回合第一次攻击额外触发一次神经腐蚀。")
     };
 }
 
@@ -2259,8 +2259,8 @@ public sealed class AbyssalForm : CustomCardModel
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Abyssal Form"),
-        ("description", "Gain [gold]Abyssal Toxin[/gold].")
+        ("title", "无垠海疆"),
+        ("description", "回合开始时触发所有炼金单元脉冲。炼金单元释放效果翻倍。若本回合没有炼金单元脉冲，你的下一张攻击牌施加3层中毒。")
     };
 }
 
@@ -2277,7 +2277,7 @@ public sealed class NavigatorForesight : CustomCardModel
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Navigator's Foresight"),
-        ("description", "Gain [gold]Star Chart[/gold] twice.")
+        ("title", "自由的第三面"),
+        ("description", "每回合第一次你将击破炼金单元时，选择：改为触发脉冲；或释放后重新召唤1个炼金单元。")
     };
 }
