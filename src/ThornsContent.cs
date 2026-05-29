@@ -90,7 +90,7 @@ public sealed class Thorns : PlaceholderCharacterModel
 
 	public override int StartingHp => 70;
 
-	public override CardPoolModel CardPool => ModelDb.CardPool<SilentCardPool>();
+	public override CardPoolModel CardPool => ModelDb.CardPool<ThornsCardPool>();
 
 	public override RelicPoolModel RelicPool => ModelDb.RelicPool<SilentRelicPool>();
 
@@ -98,18 +98,18 @@ public sealed class Thorns : PlaceholderCharacterModel
 
 	public override IEnumerable<CardModel> StartingDeck => new CardModel[]
 	{
-		ModelDb.Card<StrikeSilent>(),
-		ModelDb.Card<StrikeSilent>(),
-		ModelDb.Card<StrikeSilent>(),
-		ModelDb.Card<StrikeSilent>(),
-		ModelDb.Card<StrikeSilent>(),
-		ModelDb.Card<DefendSilent>(),
-		ModelDb.Card<DefendSilent>(),
-		ModelDb.Card<DefendSilent>(),
-		ModelDb.Card<DefendSilent>(),
-		ModelDb.Card<DefendSilent>(),
-		ModelDb.Card<Neutralize>(),
-		ModelDb.Card<Survivor>()
+		ModelDb.Card<ThornsStrike>(),
+		ModelDb.Card<ThornsStrike>(),
+		ModelDb.Card<ThornsStrike>(),
+		ModelDb.Card<ThornsStrike>(),
+		ModelDb.Card<ThornsStrike>(),
+		ModelDb.Card<ThornsDefend>(),
+		ModelDb.Card<ThornsDefend>(),
+		ModelDb.Card<ThornsDefend>(),
+		ModelDb.Card<ThornsDefend>(),
+		ModelDb.Card<ThornsDefend>(),
+		ModelDb.Card<PoisonStrike>(),
+		ModelDb.Card<IronGuard>()
 	};
 
 	public override IReadOnlyList<RelicModel> StartingRelics => new RelicModel[]
@@ -134,9 +134,9 @@ public sealed class Thorns : PlaceholderCharacterModel
 	{
 		("title", "Thorns"),
 		("titleObject", "Thorns"),
-		("description", "A prototype Arknights character.\nStarts with Silent cards and a poison-focused relic."),
-		("cardsModifierTitle", "Silent Cards"),
-		("cardsModifierDescription", "Silent cards will now appear in rewards and shops."),
+		("description", "A prototype Arknights character.\nUses Thorns cards and a poison-focused relic."),
+		("cardsModifierTitle", "Thorns Cards"),
+		("cardsModifierDescription", "Thorns cards will now appear in rewards and shops."),
 		("eventDeathPrevention", "The black tide still recedes."),
 		("possessiveAdjective", "his"),
 		("pronounObject", "him"),

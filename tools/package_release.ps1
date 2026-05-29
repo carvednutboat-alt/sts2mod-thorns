@@ -6,7 +6,8 @@ $Manifest = Get-Content $ManifestPath -Raw | ConvertFrom-Json
 $Version = $Manifest.version
 $DistDir = Join-Path $ProjectRoot "dist"
 $ZipPath = Join-Path $DistDir "thorns-v$Version.zip"
-$Godot = "E:\Godot\Godot_v4.5.1-stable_mono_win64\Godot_v4.5.1-stable_mono_win64\Godot_v4.5.1-stable_mono_win64_console.exe"
+$Godot = "C:\Godot\Godot_v4.5.1-stable_mono_win64\Godot_v4.5.1-stable_mono_win64\Godot_v4.5.1-stable_mono_win64_console.exe"
+$env:PATH = "C:\Godot\dotnet;$env:PATH"
 
 New-Item -ItemType Directory -Force -Path $DistDir | Out-Null
 

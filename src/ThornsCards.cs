@@ -36,6 +36,19 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace ThornsMod;
 
+public sealed class ThornsCardPool : CustomCardPoolModel
+{
+    public override string Title => "thorns";
+
+    public override string EnergyColorName => "silent";
+
+    public override Color DeckEntryCardColor => new Color("B7D179");
+
+    public override Color ShaderColor => new Color("B7D179");
+
+    public override bool IsColorless => false;
+}
+
 
 
 // ============================================================
@@ -64,7 +77,6 @@ public sealed class ThornsPower : CustomPowerModel
         ("description", "When attacked, deal 1 damage back.")
     };
 }
-
 public sealed class RegenerationPower : CustomPowerModel
 {
     public override PowerType Type => PowerType.Buff;
@@ -270,7 +282,7 @@ public sealed class VesselOfPoisonPower : CustomPowerModel
 // BASIC CARDS (10)
 // ============================================================
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class ThornsStrike : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -298,7 +310,7 @@ public sealed class ThornsStrike : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class ThornsDefend : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -324,7 +336,7 @@ public sealed class ThornsDefend : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class PoisonStrike : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -354,7 +366,7 @@ public sealed class PoisonStrike : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class QuickSlash : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -381,7 +393,7 @@ public sealed class QuickSlash : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class IronGuard : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -406,7 +418,7 @@ public sealed class IronGuard : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class RegenerativeSalve : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -432,7 +444,7 @@ public sealed class RegenerativeSalve : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class DarkStarGaze : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -458,7 +470,7 @@ public sealed class DarkStarGaze : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class PreciseThrust : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -487,7 +499,7 @@ public sealed class PreciseThrust : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class DefensiveStance : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -512,7 +524,7 @@ public sealed class DefensiveStance : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class NeurotoxinStrike : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -547,7 +559,7 @@ public sealed class NeurotoxinStrike : CustomCardModel
 // COMMON CARDS (25)
 // ============================================================
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class DualStrike : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -576,7 +588,7 @@ public sealed class DualStrike : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class PoisonBlade : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -605,7 +617,7 @@ public sealed class PoisonBlade : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class StarlightBarrier : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -630,7 +642,7 @@ public sealed class StarlightBarrier : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class QuickRecovery : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -656,7 +668,7 @@ public sealed class QuickRecovery : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class ChemicalBurn : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -686,7 +698,7 @@ public sealed class ChemicalBurn : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class DestrezaThrust : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -714,7 +726,7 @@ public sealed class DestrezaThrust : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class CrossSlash : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -743,7 +755,7 @@ public sealed class CrossSlash : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class SeaBreeze : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -771,7 +783,7 @@ public sealed class SeaBreeze : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class InkSplash : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -802,7 +814,7 @@ public sealed class InkSplash : CustomCardModel
 }
 
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class CalmWaters : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -827,7 +839,7 @@ public sealed class CalmWaters : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class ToxicEdge : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -856,7 +868,7 @@ public sealed class ToxicEdge : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class OceanShield : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -881,7 +893,7 @@ public sealed class OceanShield : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class Starfall : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -911,7 +923,7 @@ public sealed class Starfall : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class DeepSeaVenom : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -938,7 +950,7 @@ public sealed class DeepSeaVenom : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class SwiftRetort : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -967,7 +979,7 @@ public sealed class SwiftRetort : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class AlchemicalMixture : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -996,7 +1008,7 @@ public sealed class AlchemicalMixture : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class ConstellationDraw : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1022,7 +1034,7 @@ public sealed class ConstellationDraw : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class AegirResilience : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1049,7 +1061,7 @@ public sealed class AegirResilience : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class AbyssalStrike : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1076,7 +1088,7 @@ public sealed class AbyssalStrike : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class WaveSlash : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1105,7 +1117,7 @@ public sealed class WaveSlash : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class LodestarGuidance : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1131,7 +1143,7 @@ public sealed class LodestarGuidance : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class Riptide : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1163,7 +1175,7 @@ public sealed class Riptide : CustomCardModel
 // UNCOMMON CARDS (30)
 // ============================================================
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class DestrezaMastery : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1186,7 +1198,7 @@ public sealed class DestrezaMastery : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class NeurotoxinCloud : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1212,7 +1224,7 @@ public sealed class NeurotoxinCloud : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class SelfReconstitution : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1234,7 +1246,7 @@ public sealed class SelfReconstitution : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class AncientRitual : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1257,7 +1269,7 @@ public sealed class AncientRitual : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class ConstellationArmor : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1278,7 +1290,7 @@ public sealed class ConstellationArmor : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class HealingSprings : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1300,7 +1312,7 @@ public sealed class HealingSprings : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class TripleStrike : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1324,7 +1336,7 @@ public sealed class TripleStrike : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class DeadlyVenom : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1347,7 +1359,7 @@ public sealed class DeadlyVenom : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class OceanCurrent : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1371,7 +1383,7 @@ public sealed class OceanCurrent : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class ChemicalExplosion : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1397,7 +1409,7 @@ public sealed class ChemicalExplosion : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class FocusedDestreza : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1421,7 +1433,7 @@ public sealed class FocusedDestreza : CustomCardModel
 }
 
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class RegenerationAura : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1439,7 +1451,7 @@ public sealed class RegenerationAura : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class SeaKingProtection : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1460,7 +1472,7 @@ public sealed class SeaKingProtection : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class StarConstellation : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1478,7 +1490,7 @@ public sealed class StarConstellation : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class VesselOfPoison : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1496,7 +1508,7 @@ public sealed class VesselOfPoison : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class WaveCrash : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1522,7 +1534,7 @@ public sealed class WaveCrash : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class CoralShield : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1543,7 +1555,7 @@ public sealed class CoralShield : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class AbyssalWhisper : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1569,7 +1581,7 @@ public sealed class AbyssalWhisper : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class PhantomSlash : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1592,7 +1604,7 @@ public sealed class PhantomSlash : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class TidalSurge : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1616,7 +1628,7 @@ public sealed class TidalSurge : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class StarryNight : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1638,7 +1650,7 @@ public sealed class StarryNight : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class PoisonMastery : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1656,7 +1668,7 @@ public sealed class PoisonMastery : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class ThornsBody : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1674,7 +1686,7 @@ public sealed class ThornsBody : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class LodestarPower : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1701,7 +1713,7 @@ public sealed class LodestarPower : CustomCardModel
 }
 
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class SeaFoamBarrier : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1722,7 +1734,7 @@ public sealed class SeaFoamBarrier : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class ConstellationMark : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1746,7 +1758,7 @@ public sealed class ConstellationMark : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class ChemicalCatalyst : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1770,7 +1782,7 @@ public sealed class ChemicalCatalyst : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class ThornsBarrier : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1792,7 +1804,7 @@ public sealed class ThornsBarrier : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class DeepSeaRegeneration : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1814,7 +1826,7 @@ public sealed class DeepSeaRegeneration : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class StarBlessing : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1837,7 +1849,7 @@ public sealed class StarBlessing : CustomCardModel
 }
 
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class SeafoamHealing : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1859,7 +1871,7 @@ public sealed class SeafoamHealing : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class StarCataclysm : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1885,7 +1897,7 @@ public sealed class StarCataclysm : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class AncientAlchemy : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1903,7 +1915,7 @@ public sealed class AncientAlchemy : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class ConstellationLegacy : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1926,7 +1938,7 @@ public sealed class ConstellationLegacy : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class PoisonReaper : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1950,7 +1962,7 @@ public sealed class PoisonReaper : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class GuidingStar : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1968,7 +1980,7 @@ public sealed class GuidingStar : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class AbyssalForm : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
@@ -1986,7 +1998,7 @@ public sealed class AbyssalForm : CustomCardModel
     };
 }
 
-[Pool(typeof(SilentCardPool))]
+[Pool(typeof(ThornsCardPool))]
 public sealed class NavigatorForesight : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
