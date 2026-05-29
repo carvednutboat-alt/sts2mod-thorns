@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -57,6 +57,27 @@ public sealed class WeedRelicPool : CustomRelicPoolModel
 
 	public override Color LabOutlineColor => new Color("4B8F3A");
 }
+
+public sealed class ThornsCardPool : CustomCardPoolModel
+{
+	public override string Title => "thorns";
+
+	public override string EnergyColorName => "silent";
+
+	public override Color DeckEntryCardColor => new Color("B7D179");
+
+	public override Color ShaderColor => new Color("B7D179");
+
+	public override bool IsColorless => false;
+}
+
+public sealed class ThornsRelicPool : CustomRelicPoolModel
+{
+	public override string EnergyColorName => "silent";
+
+	public override Color LabOutlineColor => new Color("B7D179");
+}
+
 
 public sealed class Herbalist : PlaceholderCharacterModel
 {
@@ -234,9 +255,9 @@ public sealed class Thorns : PlaceholderCharacterModel
 
 	public override int StartingHp => 70;
 
-	public override CardPoolModel CardPool => ModelDb.CardPool<WeedCardPool>();
+	public override CardPoolModel CardPool => ModelDb.CardPool<ThornsCardPool>();
 
-	public override RelicPoolModel RelicPool => ModelDb.RelicPool<WeedRelicPool>();
+	public override RelicPoolModel RelicPool => ModelDb.RelicPool<ThornsRelicPool>();
 
 	public override PotionPoolModel PotionPool => ModelDb.PotionPool<SharedPotionPool>();
 
