@@ -2886,30 +2886,22 @@ public sealed class StarCataclysm : CustomCardModel
         new DamageVar(18m, ValueProp.Move)
     };
     public StarCataclysm() : base(3, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies) { }
-                                    protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
+                                        protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        // Step 1: Deal 18 AOE damage
+        // Step 1: Deal 18 AOE damage to all normal enemies
         foreach (Creature enemy in ThornsAlchemy.NormalEnemies(Owner.Creature.CombatState))
         {
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(enemy)
                 .WithHitFx("vfx/vfx_spell_cast").Execute(c);
         }
 
-        // Step 2: If there's an existing unit, Release it
-        Creature? existing = ThornsAlchemy.Units(Owner.Creature.CombatState).FirstOrDefault();
-        if (existing != null)
-        {
-            await ThornsAlchemy.Release(c, existing, this);
-            await CreatureCmd.Kill(existing);
-        }
-
-        // Step 3: Summon a new Alchemy Unit
+        // Step 2: Summon an Alchemy Unit (if at limit, pulses existing instead)
         await ThornsAlchemy.SummonUnit(c, Owner, this);
 
-        // Step 4: Trigger Pulse on the new unit
+        // Step 3: Trigger Pulse (applies 1 poison to all enemies)
         await ThornsAlchemy.Pulse(c, Owner.Creature.CombatState, Owner.Creature, this);
 
-        // Step 5: Apply Weak x2 and Catalyst x2 to all enemies
+        // Step 4: Apply Weak x2 and Catalyst x2 to all enemies
         foreach (Creature enemy in ThornsAlchemy.NormalEnemies(Owner.Creature.CombatState))
         {
             await PowerCmd.Apply<WeakPower>(enemy, 2m, Owner.Creature, this);
