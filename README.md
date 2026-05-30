@@ -1,8 +1,7 @@
 # STS2 Thorns Mod
 
-Standalone Thorns character mod prototype for Slay the Spire 2.
+Thorns character from Arknights mod prototype for Slay the Spire 2.
 
-This project was split out from the combined Reed/Thorns prototype. It keeps only the Thorns character code, Thorns visual assets, and Thorns packaging workflow.
 
 ## Build
 
