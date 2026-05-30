@@ -57,6 +57,8 @@ internal static class ThornsPortraits
     public static readonly string AlchemyRelease = ImageHelper.GetImagePath("packed/thorns_icons/alchemy_release_icon.png");
     public static readonly string NeuralDamage = ImageHelper.GetImagePath("packed/thorns_icons/neural_damage_icon.png");
     public static readonly string MySea = ImageHelper.GetImagePath("packed/thorns_icons/my_sea_icon.png");
+    public static readonly string Catalyst = ImageHelper.GetImagePath("packed/thorns_icons/catalyst_icon.png");
+    public static readonly string Paralysis = ImageHelper.GetImagePath("packed/thorns_icons/paralysis_icon.png");
 }
 
 internal static class ThornsAlchemy
