@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ckvtxcpv3rmmk"
-path="res://.godot/imported/neural_damage_icon.png-1d6c1a8b5649d89a3fa84270e1bd5606.ctex"
+path="res://.godot/imported/paralysis_icon.png-b61861fbfe9a8aab1565de4b6d735b43.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/packed/thorns_icons/neural_damage_icon.png"
-dest_files=["res://.godot/imported/neural_damage_icon.png-1d6c1a8b5649d89a3fa84270e1bd5606.ctex"]
+source_file="res://images/packed/thorns_icons/paralysis_icon.png"
+dest_files=["res://.godot/imported/paralysis_icon.png-b61861fbfe9a8aab1565de4b6d735b43.ctex"]
 
 [params]
 
