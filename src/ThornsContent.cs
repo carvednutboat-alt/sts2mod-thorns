@@ -102,14 +102,14 @@ public sealed class Thorns : PlaceholderCharacterModel
 		ModelDb.Card<ThornsStrike>(),
 		ModelDb.Card<ThornsStrike>(),
 		ModelDb.Card<ThornsStrike>(),
-		ModelDb.Card<ThornsStrike>(),
 		ModelDb.Card<ThornsDefend>(),
 		ModelDb.Card<ThornsDefend>(),
 		ModelDb.Card<ThornsDefend>(),
 		ModelDb.Card<ThornsDefend>(),
 		ModelDb.Card<ThornsDefend>(),
 		ModelDb.Card<PoisonStrike>(),
-		ModelDb.Card<IronGuard>()
+		ModelDb.Card<IronGuard>(),
+		ModelDb.Card<AlchemicalMixture>()
 	};
 
 	public override IReadOnlyList<RelicModel> StartingRelics => new RelicModel[]
