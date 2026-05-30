@@ -32,3 +32,9 @@ dist/
 
 # Local scratch notes. The project skill under skills/ is intentionally tracked.
 CODEX_NOTES.md
+
+# Design scratch files (not part of the mod build)
+*.txt
+*.js
+scripts/
+update_csv.js
