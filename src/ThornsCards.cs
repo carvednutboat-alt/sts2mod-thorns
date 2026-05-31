@@ -558,8 +558,8 @@ public sealed class VesselOfPoisonPower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "炼金术"),
-        ("description", "Attacks apply Poison.")
+        ("title", "毒剂容器"),
+        ("description", "攻击对中毒敌人额外施加1层中毒。")
     };
 }
 
@@ -683,7 +683,7 @@ public sealed class AlchemyPulseHealPower : CustomPowerModel
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "再生气雾"),
-        ("description", "Alchemical Unit pulses heal you.")
+        ("description", "炼金单元脉冲时为你回复生命。")
     };
 }
 
@@ -749,7 +749,7 @@ public sealed class AncientAlchemyPower : CustomPowerModel
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "炼金术"),
-        ("description", "Whenever you summon an Alchemical Unit, draw cards, up to twice each turn.")
+        ("description", "每当你召唤炼金单元时抽1张牌，每回合限2次。")
     };
 }
 
@@ -794,8 +794,8 @@ public sealed class ConstellationLegacyPower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "炼金术"),
-        ("description", "Alchemical Unit limit is increased. Your first Alchemy card each combat summons an extra unit. Unit releases grant Block.")
+        ("title", "宝宝摇篮号"),
+        ("description", "炼金单元上限+1。首次打出炼金牌额外召唤1个单元。单元释放时获得格挡。")
     };
 }
 
@@ -983,7 +983,7 @@ public sealed class CatalystPower : CustomPowerModel
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "催化"),
-        ("description", "每当被赋予减益效果时，消耗1层催化使该减益效果+1。回合结束时也会自动消化减益。")
+        ("description", "目标被赋予催化时，消耗催化使每种已有层数效果各+1。目标已有催化时被赋予新效果，额外+1并消耗1层催化。")
     };
 }
 
@@ -1189,16 +1189,22 @@ public sealed class DualCorePower : CustomPowerModel
 public sealed class TacticalUnityPower : CustomPowerModel
 {
     public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Counter;
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new BlockVar(4m, ValueProp.Move) };
+    public override PowerStackType StackType => PowerStackType.Single;
     public override async Task AfterCardPlayed(PlayerChoiceContext ctx, CardPlay cp)
     {
-        if (cp.Card.Owner != Owner.Player || cp.Card.Type != CardType.Power || cp.Card == null) return;
+        if (cp.Card == null || cp.Card.Type != CardType.Power) return;
+        if (Owner.CombatState == null) return;
+        var units = ThornsAlchemy.Units(Owner.CombatState);
+        if (units.Count == 0) return;
         Flash();
-        await CreatureCmd.GainBlock(Owner, DynamicVars.Block, cp);
-        if (Owner.Player != null) await CardPileCmd.Draw(ctx, 1, Owner.Player);
+        foreach (var unit in units)
+            await ThornsAlchemy.Pulse(ctx, Owner.CombatState, Owner, cp.Card);
     }
-    public override List<(string, string)> Localization => new List<(string, string)> { ("title", "战术协同"), ("description", "本回合炼金单元脉冲和释放结算两次。") };
+    public override async Task AfterTurnEnd(PlayerChoiceContext ctx, CombatSide side)
+    {
+        if (side == Owner.Side) await PowerCmd.Remove(this);
+    }
+    public override List<(string, string)> Localization => new List<(string, string)> { ("title", "战术协同"), ("description", "本回合友方每使用一张能力牌，场上的炼金单元触发一次脉冲。") };
 }
 
 public sealed class VoidSwordPower : CustomPowerModel
@@ -3315,23 +3321,30 @@ public sealed class VoyageEnd : CustomCardModel
 public sealed class MindCrash : CustomCardModel
 {
     public override string? CustomPortraitPath => ThornsPortraits.NeuralDamage;
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
-    {
-        new DynamicVar("NeuralAmount", 8m)
-    };
     public MindCrash() : base(1, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
         ArgumentNullException.ThrowIfNull(p.Target);
-        NeuralDamageCounterPower? nd = p.Target.GetPower<NeuralDamageCounterPower>();
-        if (nd != null) await PowerCmd.Remove(nd);
-        await PowerCmd.Apply<NeuralShockPower>(p.Target, 1m, Owner.Creature, this);
+        int r = new Random().Next(9);
+        switch (r)
+        {
+            case 0: await PowerCmd.Apply<PoisonPower>(p.Target, 1m, Owner.Creature, this); break;
+            case 1: await PowerCmd.Apply<WeakPower>(p.Target, 1m, Owner.Creature, this); break;
+            case 2: await PowerCmd.Apply<VulnerablePower>(p.Target, 1m, Owner.Creature, this); break;
+            case 3: await PowerCmd.Apply<FrailPower>(p.Target, 1m, Owner.Creature, this); break;
+            case 4: await PowerCmd.Apply<StrengthPower>(p.Target, 1m, Owner.Creature, this); break;
+            case 5: await PowerCmd.Apply<DexterityPower>(p.Target, 1m, Owner.Creature, this); break;
+            case 6: await PowerCmd.Apply<ThornsPower>(p.Target, 1m, Owner.Creature, this); break;
+            case 7: await PowerCmd.Apply<SlowPower>(p.Target, 1m, Owner.Creature, this); break;
+            case 8: await PowerCmd.Apply<RitualPower>(p.Target, 1m, Owner.Creature, this); break;
+        }
+        await ThornsAlchemy.ApplyCatalyst(p.Target, 2m, Owner.Creature, this);
     }
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "神秘药剂"),
-        ("description", "随机赋予目标一种可催化效果和2层催化。")
+        ("description", "随机赋予目标（敌或友）一种可催化效果和2层催化。")
     };
 }
 
@@ -3510,6 +3523,7 @@ public sealed class DeathInstinct : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
     public DeathInstinct() : base(0, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
+    public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
         await ThornsAlchemy.ApplyCatalyst(Owner.Creature, 1m, Owner.Creature, this);

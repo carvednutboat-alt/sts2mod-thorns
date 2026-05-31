@@ -103,7 +103,8 @@ public sealed class Thorns : PlaceholderCharacterModel
 		("cardsModifierTitle", "Thorns Cards"), ("cardsModifierDescription", "Thorns cards will now appear in rewards and shops."),
 		("eventDeathPrevention", "The black tide still recedes."),
 		("possessiveAdjective", "his"), ("pronounObject", "him"), ("pronounPossessive", "his"), ("pronounSubject", "he"),
-		("unlockText", "Available from the Thorns mod.")
+		("unlockText", "Available from the Thorns mod."),
+			("ping", "我竟然也跟着睡着了吗")
 	};
 }
 
