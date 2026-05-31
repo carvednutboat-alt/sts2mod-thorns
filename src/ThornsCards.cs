@@ -309,6 +309,41 @@ internal static class ThornsAlchemy
 // ============================================================
 
 // Thorns (荆棘) and Regen (再生) are base-game powers in STS2 — no custom implementation needed.
+
+// 摧残 (Debilitate): modifies damage multipliers — doubles Vulnerable extra damage and Weak damage reduction
+public sealed class DebilitatePower : CustomPowerModel
+{
+    public override PowerType Type => PowerType.Debuff;
+    public override PowerStackType StackType => PowerStackType.Counter;
+
+    public decimal ModifyVulnerableMultiplier(Creature target, decimal amount, ValueProp props, Creature dealer, CardModel cardSource)
+    {
+        if (props.IsPoweredAttack() && target == Owner && Amount > 0)
+            return amount + (amount - 1m);
+        return amount;
+    }
+
+    public decimal ModifyWeakMultiplier(Creature target, decimal amount, ValueProp props, Creature dealer, CardModel cardSource)
+    {
+        if (props.IsPoweredAttack() && dealer == Owner && Amount > 0)
+            return amount - (1m - amount);
+        return amount;
+    }
+
+    public string? CustomPowerIconPath => ImageHelper.GetImagePath("atlases/power_atlas.sprites/debilitatepower.tres");
+    public string? CustomPowerBigIconPath => ImageHelper.GetImagePath("powers/debilitatepower.png");
+    public override List<(string, string)> Localization => new() { ("title", "摧残"), ("description", "易伤额外受伤翻倍，虚弱减伤翻倍。") };
+}
+
+
+// 摧残 (Debilitate): doubles existing Vulnerable and Weak. Applied directly in card OnPlay.
+
+public sealed class ThornsTempStrengthDownPower : TemporaryStrengthPower
+{
+    public override AbstractModel OriginModel => ModelDb.Card<SeaKingProtection>();
+    protected override bool IsPositive => false;
+}
+
 public sealed class PoisonMasteryPower : CustomPowerModel
 {
     public override PowerType Type => PowerType.Buff;
@@ -840,7 +875,6 @@ public sealed class AbyssalFormPower : CustomPowerModel
 public sealed class NavigatorForesightPower : CustomPowerModel
 {
     private class Data { public bool usedThisTurn; }
-
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
     protected override object InitInternalData() => new Data();
@@ -848,33 +882,49 @@ public sealed class NavigatorForesightPower : CustomPowerModel
     public override async Task BeforeDamageReceived(PlayerChoiceContext choiceContext, Creature target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
         Data data = GetInternalData<Data>();
-        if (!target.HasPower<AlchemyUnitPower>() || data.usedThisTurn || !target.IsAlive)
+        if (!target.HasPower<AlchemyUnitPower>() || data.usedThisTurn || !target.IsAlive) return;
+        if (amount < target.CurrentHp) return;
+        data.usedThisTurn = true;
+        Flash();
+        // Knowledge Demon-style choice via CardSelectCmd.FromChooseACardScreen
+        var cs = Owner.CombatState;
+        if (cs == null || Owner.Player == null) return;
+        var options = new List<CardModel>
         {
-            return;
-        }
-
-        // Intercept lethal damage: prevent break, pulse instead
-        if (amount >= target.CurrentHp)
+            CombatState.CreateCard(ModelDb.Card<NavigatorPulseCard>(), Owner.Player),
+            CombatState.CreateCard(ModelDb.Card<NavigatorReleaseCard>(), Owner.Player),
+            CombatState.CreateCard(ModelDb.Card<NavigatorBuffCard>(), Owner.Player),
+        };
+        var chosen = await CardSelectCmd.FromChooseACardScreen(
+            new BlockingPlayerChoiceContext(), options, Owner.Player, false);
+        // Execute chosen effect using the real combat context
+        if (chosen is NavigatorPulseCard)
         {
-            data.usedThisTurn = true;
-            Flash();
-            // Reduce damage to keep unit alive at 1 HP
             await PowerCmd.Apply<BufferPower>(target, 1m, Owner, cardSource);
-            // Trigger pulse instead of release
-            if (Owner.CombatState != null)
+            if (cs != null) await ThornsAlchemy.Pulse(choiceContext, cs, Owner, cardSource);
+            var enemies = cs?.HittableEnemies.Where(e => e.IsAlive && !e.IsPlayer).ToList() ?? new List<Creature>();
+            foreach (var e in enemies)
             {
-                await ThornsAlchemy.Pulse(choiceContext, Owner.CombatState, Owner, cardSource);
+                await PowerCmd.Apply<VulnerablePower>(e, 3m, Owner, cardSource);
+                await PowerCmd.Apply<WeakPower>(e, 3m, Owner, cardSource);
             }
+        }
+        else if (chosen is NavigatorReleaseCard)
+        {
+            await ThornsAlchemy.Release(choiceContext, target, cardSource);
+            if (Owner.Player != null) await ThornsAlchemy.SummonUnit(choiceContext, Owner.Player, cardSource);
+        }
+        else if (chosen is NavigatorBuffCard)
+        {
+            await PowerCmd.Apply<StrengthPower>(Owner, 3m, Owner, cardSource);
+            await PowerCmd.Apply<DexterityPower>(Owner, 3m, Owner, cardSource);
+            await PowerCmd.Apply<RegenPower>(Owner, 3m, Owner, cardSource);
         }
     }
 
     public override Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
     {
-        if (side == Owner.Side)
-        {
-            GetInternalData<Data>().usedThisTurn = false;
-        }
-
+        if (side == Owner.Side) GetInternalData<Data>().usedThisTurn = false;
         return Task.CompletedTask;
     }
 
@@ -1228,7 +1278,7 @@ public sealed class PoisonStrike : CustomCardModel
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "神经腐蚀"),
-        ("description", "造成{Damage}点伤害。施加{Poison}层中毒。")
+        ("description", "造成{Damage}点伤害。施加{PoisonPower}层中毒。")
     };
 }
 
@@ -1352,16 +1402,14 @@ public sealed class DarkStarGaze : CustomCardModel
         new CardsVar(1)
     };
 
-    public DarkStarGaze() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+    public DarkStarGaze() : base(0, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy) { }
 
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-
-        await CardPileCmd.Draw(c, DynamicVars.Cards.BaseValue, Owner);
+        ArgumentNullException.ThrowIfNull(p.Target);
+        await ThornsAlchemy.ApplyCatalyst(p.Target, 1m, Owner.Creature, this);
         if (ThornsAlchemy.HasUnit(Owner.Creature.CombatState))
-        {
-            await ThornsAlchemy.ApplyCatalyst(Owner.Creature, 1m, Owner.Creature, this);
-        }
+            await CardPileCmd.Draw(c, DynamicVars.Cards.BaseValue, Owner);
     }
 
     protected override void OnUpgrade() => DynamicVars.Cards.UpgradeValueBy(1m);
@@ -1571,7 +1619,7 @@ public sealed class ChemicalBurn : CustomCardModel
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "腐蚀雾区"),
-        ("description", "对所有敌人施加{Poison}层中毒和{NeuralAmount}层神经损伤。若场上有炼金单元，额外施加2层催化。")
+        ("description", "对所有敌人施加{PoisonPower}层中毒和{NeuralAmount}层神经损伤。若场上有炼金单元，额外施加2层催化。")
     };
 }
 
@@ -1654,6 +1702,7 @@ public sealed class InkSplash : CustomCardModel
         {
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(enemy)
                 .WithHitFx("vfx/vfx_attack_slash").Execute(c);
+            await ThornsAlchemy.ApplyCatalyst(enemy, 1m, Owner.Creature, this);
         }
     }
 
@@ -1784,7 +1833,7 @@ public sealed class DeepSeaVenom : CustomCardModel
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "深海毒剂"),
-        ("description", "施加{Poison}层中毒。若目标有催化，额外施加2层中毒。")
+        ("description", "施加{PoisonPower}层中毒。若目标有催化，额外施加2层中毒。")
     };
 }
 
@@ -1856,28 +1905,19 @@ public sealed class AlchemicalMixture : CustomCardModel
 public sealed class ConstellationDraw : CustomCardModel
 {
     public override string? CustomPortraitPath => MissingPortraitPath;
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
-    {
-        new CardsVar(2)
-    };
-
-    public ConstellationDraw() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+    public ConstellationDraw() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+    protected override bool HasEnergyCostX => true;
 
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-
-        await CardPileCmd.Draw(c, DynamicVars.Cards.BaseValue, Owner);
-        if (!ThornsAlchemy.HasUnit(Owner.Creature.CombatState))
-        {
-            CardModel? discard = PileType.Hand.GetPile(Owner).Cards.FirstOrDefault(card => card != this);
-            if (discard != null)
-            {
-                await CardCmd.Discard(c, discard);
-            }
-        }
+        CombatState? cs = Owner.Creature.CombatState;
+        if (cs == null) return;
+        int x = ResolveEnergyXValue();
+        for (int i = 0; i < x; i++)
+            await ThornsAlchemy.Pulse(c, cs, Owner.Creature, this);
     }
 
-    protected override void OnUpgrade() => DynamicVars.Cards.UpgradeValueBy(1m);
+    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
@@ -1983,7 +2023,7 @@ public sealed class WaveSlash : CustomCardModel
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "浪波斩"),
-        ("description", "造成{Damage}点伤害。对另一个随机敌人施加{Poison}层中毒。")
+        ("description", "造成{Damage}点伤害。对另一个随机敌人施加{PoisonPower}层中毒。")
     };
 }
 
@@ -2065,7 +2105,7 @@ public sealed class DestrezaMastery : CustomCardModel
     {
         new DamageVar(4m, ValueProp.Move), new RepeatVar(4)
     };
-    public DestrezaMastery() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
+    public DestrezaMastery() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
         ArgumentNullException.ThrowIfNull(p.Target);
@@ -2074,7 +2114,11 @@ public sealed class DestrezaMastery : CustomCardModel
             .Targeting(p.Target).WithHitFx("vfx/vfx_attack_slash").Execute(c);
         if (poisoned)
         {
-            await PowerCmd.Apply<StrengthPower>(Owner.Creature, DynamicVars.Repeat.IntValue, Owner.Creature, this);
+            int amt = DynamicVars.Repeat.IntValue;
+            // Flex-style temporary strength: gain now, lose at end of turn
+            await PowerCmd.Apply<StrengthPower>(Owner.Creature, amt, Owner.Creature, this);
+            // Flex-style temporary strength
+            await PowerCmd.Apply<TemporaryStrengthPower>(Owner.Creature, amt, Owner.Creature, this);
         }
     }
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(1m);
@@ -2088,7 +2132,7 @@ public sealed class DestrezaMastery : CustomCardModel
 [Pool(typeof(ThornsCardPool))]
 public sealed class NeurotoxinCloud : CustomCardModel
 {
-    public override string? CustomPortraitPath => MissingPortraitPath;
+    public override string? CustomPortraitPath => ImageHelper.GetImagePath("atlases/card_atlas.sprites/necrobinder/debilitate.tres");
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
         new PowerVar<PoisonPower>(5m)
@@ -2100,14 +2144,15 @@ public sealed class NeurotoxinCloud : CustomCardModel
         foreach (Creature enemy in ThornsAlchemy.NormalEnemies(Owner.Creature.CombatState))
         {
             await PowerCmd.Apply<PoisonPower>(enemy, DynamicVars.Poison.BaseValue, Owner.Creature, this);
-            await ThornsAlchemy.ApplyCatalyst(enemy, 1m, Owner.Creature, this);
+            // 摧残: apply DebilitatePower (multiplier-level effect)
+            await PowerCmd.Apply<DebilitatePower>(enemy, 1m, Owner.Creature, this);
         }
     }
     protected override void OnUpgrade() => DynamicVars.Poison.UpgradeValueBy(2m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "神经腐蚀云"),
-        ("description", "对所有敌人施加{Poison}层中毒和1层摧残。")
+        ("description", "对所有敌人施加{PoisonPower}层中毒和1层摧残。")
     };
 }
 
@@ -2282,7 +2327,7 @@ public sealed class DeadlyVenom : CustomCardModel
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "致命毒剂"),
-        ("description", "施加{Poison}层中毒。若目标或自身有催化，获得1点能量。")
+        ("description", "施加{PoisonPower}层中毒。若目标或自身有催化，获得1点能量。")
     };
 }
 
@@ -2373,12 +2418,15 @@ public sealed class SeaKingProtection : CustomCardModel
     public SeaKingProtection() : base(3, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, p);
+        var players = Owner.Creature.CombatState?.Players ?? new List<Player>();
+        int share = (int)DynamicVars.Block.BaseValue / Math.Max(players.Count, 1);
+        foreach (var pl in players)
+            if (pl.Creature.IsAlive) await CreatureCmd.GainBlock(pl.Creature, (decimal)share, ValueProp.Move, null);
         if (ThornsAlchemy.HasUnit(Owner.Creature.CombatState))
         {
             foreach (Creature enemy in ThornsAlchemy.NormalEnemies(Owner.Creature.CombatState))
             {
-                await PowerCmd.Apply<WeakPower>(enemy, 2m, Owner.Creature, this);
+                await PowerCmd.Apply<ThornsTempStrengthDownPower>(enemy, 10m, Owner.Creature, this);
             }
         }
     }
@@ -2443,7 +2491,7 @@ public sealed class WaveCrash : CustomCardModel
                 .WithHitFx("vfx/vfx_attack_slash").Execute(c);
             if (ThornsAlchemy.HasUnit(Owner.Creature.CombatState))
             {
-                await ThornsAlchemy.ApplyCatalyst(enemy, 1m, Owner.Creature, this);
+                await PowerCmd.Apply<WeakPower>(enemy, 1m, Owner.Creature, this);
             }
         }
     }
@@ -2507,7 +2555,7 @@ public sealed class AbyssalWhisper : CustomCardModel
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "深海低语"),
-        ("description", "对所有敌人施加{Poison}层中毒和{NeuralAmount}层神经损伤。每1名敌人有6层以上中毒，抽1张牌。")
+        ("description", "对所有敌人施加{PoisonPower}层中毒和{NeuralAmount}层神经损伤。每1名敌人有6层以上中毒，抽1张牌。")
     };
 }
 
@@ -2630,7 +2678,7 @@ public sealed class ConstellationMark : CustomCardModel
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "测绘标记"),
-        ("description", "施加{Poison}层中毒和{CatalystAmount}层催化。")
+        ("description", "施加{PoisonPower}层中毒和{CatalystAmount}层催化。")
     };
 }
 
@@ -2694,19 +2742,19 @@ public sealed class DeepSeaRegeneration : CustomCardModel
     public override string? CustomPortraitPath => MissingPortraitPath;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new HealVar(6m)
+        new CardsVar("RegenAmount", 3)
     };
     public DeepSeaRegeneration() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
 
-        await CreatureCmd.Heal(Owner.Creature, DynamicVars.Heal.BaseValue);
+        await PowerCmd.Apply<RegenPower>(Owner.Creature, DynamicVars["RegenAmount"].BaseValue, Owner.Creature, this);
         if (!ThornsAlchemy.HasUnit(Owner.Creature.CombatState))
         {
             await ThornsAlchemy.SummonUnit(c, Owner, this);
         }
     }
-    protected override void OnUpgrade() => DynamicVars.Heal.UpgradeValueBy(3m);
+    protected override void OnUpgrade() => DynamicVars["RegenAmount"].UpgradeValueBy(2m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "深海再生"),
@@ -3013,7 +3061,7 @@ public sealed class NeuroParalyze : CustomCardModel
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "神经麻痹"),
-        ("description", "施加1层易伤，{Weak}层虚弱和{NeuralAmount}层神经损伤。")
+        ("description", "施加1层易伤，{WeakPower}层虚弱和{NeuralAmount}层神经损伤。")
     };
 }
 
@@ -3160,21 +3208,18 @@ public sealed class SwarmTide : CustomCardModel
 public sealed class PrecisionMix : CustomCardModel
 {
     public override string? CustomPortraitPath => ThornsPortraits.AlchemyUnit;
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
-    {
-        new BlockVar(15m, ValueProp.Move)
-    };
     public PrecisionMix() : base(2, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, p);
-        await PowerCmd.Apply<PrecisionMixPower>(Owner.Creature, 1m, Owner.Creature, this, silent: true);
+        await ThornsAlchemy.SummonUnit(c, Owner, this);
+        CombatState? cs = Owner.Creature.CombatState;
+        if (cs != null) { await ThornsAlchemy.Pulse(c, cs, Owner.Creature, this); await ThornsAlchemy.Pulse(c, cs, Owner.Creature, this); }
     }
-    protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(5m);
+    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "精密调配"),
-        ("description", "获得{Block}点格挡。本回合下一次召唤炼金单元时额外召唤1个。")
+        ("description", "生成1个炼金单元，并立刻触发2次脉冲。")
     };
 }
 
@@ -3184,27 +3229,27 @@ public sealed class UnitOverload : CustomCardModel
     public override string? CustomPortraitPath => ThornsPortraits.AlchemyRelease;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(20m, ValueProp.Move)
+        new DamageVar(16m, ValueProp.Move)
     };
-    public UnitOverload() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy) { }
+    public UnitOverload() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        ArgumentNullException.ThrowIfNull(p.Target);
-        List<Creature> units = ThornsAlchemy.Units(Owner.Creature.CombatState);
-        int mult = units.Count > 0 ? 2 : 1;
-        if (units.Count > 0)
+        var units = ThornsAlchemy.Units(Owner.Creature.CombatState);
+        int bonus = units.Count * 6;
+        foreach (var unit in units)
         {
-            await ThornsAlchemy.Release(c, units[0], this, mult);
-            await CreatureCmd.Kill(units[0]);
+            await ThornsAlchemy.Release(c, unit, this, 2);
+            await CreatureCmd.Kill(unit);
         }
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(p.Target)
-            .WithHitFx("vfx/vfx_attack_slash").Execute(c);
+        foreach (var enemy in ThornsAlchemy.NormalEnemies(Owner.Creature.CombatState))
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus).FromCard(this).Targeting(enemy)
+                .WithHitFx("vfx/vfx_attack_slash").Execute(c);
     }
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(8m);
+    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(6m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "单元过载"),
-        ("description", "造成{Damage}点伤害。击破1个炼金单元，释放效果翻倍。")
+        ("description", "击破所有炼金单元（释放翻倍），对全体敌人造成{Damage}+单元数×6点伤害。")
     };
 }
 
@@ -3245,27 +3290,19 @@ public sealed class MindCrash : CustomCardModel
     {
         new DynamicVar("NeuralAmount", 8m)
     };
-    public MindCrash() : base(2, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy) { }
+    public MindCrash() : base(1, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
         ArgumentNullException.ThrowIfNull(p.Target);
-        bool hadNeural = p.Target.HasPower<NeuralDamageCounterPower>();
-        await PowerCmd.Apply<NeuralDamageCounterPower>(p.Target, DynamicVars["NeuralAmount"].BaseValue, Owner.Creature, this);
-        if (hadNeural)
-        {
-            NeuralDamageCounterPower? nd = p.Target.GetPower<NeuralDamageCounterPower>();
-            if (nd != null && nd.Amount >= 12)
-            {
-                await PowerCmd.Remove(nd);
-                await PowerCmd.Apply<NeuralShockPower>(p.Target, 1m, Owner.Creature, this);
-            }
-        }
+        NeuralDamageCounterPower? nd = p.Target.GetPower<NeuralDamageCounterPower>();
+        if (nd != null) await PowerCmd.Remove(nd);
+        await PowerCmd.Apply<NeuralShockPower>(p.Target, 1m, Owner.Creature, this);
     }
-    protected override void OnUpgrade() => DynamicVars["NeuralAmount"].UpgradeValueBy(4m);
+    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "精神崩溃"),
-        ("description", "施加{NeuralAmount}层神经损伤。若目标已有神经损伤，立刻触发神经震慑。")
+        ("description", "立刻触发神经震慑。")
     };
 }
 
@@ -3294,21 +3331,30 @@ public sealed class NeuroOverload : CustomCardModel
     {
         new DamageVar(12m, ValueProp.Move)
     };
-    public NeuroOverload() : base(3, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy) { }
+    public NeuroOverload() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
         ArgumentNullException.ThrowIfNull(p.Target);
-        NeuralDamageCounterPower? nd = p.Target.GetPower<NeuralDamageCounterPower>();
-        int bonus = nd != null ? (int)nd.Amount : 0;
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus * 2).FromCard(this).Targeting(p.Target)
-            .WithHitFx("vfx/vfx_attack_slash").Execute(c);
-        if (nd != null) await PowerCmd.Remove(nd);
+        if (p.Target.HasPower<NeuralShockPower>())
+        {
+            int poisonAmt = (int)(p.Target.GetPower<PoisonPower>()?.Amount ?? 0);
+            await DamageCmd.Attack(24m + poisonAmt).FromCard(this).Targeting(p.Target)
+                .WithHitFx("vfx/vfx_attack_slash").Execute(c);
+        }
+        else
+        {
+            NeuralDamageCounterPower? nd = p.Target.GetPower<NeuralDamageCounterPower>();
+            int bonus = nd != null ? (int)nd.Amount : 0;
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue + bonus * 2).FromCard(this).Targeting(p.Target)
+                .WithHitFx("vfx/vfx_attack_slash").Execute(c);
+            if (nd != null) await PowerCmd.Remove(nd);
+        }
     }
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4m);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "神经超载"),
-        ("description", "造成{Damage}+目标神经损伤层数×2点伤害。清除所有神经损伤。")
+        ("description", "造成{Damage}+目标神经损伤层数×2点伤害。若目标处于神经震慑，改为造成24+中毒层数伤害。")
     };
 }
 
@@ -3316,21 +3362,21 @@ public sealed class NeuroOverload : CustomCardModel
 public sealed class BrainHijack : CustomCardModel
 {
     public override string? CustomPortraitPath => ThornsPortraits.NeuralDamage;
-    public BrainHijack() : base(-1, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy) { }
+    public BrainHijack() : base(1, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy) { }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
         ArgumentNullException.ThrowIfNull(p.Target);
-        NeuralDamageCounterPower? nd = p.Target.GetPower<NeuralDamageCounterPower>();
-        if (nd == null || nd.Amount <= 0) return;
-        int consumed = (int)nd.Amount / 2;
-        await PowerCmd.ModifyAmount(nd, -consumed, Owner.Creature, this);
-        await PlayerCmd.GainEnergy(consumed, Owner);
+        CatalystPower? cat = p.Target.GetPower<CatalystPower>();
+        if (cat == null || cat.Amount <= 0) return;
+        int layers = (int)cat.Amount;
+        await PowerCmd.Remove(cat);
+        await PlayerCmd.GainEnergy(layers, Owner);
     }
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "脑髓劫持"),
-        ("description", "消耗目标神经损伤层数。每消耗1层获得1点能量。")
+        ("title", "媒介归还"),
+        ("description", "清除目标所有催化层数，每清除1层获得1点能量。")
     };
 }
 
@@ -3534,4 +3580,29 @@ public sealed class VoidSword : CustomCardModel
         ("title", "无我剑境"),
         ("description", "每回合开始时手牌中每有1张攻击牌多抽1张（上限3张）。")
     };
+}
+
+// NavigatorForesight choice cards
+[Pool(typeof(ThornsCardPool))]
+public sealed class NavigatorPulseCard : CustomCardModel
+{
+    public override string? CustomPortraitPath => ThornsPortraits.MySea;
+    public NavigatorPulseCard() : base(-1, CardType.Status, CardRarity.Basic, TargetType.None, showInCardLibrary: false) { }
+    public override List<(string, string)> Localization => new() { ("title", "特殊脉冲"), ("description", "全体敌人3伤+3易伤+3虚弱") };
+}
+
+[Pool(typeof(ThornsCardPool))]
+public sealed class NavigatorReleaseCard : CustomCardModel
+{
+    public override string? CustomPortraitPath => ThornsPortraits.AlchemyRelease;
+    public NavigatorReleaseCard() : base(-1, CardType.Status, CardRarity.Basic, TargetType.None, showInCardLibrary: false) { }
+    public override List<(string, string)> Localization => new() { ("title", "释放重生"), ("description", "释放并重新召唤炼金单元") };
+}
+
+[Pool(typeof(ThornsCardPool))]
+public sealed class NavigatorBuffCard : CustomCardModel
+{
+    public override string? CustomPortraitPath => ThornsPortraits.AlchemyUnit;
+    public NavigatorBuffCard() : base(-1, CardType.Status, CardRarity.Basic, TargetType.None, showInCardLibrary: false) { }
+    public override List<(string, string)> Localization => new() { ("title", "自我强化"), ("description", "获得3力量+3敏捷+3再生") };
 }
