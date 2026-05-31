@@ -558,7 +558,7 @@ public sealed class VesselOfPoisonPower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "????"),
+        ("title", "炼金术"),
         ("description", "Attacks apply Poison.")
     };
 }
@@ -623,8 +623,8 @@ public sealed class FirstUnitBreakRewardPower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "Ancient Ritual"),
-        ("description", "The first time an Alchemical Unit releases each combat, gain Strength and Dexterity.")
+        ("title", "疏通航道"),
+        ("description", "每回合炼金单元首次释放时获得力量和敏捷。")
     };
 }
 
@@ -670,7 +670,7 @@ public sealed class ThornsBodyPower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "鎶よ韩灏栧埡"),
+        ("title", "护身尖刺"),
         ("description", "The first time each turn you are attacked, retaliate and apply Poison.")
     };
 }
@@ -682,7 +682,7 @@ public sealed class AlchemyPulseHealPower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "鍐嶇敓鍏夌幆"),
+        ("title", "再生气雾"),
         ("description", "Alchemical Unit pulses heal you.")
     };
 }
@@ -694,7 +694,7 @@ public sealed class StarConstellationPower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "鏄熷浘"),
+        ("title", "星图"),
         ("description", "Alchemical Unit pulses trigger twice and apply Catalyst to enemies.")
     };
 }
@@ -716,7 +716,7 @@ public sealed class StarBlessingPower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "寮曟槦绁濈"),
+        ("title", "引星祝福"),
         ("description", "While an Alchemical Unit exists, your attacks deal additional damage.")
     };
 }
@@ -748,7 +748,7 @@ public sealed class AncientAlchemyPower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "????"),
+        ("title", "炼金术"),
         ("description", "Whenever you summon an Alchemical Unit, draw cards, up to twice each turn.")
     };
 }
@@ -794,7 +794,7 @@ public sealed class ConstellationLegacyPower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "????"),
+        ("title", "炼金术"),
         ("description", "Alchemical Unit limit is increased. Your first Alchemy card each combat summons an extra unit. Unit releases grant Block.")
     };
 }
@@ -850,7 +850,7 @@ public sealed class GuidingStarPower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "鑷抽珮涔嬫湳"),
+        ("title", "至高之术"),
         ("description", "The second Attack each combat grants Strength. Afterward, your first Attack each turn applies extra Poison.")
     };
 }
@@ -887,7 +887,7 @@ public sealed class AbyssalFormPower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "鏃犲灎娴风枂"),
+        ("title", "无垠海疆"),
         ("description", "At turn start, trigger Alchemical Unit pulses. Unit release effects are doubled. If no pulse happened this turn, your next Attack applies Poison.")
     };
 }
@@ -949,7 +949,7 @@ public sealed class NavigatorForesightPower : CustomPowerModel
 
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "鑷敱鐨勭涓夐潰"),
+        ("title", "自由的第三面"),
         ("description", "The first time each turn an Alchemical Unit would be broken, prevent it and trigger a pulse instead.")
     };
 }
@@ -1067,7 +1067,7 @@ public sealed class AlchemyCorePower : CustomPowerModel
         await ThornsAlchemy.Pulse(ctx, Owner.CombatState, Owner, null);
         await CreatureCmd.GainBlock(Owner, 2m * units.Count, ValueProp.Move, null);
     }
-    public override List<(string, string)> Localization => new List<(string, string)> { ("title", "炼金炉心"), ("description", "End of turn: pulse + block per unit.") };
+    public override List<(string, string)> Localization => new List<(string, string)> { ("title", "炼金炉心"), ("description", "回合结束时若有炼金单元则触发脉冲，每个单元获得格挡。") };
 }
 
 public sealed class SwarmTidePower : CustomPowerModel
@@ -1088,7 +1088,7 @@ public sealed class SwarmTidePower : CustomPowerModel
             await PowerCmd.Apply<PoisonPower>(enemy, 3m, Owner, null);
         }
     }
-    public override List<(string, string)> Localization => new List<(string, string)> { ("title", "涌潮大群"), ("description", "Alchemy Unit pulses and releases deal 8 damage to ALL enemies.") };
+    public override List<(string, string)> Localization => new List<(string, string)> { ("title", "涌潮大群"), ("description", "炼金单元脉冲和释放时对全体敌人造成8点伤害。") };
 }
 
 public sealed class PrecisionMixPower : CustomPowerModel
@@ -1112,7 +1112,7 @@ public sealed class PrecisionMixPower : CustomPowerModel
         if (side == Owner.Side) GetInternalData<Data>().usedThisTurn = false;
         return Task.CompletedTask;
     }
-    public override List<(string, string)> Localization => new List<(string, string)> { ("title", "精密调配"), ("description", "Next Alchemy card summons an extra unit.") };
+    public override List<(string, string)> Localization => new List<(string, string)> { ("title", "精密调配"), ("description", "下张炼金牌额外召唤1个单元。") };
 }
 
 public sealed class PlagueSpreadPower : CustomPowerModel
@@ -1129,7 +1129,7 @@ public sealed class PlagueSpreadPower : CustomPowerModel
             await PowerCmd.Apply<NeuralDamageCounterPower>(enemy, 3m, Owner, null);
         }
     }
-    public override List<(string, string)> Localization => new List<(string, string)> { ("title", "扩散污染"), ("description", "Neural Shock applies 3 Poison + 3 Neural to all.") };
+    public override List<(string, string)> Localization => new List<(string, string)> { ("title", "扩散污染"), ("description", "神经震慑触发时全体敌人+3中毒+3神经损伤。") };
 }
 
 public sealed class PainDeprivePower : CustomPowerModel
@@ -1143,7 +1143,7 @@ public sealed class PainDeprivePower : CustomPowerModel
         await PowerCmd.Apply<WeakPower>(target, 2m, Owner, null);
         await PowerCmd.Apply<VulnerablePower>(target, 2m, Owner, null);
     }
-    public override List<(string, string)> Localization => new List<(string, string)> { ("title", "痛觉剥夺"), ("description", "Neural Shock applies 2 Weak + 2 Vulnerable.") };
+    public override List<(string, string)> Localization => new List<(string, string)> { ("title", "痛觉剥夺"), ("description", "神经震慑触发时+2虚弱+2易伤。") };
 }
 
 public sealed class DeathInstinctPower : CustomPowerModel
@@ -1164,7 +1164,7 @@ public sealed class DeathInstinctPower : CustomPowerModel
             await PowerCmd.Apply<StrengthPower>(Owner, 1m, Owner, cp.Card);
         }
     }
-    public override List<(string, string)> Localization => new List<(string, string)> { ("title", "死斗本能"), ("description", "Every 3rd Attack played grants 1 Strength.") };
+    public override List<(string, string)> Localization => new List<(string, string)> { ("title", "死斗本能"), ("description", "每打出3张攻击牌获得1点力量。") };
 }
 
 public sealed class DualCorePower : CustomPowerModel
@@ -1183,7 +1183,7 @@ public sealed class DualCorePower : CustomPowerModel
         Flash();
         await PowerCmd.Apply<DexterityPower>(Owner, 1m, Owner, null);
     }
-    public override List<(string, string)> Localization => new List<(string, string)> { ("title", "双核驱动"), ("description", "Summon unit grants Strength. Neural Shock grants Dexterity.") };
+    public override List<(string, string)> Localization => new List<(string, string)> { ("title", "双核驱动"), ("description", "生成炼金单元时+1力量，神经震慑时+1敏捷。") };
 }
 
 public sealed class TacticalUnityPower : CustomPowerModel
@@ -1198,7 +1198,7 @@ public sealed class TacticalUnityPower : CustomPowerModel
         await CreatureCmd.GainBlock(Owner, DynamicVars.Block, cp);
         if (Owner.Player != null) await CardPileCmd.Draw(ctx, 1, Owner.Player);
     }
-    public override List<(string, string)> Localization => new List<(string, string)> { ("title", "战术协同"), ("description", "Pulse and Release trigger twice this turn.") };
+    public override List<(string, string)> Localization => new List<(string, string)> { ("title", "战术协同"), ("description", "本回合炼金单元脉冲和释放结算两次。") };
 }
 
 public sealed class VoidSwordPower : CustomPowerModel
@@ -1214,7 +1214,7 @@ public sealed class VoidSwordPower : CustomPowerModel
         int draw = Math.Min(atkCount, 3);
         if (draw > 0) await CardPileCmd.Draw(ctx, draw, Owner.Player);
     }
-    public override List<(string, string)> Localization => new List<(string, string)> { ("title", "无我剑境"), ("description", "Draw 1 per Attack in hand at turn start (max 3).") };
+    public override List<(string, string)> Localization => new List<(string, string)> { ("title", "无我剑境"), ("description", "回合开始时手牌每有1张攻击牌多抽1张（上限3张）。") };
 }
 
 [Pool(typeof(ThornsCardPool))]
@@ -3330,8 +3330,8 @@ public sealed class MindCrash : CustomCardModel
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     public override List<(string, string)> Localization => new List<(string, string)>
     {
-        ("title", "精神崩溃"),
-        ("description", "施加8层神经损伤。若目标已有神经损伤，立刻触发神经震慑。")
+        ("title", "神秘药剂"),
+        ("description", "随机赋予目标一种可催化效果和2层催化。")
     };
 }
 
@@ -3373,7 +3373,7 @@ public sealed class NeuroOverload : CustomCardModel
     public override List<(string, string)> Localization => new List<(string, string)>
     {
         ("title", "神经超载"),
-        ("description", "造成15+本场神经震慑次数点伤害。施加15层神经损伤。")
+        ("description", "造成15+本局神经震慑触发次数点伤害。施加15层神经损伤。消耗。")
     };
 }
 
