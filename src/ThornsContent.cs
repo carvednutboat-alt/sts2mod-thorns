@@ -30,6 +30,7 @@ using MegaCrit.Sts2.Core.Models.PotionPools;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace ThornsMod;
@@ -118,6 +119,12 @@ internal static class ThornsCharacterIconOutlineTexturePatch
 {
 	private const string IconOutlinePath = "res://images/packed/character_select/char_select_thorns.png";
 	private static void Postfix(CharacterModel __instance, ref Texture2D __result) { if (__instance is Thorns && ResourceLoader.Exists(IconOutlinePath)) __result = ResourceLoader.Load<Texture2D>(IconOutlinePath); }
+}
+
+[HarmonyPatch(typeof(RunManager), "StartNewRun")]
+internal static class ThornsRunStartPatch
+{
+    private static void Prefix() { ThornsMod.NeuralShockRunStats.Reset(); }
 }
 
 [HarmonyPatch(typeof(TheArchitect), "DefineDialogues")]

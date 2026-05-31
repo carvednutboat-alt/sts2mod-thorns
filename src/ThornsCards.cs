@@ -313,12 +313,12 @@ internal static class ThornsAlchemy
 
 // Thorns (荆棘) and Regen (再生) are base-game powers in STS2 — no custom implementation needed.
 
-public sealed class TotalNeuralShockCountPower : CustomPowerModel
+// Run-level counter for neural shock triggers (persists across combats)
+internal static class NeuralShockRunStats
 {
-    public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Counter;
-    protected override bool IsVisibleInternal => false;
-    public override bool ShouldPlayVfx => false;
+    public static int Count;
+    public static void Increment() => Count++;
+    public static void Reset() => Count = 0;
 }
 
 public sealed class TotalPulseCountPower : CustomPowerModel
@@ -388,7 +388,7 @@ public sealed class PoisonMasteryPower : CustomPowerModel
         {
             await PowerCmd.Remove(counter);
             await PowerCmd.Apply<NeuralShockPower>(target, 1m, Owner, null);
-            await PowerCmd.Apply<TotalNeuralShockCountPower>(Owner, 1m, Owner, null, silent: true);
+            NeuralShockRunStats.Increment();
             foreach (PoisonReaperPower reaper in Owner.Powers.OfType<PoisonReaperPower>())
             {
                 await reaper.AfterNeuralShock(choiceContext, target);
@@ -3364,7 +3364,7 @@ public sealed class NeuroOverload : CustomCardModel
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
         ArgumentNullException.ThrowIfNull(p.Target);
-        int shocks = (int)(Owner.Creature.GetPower<TotalNeuralShockCountPower>()?.Amount ?? 0);
+        int shocks = NeuralShockRunStats.Count;
         await DamageCmd.Attack(15m + shocks).FromCard(this).Targeting(p.Target)
             .WithHitFx("vfx/vfx_attack_slash").Execute(c);
         await PowerCmd.Apply<NeuralDamageCounterPower>(p.Target, 15m, Owner.Creature, this);
